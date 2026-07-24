@@ -1,0 +1,27 @@
+# model artifacts — never commit weights
+*.gguf
+*.safetensors
+*.bin
+*.pt
+models/
+checkpoints/
+outputs/
+lora_model/
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# unsloth / training runs
+wandb/
+runs/
+unsloth_compiled_cache/
+
+# large raw generation dumps stay local; filtered sets are committed
+datasets/*/generated/raw/
+
+# os / editor
+.DS_Store
+Thumbs.db

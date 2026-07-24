@@ -1,0 +1,454 @@
+<title>Master Models — 5×10B Specialist Fleet Plan v2</title>
+<style>
+  :root{
+    --bg:#0b0e14; --panel:#121722; --panel2:#0f1420; --line:#1f2735;
+    --text:#dbe4f0; --muted:#8b98ab; --accent:#5eead4; --accent2:#818cf8;
+    --warn:#fbbf24; --bad:#f87171; --good:#34d399;
+    font-size:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;line-height:1.55;padding:0 0 80px}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 28px}
+  header{padding:56px 0 32px;border-bottom:1px solid var(--line);margin-bottom:40px;
+    background:radial-gradient(1200px 400px at 50% -100px, rgba(94,234,212,.08), transparent)}
+  .kicker{color:var(--accent);letter-spacing:.18em;text-transform:uppercase;font-size:.72rem;font-weight:700;margin-bottom:10px}
+  h1{font-size:2.1rem;font-weight:800;letter-spacing:-.02em}
+  .sub{color:var(--muted);margin-top:10px;max-width:780px}
+  h2{font-size:1.35rem;font-weight:750;margin:52px 0 6px;letter-spacing:-.01em}
+  h2 .n{color:var(--accent2);font-family:ui-monospace,monospace;font-size:.95rem;margin-right:10px}
+  .lead{color:var(--muted);margin-bottom:18px;max-width:780px}
+  p{margin:10px 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:820px){.grid2,.grid3{grid-template-columns:1fr}}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+  .pill.good{background:rgba(52,211,153,.14);color:var(--good);border:1px solid rgba(52,211,153,.35)}
+  .pill.warn{background:rgba(251,191,36,.12);color:var(--warn);border:1px solid rgba(251,191,36,.35)}
+  .pill.bad{background:rgba(248,113,113,.12);color:var(--bad);border:1px solid rgba(248,113,113,.35)}
+  .pill.info{background:rgba(129,140,248,.14);color:var(--accent2);border:1px solid rgba(129,140,248,.35)}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.92rem}
+  th{color:var(--muted);text-align:left;font-weight:650;font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;padding:10px 12px;border-bottom:1px solid var(--line)}
+  td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  .tblwrap{overflow-x:auto}
+  code,.mono{font-family:ui-monospace,'Cascadia Code',Consolas,monospace;font-size:.86em;background:#0a0f18;border:1px solid var(--line);border-radius:6px;padding:2px 6px;color:#a5f3fc}
+  .verdict{display:flex;gap:18px;align-items:flex-start;background:linear-gradient(135deg,rgba(52,211,153,.08),rgba(94,234,212,.03));border:1px solid rgba(52,211,153,.3)}
+  .verdict .big{font-size:2.4rem;line-height:1}
+  svg{max-width:100%;height:auto;display:block;margin:8px auto}
+  .svgcard{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:18px;margin:18px 0;overflow-x:auto}
+  .cap{color:var(--muted);font-size:.8rem;text-align:center;margin-top:8px}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;text-align:center}
+  .stat .v{font-size:1.5rem;font-weight:800;color:var(--accent)}
+  .stat .l{color:var(--muted);font-size:.78rem;margin-top:4px}
+  ul{margin:8px 0 8px 20px}
+  li{margin:5px 0}
+  .risk{border-left:3px solid var(--bad);padding-left:14px;margin:12px 0}
+  .risk b{color:#fca5a5}
+  .risk .fix{color:var(--good);font-size:.9rem}
+  .phase{display:flex;gap:16px;margin:14px 0;align-items:flex-start}
+  .phase .dot{min-width:38px;height:38px;border-radius:50%;background:var(--panel);border:2px solid var(--accent2);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent2);font-family:ui-monospace,monospace}
+  .phase .body{flex:1;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 18px}
+  .phase .body b{color:var(--text)}
+  .phase .meta{color:var(--muted);font-size:.82rem;margin-top:4px}
+  .srcs{font-size:.85rem;color:var(--muted)}
+  .srcs a{color:var(--accent2);text-decoration:none}
+  .srcs a:hover{text-decoration:underline}
+  .hl{color:var(--accent)}
+  .rec{outline:2px solid rgba(94,234,212,.45);outline-offset:-2px;border-radius:10px}
+</style>
+
+<header><div class="wrap">
+  <div class="kicker">Master Models · Plan v3 (post-roast reshape) · 2026-07-24</div>
+  <h1>The Specialist Factory — Earn the Fleet, Don't Assume It</h1>
+  <div class="sub">Mission reframed: build the dataset factory + eval harness that proves when a local specialist beats the free stock generalist. The 5×10B fleet + 20–25B orchestrator is the <b>conditional end-state</b> — each model earns existence by winning a hard gate. Token cost is already ~$0 via stock local Qwen3-Coder-30B; this project is a quality bet, run as a capped experiment. All datasets custom-built (Fable 5 teacher); every model fully agentic: read/write, bash, tool calling, MCP, skills.</div>
+</div></header>
+
+<div class="wrap">
+
+  <!-- ROAST VERDICT -->
+  <div class="card" style="border:1px solid rgba(251,191,36,.45);background:linear-gradient(135deg,rgba(251,191,36,.08),rgba(248,113,113,.04))">
+    <span class="pill warn">Council roast verdict · RESHAPE</span> <span class="pill bad">Confidence: high</span>
+    <p style="margin-top:10px"><b>5-persona adversarial review (2026-07-24):</b> Contrarian 2/10 · Expansionist 7/10 · Logician 3/10 · Researcher 3/10 · Buyer 3/10.</p>
+    <ul>
+      <li><b>Cost thesis is dead on arrival:</b> token cost hits ~$0 the day you serve stock Qwen3-Coder-30B-A3B locally — the fleet adds no savings, only a quality bet.</li>
+      <li><b>Data math against you:</b> published agentic distillation wins (SWE-Star, Open-SWE-Traces) used 100–250K trajectories, not 2K — and 7B still lost to 32B. One tight framework (not "frontend") is the only proven win at small scale.</li>
+      <li><b>Swap-mode hierarchy contradicts agent loops:</b> 20–100 serial calls per task × 5–10s swaps + KV re-prefill = minutes of loading; multi-agent handoffs are the documented failure zone (MAST: 79% of failures).</li>
+      <li><b>Self-graded gate:</b> same person writes seeds, teacher prompts, judge, and eval — gate must target stock <i>Qwen3-Coder-30B</i> on real repo tasks, not base 30B on Fable-flavored evals.</li>
+      <li><b>What survives (the 7/10 case):</b> the dataset factory + eval harness is the compounding asset; hybrid routing (local grunt work, frontier escalation) and privacy-bound fleets are the real product angle.</li>
+    </ul>
+    <p><b class="hl">Status: reshape implemented in this plan.</b> The fleet is now the conditional end-state (section 01), the gate targets stock Qwen3-Coder-30B on real repo tasks with anti-self-grading rules (section 08), the first specialist is a tight-domain kill-test capped at $100 + 2 weekends, and the general-data mix is raised to 20–30% to protect tool calling.</p>
+  </div>
+
+  <!-- VERDICT -->
+  <div class="card verdict">
+    <div class="big">✅</div>
+    <div>
+      <span class="pill good">Buildable</span> <span class="pill warn">Quality bet, not a cost play</span> <span class="pill info">Every model must win a gate to exist</span>
+      <p style="margin-top:10px"><b>What this project actually is:</b> a repeatable specialist factory (seed → generate → judge → train → eval) plus an honest eval harness. Cost savings arrived the day stock Qwen3-Coder-30B-A3B ran locally — so a specialist ships only if it beats that free baseline on real work. The factory and harness compound across every future base model; the individual checkpoints are disposable.</p>
+      <p style="color:var(--muted)"><b>Reality check on "no models from the internet":</b> training a 10B model <i>from scratch</i> needs trillions of tokens and roughly $500K–$2M+ of GPU compute per model — not a local project. The practical meaning of full control: <span class="hl">open-weight base + 100% our own fine-tuning data</span>. Weights sit on your disk, run offline, and every behavior you add comes from data you built and audited. Section 02 shows the spectrum.</p>
+    </div>
+  </div>
+
+  <!-- ARCHITECTURE -->
+  <h2><span class="n">01</span>Operating Model — Now vs Conditional End-State</h2>
+  <div class="lead"><b>Now:</b> stock local generalist + frontier escalation, wrapped in the eval harness. Specialists join one at a time, each only after beating the stock baseline on real tasks.</div>
+
+  <div class="svgcard">
+  <svg viewBox="0 0 980 250" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,sans-serif">
+    <defs><marker id="ar6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#5eead4"/></marker></defs>
+    <rect x="30" y="80" width="200" height="90" rx="12" fill="#121722" stroke="#2a3648"/>
+    <text x="130" y="115" fill="#dbe4f0" font-size="14" text-anchor="middle" font-weight="600">Coding agent</text>
+    <text x="130" y="137" fill="#8b98ab" font-size="12" text-anchor="middle">pi / Hermes harness</text>
+    <text x="130" y="155" fill="#8b98ab" font-size="11" text-anchor="middle">tools · MCP · skills</text>
+    <line x1="230" y1="125" x2="320" y2="125" stroke="#5eead4" stroke-width="2.5" marker-end="url(#ar6)"/>
+    <rect x="324" y="60" width="300" height="130" rx="14" fill="#0f1a2b" stroke="#5eead4" stroke-width="2"/>
+    <text x="474" y="92" fill="#5eead4" font-size="15" text-anchor="middle" font-weight="700">STOCK Qwen3-Coder-30B-A3B</text>
+    <text x="474" y="114" fill="#8b98ab" font-size="12" text-anchor="middle">local, $0/token, already running</text>
+    <text x="474" y="134" fill="#8b98ab" font-size="12" text-anchor="middle">handles the daily grunt work</text>
+    <text x="474" y="160" fill="#fbbf24" font-size="12" text-anchor="middle" font-weight="700">= THE BASELINE EVERY SPECIALIST MUST BEAT</text>
+    <line x1="624" y1="100" x2="720" y2="70" stroke="#f87171" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#ar6)"/>
+    <rect x="724" y="40" width="226" height="60" rx="12" fill="#121722" stroke="#f87171" stroke-dasharray="5 4"/>
+    <text x="837" y="65" fill="#f87171" font-size="13" text-anchor="middle" font-weight="700">Frontier escalation</text>
+    <text x="837" y="85" fill="#8b98ab" font-size="11" text-anchor="middle">hard/novel tasks → Claude (paid, rare)</text>
+    <line x1="624" y1="155" x2="720" y2="185" stroke="#34d399" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#ar6)"/>
+    <rect x="724" y="158" width="226" height="60" rx="12" fill="#121722" stroke="#34d399" stroke-dasharray="5 4"/>
+    <text x="837" y="183" fill="#34d399" font-size="13" text-anchor="middle" font-weight="700">Gate-winning specialists</text>
+    <text x="837" y="203" fill="#8b98ab" font-size="11" text-anchor="middle">added one by one, only after a win</text>
+    <text x="490" y="238" fill="#8b98ab" font-size="12" text-anchor="middle">Eval harness wraps everything: every route logged, every model scored on the same 20 real repo tasks</text>
+  </svg>
+  <div class="cap">Day-one architecture. Zero training required — this already hits the ~$0 token goal and produces the routing logs that later train the orchestrator.</div>
+  </div>
+
+  <div class="lead" style="margin-top:26px"><b>Conditional end-state</b> (each box unlocked by its own gate win — nothing below is committed):</div>
+  <div class="svgcard">
+  <svg viewBox="0 0 980 500" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,sans-serif">
+    <defs>
+      <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#5eead4"/></marker>
+      <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#818cf8"/></marker>
+    </defs>
+    <rect x="390" y="12" width="200" height="44" rx="10" fill="#121722" stroke="#2a3648"/>
+    <text x="490" y="39" fill="#dbe4f0" font-size="14" text-anchor="middle" font-weight="600">Coding agent (pi / Hermes)</text>
+    <line x1="490" y1="56" x2="490" y2="92" stroke="#5eead4" stroke-width="2" marker-end="url(#ar)"/>
+    <!-- orchestrator -->
+    <rect x="300" y="94" width="380" height="96" rx="14" fill="#0f1a2b" stroke="#5eead4" stroke-width="2.5"/>
+    <text x="490" y="126" fill="#5eead4" font-size="16" text-anchor="middle" font-weight="700">ORCHESTRATOR · 20–25B</text>
+    <text x="490" y="147" fill="#8b98ab" font-size="12" text-anchor="middle">fine-tuned on (request → plan + routes + merge) — big enough to</text>
+    <text x="490" y="164" fill="#8b98ab" font-size="12" text-anchor="middle">decompose messy tasks, judge specialist output, retry or escalate</text>
+    <text x="490" y="182" fill="#5eead4" font-size="11" text-anchor="middle" font-family="monospace">pick: Qwen3-30B-A3B (MoE) or Mistral Small 24B</text>
+    <!-- routes to 5 -->
+    <line x1="360" y1="190" x2="120" y2="272" stroke="#818cf8" stroke-width="2" marker-end="url(#ar2)"/>
+    <line x1="430" y1="190" x2="310" y2="272" stroke="#818cf8" stroke-width="2" marker-end="url(#ar2)"/>
+    <line x1="490" y1="190" x2="490" y2="272" stroke="#818cf8" stroke-width="2" marker-end="url(#ar2)"/>
+    <line x1="550" y1="190" x2="672" y2="272" stroke="#818cf8" stroke-width="2" marker-end="url(#ar2)"/>
+    <line x1="620" y1="190" x2="862" y2="272" stroke="#818cf8" stroke-width="2" marker-end="url(#ar2)"/>
+    <!-- 5 specialists -->
+    <g>
+      <rect x="30" y="276" width="176" height="110" rx="12" fill="#121722" stroke="#34d399" stroke-width="1.5"/>
+      <text x="118" y="302" fill="#34d399" font-size="13.5" text-anchor="middle" font-weight="700">FRONTEND · 10B</text>
+      <text x="118" y="323" fill="#8b98ab" font-size="11" text-anchor="middle">UI, CSS, React, motion,</text>
+      <text x="118" y="339" fill="#8b98ab" font-size="11" text-anchor="middle">design systems, a11y</text>
+      <text x="118" y="367" fill="#5eead4" font-size="10.5" text-anchor="middle" font-family="monospace">Qwen3 8B base</text>
+    </g>
+    <g>
+      <rect x="222" y="276" width="176" height="110" rx="12" fill="#121722" stroke="#818cf8" stroke-width="1.5"/>
+      <text x="310" y="302" fill="#818cf8" font-size="13.5" text-anchor="middle" font-weight="700">BACKEND · 10B</text>
+      <text x="310" y="323" fill="#8b98ab" font-size="11" text-anchor="middle">APIs, DB schema, queues,</text>
+      <text x="310" y="339" fill="#8b98ab" font-size="11" text-anchor="middle">business logic, infra</text>
+      <text x="310" y="367" fill="#5eead4" font-size="10.5" text-anchor="middle" font-family="monospace">Qwen3 8B base</text>
+    </g>
+    <g>
+      <rect x="414" y="276" width="152" height="110" rx="12" fill="#121722" stroke="#fbbf24" stroke-width="1.5"/>
+      <text x="490" y="302" fill="#fbbf24" font-size="13.5" text-anchor="middle" font-weight="700">SECURITY · 10B</text>
+      <text x="490" y="323" fill="#8b98ab" font-size="11" text-anchor="middle">OWASP, authz, secrets,</text>
+      <text x="490" y="339" fill="#8b98ab" font-size="11" text-anchor="middle">vuln-vs-fixed review</text>
+      <text x="490" y="367" fill="#5eead4" font-size="10.5" text-anchor="middle" font-family="monospace">Qwen3 8B base</text>
+    </g>
+    <g>
+      <rect x="582" y="276" width="180" height="110" rx="12" fill="#121722" stroke="#f87171" stroke-width="1.5"/>
+      <text x="672" y="302" fill="#f87171" font-size="13.5" text-anchor="middle" font-weight="700">CODE REVIEW · 10B</text>
+      <text x="672" y="323" fill="#8b98ab" font-size="11" text-anchor="middle">diff critique, bug patterns,</text>
+      <text x="672" y="339" fill="#8b98ab" font-size="11" text-anchor="middle">findings + fixes</text>
+      <text x="672" y="367" fill="#5eead4" font-size="10.5" text-anchor="middle" font-family="monospace">Qwen3 8B base</text>
+    </g>
+    <g>
+      <rect x="778" y="276" width="172" height="110" rx="12" fill="#121722" stroke="#a78bfa" stroke-width="1.5" stroke-dasharray="5 4"/>
+      <text x="864" y="302" fill="#a78bfa" font-size="13.5" text-anchor="middle" font-weight="700">SLOT 5 · 10B</text>
+      <text x="864" y="323" fill="#8b98ab" font-size="11" text-anchor="middle">your call — suggested:</text>
+      <text x="864" y="339" fill="#8b98ab" font-size="11" text-anchor="middle">TESTING (unit/e2e/QA)</text>
+      <text x="864" y="367" fill="#5eead4" font-size="10.5" text-anchor="middle" font-family="monospace">or docs / DevOps</text>
+    </g>
+    <!-- serving -->
+    <rect x="30" y="416" width="920" height="52" rx="12" fill="#0f1420" stroke="#1f2735"/>
+    <text x="490" y="438" fill="#dbe4f0" font-size="13" text-anchor="middle" font-weight="600">llama.cpp servers · OpenAI-compatible API · orchestrator resident, specialists loaded on demand (or all-resident at 48 GB)</text>
+    <text x="490" y="456" fill="#8b98ab" font-size="11.5" text-anchor="middle">agent sees model names: orchestrator · frontend · backend · security · review · testing</text>
+  </svg>
+  <div class="cap">Only 4 specialist roles were named — the fifth 10B slot is open. Testing/QA is the suggested fill: it closes the loop (build, secure, review, verify).</div>
+  </div>
+
+  <!-- CONTROL SPECTRUM -->
+  <h2><span class="n">02</span>"No Models From the Internet" — The Control Spectrum</h2>
+  <div class="lead">What full control actually costs at each level. The goal (know and control everything the model learns <i>for its job</i>) is achieved at level 2–3, not level 4.</div>
+  <div class="svgcard">
+  <svg viewBox="0 0 980 300" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,sans-serif">
+    <line x1="60" y1="150" x2="920" y2="150" stroke="#1f2735" stroke-width="3"/>
+    <!-- L1 -->
+    <g>
+      <circle cx="120" cy="150" r="9" fill="#f87171"/>
+      <text x="120" y="110" fill="#f87171" font-size="13" text-anchor="middle" font-weight="700">L1 · API models</text>
+      <text x="120" y="128" fill="#8b98ab" font-size="11" text-anchor="middle">zero control, data leaves box</text>
+      <text x="120" y="185" fill="#8b98ab" font-size="11" text-anchor="middle">$/token forever</text>
+    </g>
+    <!-- L2 -->
+    <g>
+      <circle cx="360" cy="150" r="9" fill="#fbbf24"/>
+      <text x="360" y="110" fill="#fbbf24" font-size="13" text-anchor="middle" font-weight="700">L2 · Open weights as-is</text>
+      <text x="360" y="128" fill="#8b98ab" font-size="11" text-anchor="middle">runs offline, but behavior = someone else's training</text>
+      <text x="360" y="185" fill="#8b98ab" font-size="11" text-anchor="middle">$0 · today's local-coder setup</text>
+    </g>
+    <!-- L3 -->
+    <g>
+      <circle cx="620" cy="150" r="13" fill="#34d399" stroke="#5eead4" stroke-width="3"/>
+      <text x="620" y="96" fill="#34d399" font-size="14" text-anchor="middle" font-weight="800">L3 · Open base + 100% our data ⭐</text>
+      <text x="620" y="116" fill="#8b98ab" font-size="11" text-anchor="middle">every skill we add comes from data we built + audited</text>
+      <text x="620" y="132" fill="#8b98ab" font-size="11" text-anchor="middle">weights on our disk, offline, ours to keep</text>
+      <text x="620" y="185" fill="#34d399" font-size="11.5" text-anchor="middle" font-weight="700">~$100–500/specialist · weeks</text>
+      <text x="620" y="203" fill="#8b98ab" font-size="11" text-anchor="middle">THIS PLAN</text>
+    </g>
+    <!-- L4 -->
+    <g>
+      <circle cx="880" cy="150" r="9" fill="#f87171"/>
+      <text x="880" y="110" fill="#f87171" font-size="13" text-anchor="middle" font-weight="700">L4 · From scratch</text>
+      <text x="880" y="128" fill="#8b98ab" font-size="11" text-anchor="middle">trillions of tokens, GPU cluster</text>
+      <text x="880" y="185" fill="#f87171" font-size="11.5" text-anchor="middle" font-weight="700">$500K–$2M+ per 10B model</text>
+      <text x="880" y="203" fill="#8b98ab" font-size="11" text-anchor="middle">not a local project</text>
+    </g>
+    <text x="490" y="255" fill="#8b98ab" font-size="12" text-anchor="middle">Control ————————————————————————————————————————————————▶ Cost</text>
+  </svg>
+  <div class="cap">L3 = base knows English + code syntax (commodity knowledge); everything domain-specific comes from our dataset. That's the "entire control on what we give it" requirement, met at hobbyist cost.</div>
+  </div>
+
+  <!-- AGENTIC REQUIREMENT -->
+  <h2><span class="n">03</span>Agentic Requirement — Where Each Capability Actually Lives</h2>
+  <div class="lead">Read/write/bash/MCP/skills are not model features — they are harness tools. The model's job is to <i>drive</i> them: emit correct tool-call JSON, loop over results, know when to stop. So base selection has one non-negotiable filter: <b>native function calling + agentic training</b>.</div>
+
+  <div class="svgcard">
+  <svg viewBox="0 0 980 330" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,sans-serif">
+    <defs>
+      <marker id="ar4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#5eead4"/></marker>
+      <marker id="ar5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#818cf8"/></marker>
+    </defs>
+    <!-- model box -->
+    <rect x="40" y="60" width="330" height="210" rx="14" fill="#0f1a2b" stroke="#5eead4" stroke-width="2"/>
+    <text x="205" y="92" fill="#5eead4" font-size="15" text-anchor="middle" font-weight="700">MODEL = THE BRAIN</text>
+    <text x="205" y="116" fill="#8b98ab" font-size="12" text-anchor="middle">what the weights must be good at:</text>
+    <text x="60" y="145" fill="#dbe4f0" font-size="12.5">✔ emit valid tool-call JSON, every time</text>
+    <text x="60" y="169" fill="#dbe4f0" font-size="12.5">✔ multi-turn loop: call → read result → next call</text>
+    <text x="60" y="193" fill="#dbe4f0" font-size="12.5">✔ pick the RIGHT tool (grep vs read vs bash)</text>
+    <text x="60" y="217" fill="#dbe4f0" font-size="12.5">✔ know when to stop and answer</text>
+    <text x="60" y="241" fill="#dbe4f0" font-size="12.5">✔ recover when a tool call errors</text>
+    <!-- arrows -->
+    <line x1="370" y1="140" x2="470" y2="140" stroke="#5eead4" stroke-width="2.5" marker-end="url(#ar4)"/>
+    <text x="420" y="128" fill="#5eead4" font-size="11" text-anchor="middle" font-family="monospace">tool_call {}</text>
+    <line x1="470" y1="190" x2="370" y2="190" stroke="#818cf8" stroke-width="2.5" marker-end="url(#ar5)"/>
+    <text x="420" y="212" fill="#818cf8" font-size="11" text-anchor="middle" font-family="monospace">tool result</text>
+    <!-- harness box -->
+    <rect x="474" y="60" width="330" height="210" rx="14" fill="#121722" stroke="#818cf8" stroke-width="2"/>
+    <text x="639" y="92" fill="#818cf8" font-size="15" text-anchor="middle" font-weight="700">HARNESS = THE HANDS</text>
+    <text x="639" y="116" fill="#8b98ab" font-size="12" text-anchor="middle">pi / Hermes / agent CLI provides &amp; executes:</text>
+    <text x="494" y="145" fill="#dbe4f0" font-size="12.5">🗂 file read / write / edit</text>
+    <text x="494" y="169" fill="#dbe4f0" font-size="12.5">⌨ bash / shell execution</text>
+    <text x="494" y="193" fill="#dbe4f0" font-size="12.5">🔌 MCP servers (any, via tool schema)</text>
+    <text x="494" y="217" fill="#dbe4f0" font-size="12.5">📚 skills (prompt-injected workflows)</text>
+    <text x="494" y="241" fill="#dbe4f0" font-size="12.5">🔍 search / glob / web</text>
+    <!-- consequence -->
+    <rect x="828" y="60" width="122" height="210" rx="14" fill="#0f1420" stroke="#fbbf24" stroke-width="1.5"/>
+    <text x="889" y="95" fill="#fbbf24" font-size="13" text-anchor="middle" font-weight="700">FILTER</text>
+    <text x="889" y="125" fill="#8b98ab" font-size="11" text-anchor="middle">base without</text>
+    <text x="889" y="141" fill="#8b98ab" font-size="11" text-anchor="middle">native tool</text>
+    <text x="889" y="157" fill="#8b98ab" font-size="11" text-anchor="middle">calling =</text>
+    <text x="889" y="176" fill="#f87171" font-size="12" text-anchor="middle" font-weight="700">disqualified,</text>
+    <text x="889" y="195" fill="#8b98ab" font-size="11" text-anchor="middle">no matter how</text>
+    <text x="889" y="211" fill="#8b98ab" font-size="11" text-anchor="middle">smart at code</text>
+    <rect x="40" y="288" width="910" height="1" fill="#1f2735"/>
+    <text x="490" y="315" fill="#5eead4" font-size="12.5" text-anchor="middle" font-weight="700">Consequence for training: fine-tune on agentic TRAJECTORIES (task → tool calls → results → patch), never plain Q/A — or tool calling erodes.</text>
+  </svg>
+  <div class="cap">MCP + skills need zero special model support beyond solid tool calling — MCP tools arrive as ordinary tool schemas; skills arrive as prompt content.</div>
+  </div>
+
+  <p><b class="hl">Agentic scorecard — all candidates:</b></p>
+  <div class="tblwrap"><table>
+    <tr><th>Base</th><th>Native function calling</th><th>Agentic-trained (multi-turn tools)</th><th>MCP-ready ecosystem</th><th>Agentic verdict</th></tr>
+    <tr class="rec"><td><b>Qwen3 8B / 14B</b></td><td>✅ built into chat template</td><td>✅ strong in class</td><td>✅ Qwen-Agent framework, MCP config support</td><td><span class="pill good">Pass — specialists</span></td></tr>
+    <tr class="rec"><td><b>Qwen3-30B-A3B</b></td><td>✅</td><td>✅ (Coder variant top of agentic benchmarks)</td><td>✅ you already run it in agent loops</td><td><span class="pill good">Pass — orchestrator</span></td></tr>
+    <tr><td>Devstral Small (~24B)</td><td>✅</td><td>✅ purpose-built for agentic coding (SWE-Bench)</td><td>✅ built for OpenHands-style harnesses</td><td><span class="pill info">Pass — orchestrator alt</span></td></tr>
+    <tr><td>Ministral 3 14B</td><td>✅ best-in-class JSON/function calling</td><td>✅</td><td>✅</td><td><span class="pill info">Pass — specialist alt</span></td></tr>
+    <tr><td>Gemma 3 12B/27B</td><td>⚠️ prompted, not native template</td><td>⚠️ weaker multi-turn tool loops</td><td>⚠️</td><td><span class="pill warn">Risky for this spec</span></td></tr>
+    <tr><td>Llama 3.3 8B</td><td>✅</td><td>⚠️ mid</td><td>✅</td><td><span class="pill warn">Fallback only</span></td></tr>
+  </table></div>
+
+  <!-- MODEL PICKS -->
+  <h2><span class="n">04</span>Which Base Models to Fine-Tune</h2>
+  <div class="lead">Criteria: ~10B class, open license (Apache 2.0 preferred), strong code ability out of the box, proven Unsloth/LoRA ecosystem, GGUF-friendly — and passing the section 03 agentic scorecard.</div>
+
+  <p><b class="hl">Specialists (~10B) — candidates:</b></p>
+  <div class="tblwrap"><table>
+    <tr><th>Base</th><th>Size</th><th>License</th><th>Strengths</th><th>Fit</th></tr>
+    <tr class="rec"><td><b>Qwen3 8B</b> ⭐</td><td>8B dense</td><td>Apache 2.0</td><td>Best code ability in class, native tool calling in chat template, biggest fine-tune ecosystem, same family as your current 30B (shared tokenizer/chat template = simpler harness)</td><td><span class="pill good">Primary pick — all 5 specialists</span></td></tr>
+    <tr><td>Qwen3 14B</td><td>14B dense</td><td>Apache 2.0</td><td>Noticeably smarter; slower to train + serve</td><td><span class="pill info">Upgrade path if 8B plateaus on a domain</span></td></tr>
+    <tr><td>Gemma 3 12B</td><td>12B dense</td><td>Gemma license</td><td>Strong reasoning, good writing (nice for review/docs roles)</td><td><span class="pill warn">Alt for review model; heavier memory</span></td></tr>
+    <tr><td>Ministral 3 14B</td><td>14B dense</td><td>Apache 2.0</td><td>Strong tool-calling family, multilingual</td><td><span class="pill warn">Alt if Qwen weak somewhere</span></td></tr>
+    <tr><td>Llama 3.3 8B</td><td>8B dense</td><td>Llama license</td><td>Most tutorials/battle-tested LoRA configs anywhere</td><td><span class="pill warn">Fallback; code ability behind Qwen</span></td></tr>
+  </table></div>
+
+  <p><b class="hl">Orchestrator (20–25B class) — candidates:</b></p>
+  <div class="tblwrap"><table>
+    <tr><th>Base</th><th>Size</th><th>License</th><th>Why / why not</th><th>Fit</th></tr>
+    <tr class="rec"><td><b>Qwen3-30B-A3B</b> ⭐</td><td>30B MoE (3B active)</td><td>Apache 2.0</td><td>You already run it. MoE trick: 30B knowledge, ~3B-model speed and compute per token — an orchestrator that's smart AND fast. Fine-tunes fine with LoRA.</td><td><span class="pill good">Primary pick</span></td></tr>
+    <tr><td>Devstral Small (~24B)</td><td>~24B dense</td><td>Apache 2.0</td><td>Purpose-built agentic coder (competitive SWE-Bench on consumer hardware); exactly the 20–25B spec; slower per token than the MoE</td><td><span class="pill info">Strong dense alternative</span></td></tr>
+    <tr><td>Mistral Small 24B class</td><td>~24B dense</td><td>Apache 2.0</td><td>Excellent instruction following + function calling; general, not coder-specialized</td><td><span class="pill warn">Second dense alt</span></td></tr>
+    <tr><td>Gemma 3 27B</td><td>27B dense</td><td>Gemma license</td><td>Strong reasoning on one 24 GB GPU, long context</td><td><span class="pill warn">Alt; license less permissive</span></td></tr>
+  </table></div>
+
+  <p style="color:var(--muted)">Single-family recommendation: <b>all-Qwen fleet</b>. One tokenizer, one chat template, one set of Unsloth configs, one quantization workflow — five fewer ways for the harness to break.</p>
+
+  <!-- VRAM -->
+  <h2><span class="n">05</span>VRAM Budget — Can the Fleet Actually Run?</h2>
+  <div class="lead">Q4_K_M quantization, approximate resident sizes with context buffers.</div>
+  <div class="svgcard">
+  <svg viewBox="0 0 980 330" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,sans-serif">
+    <text x="30" y="30" fill="#dbe4f0" font-size="14" font-weight="700">All-resident fleet (instant switching)</text>
+    <!-- bars: orchestrator 18, 5x ~6 -->
+    <rect x="30" y="44" width="252" height="30" rx="6" fill="#0f1a2b" stroke="#5eead4"/>
+    <text x="156" y="64" fill="#5eead4" font-size="12" text-anchor="middle" font-weight="700">Orchestrator 30B-A3B · ~18 GB</text>
+    <rect x="286" y="44" width="84" height="30" rx="6" fill="#121722" stroke="#34d399"/><text x="328" y="64" fill="#34d399" font-size="10.5" text-anchor="middle">FE ~6</text>
+    <rect x="374" y="44" width="84" height="30" rx="6" fill="#121722" stroke="#818cf8"/><text x="416" y="64" fill="#818cf8" font-size="10.5" text-anchor="middle">BE ~6</text>
+    <rect x="462" y="44" width="84" height="30" rx="6" fill="#121722" stroke="#fbbf24"/><text x="504" y="64" fill="#fbbf24" font-size="10.5" text-anchor="middle">SEC ~6</text>
+    <rect x="550" y="44" width="84" height="30" rx="6" fill="#121722" stroke="#f87171"/><text x="592" y="64" fill="#f87171" font-size="10.5" text-anchor="middle">REV ~6</text>
+    <rect x="638" y="44" width="84" height="30" rx="6" fill="#121722" stroke="#a78bfa"/><text x="680" y="64" fill="#a78bfa" font-size="10.5" text-anchor="middle">TEST ~6</text>
+    <text x="740" y="64" fill="#dbe4f0" font-size="13" font-weight="800">≈ 48 GB total</text>
+    <text x="30" y="102" fill="#8b98ab" font-size="12">Needs: 2× 24 GB GPUs, or 1× RTX 5090-class 32 GB + partial CPU offload, or a 48–64 GB unified-memory box (Mac / Strix Halo).</text>
+
+    <text x="30" y="150" fill="#dbe4f0" font-size="14" font-weight="700">Swap mode (fits ONE 24 GB GPU — start here)</text>
+    <rect x="30" y="164" width="252" height="30" rx="6" fill="#0f1a2b" stroke="#5eead4"/>
+    <text x="156" y="184" fill="#5eead4" font-size="12" text-anchor="middle" font-weight="700">Orchestrator resident · ~18 GB</text>
+    <rect x="286" y="164" width="84" height="30" rx="6" fill="#121722" stroke="#34d399" stroke-dasharray="4 3"/>
+    <text x="328" y="184" fill="#34d399" font-size="10.5" text-anchor="middle">1 active ~6</text>
+    <rect x="374" y="164" width="360" height="30" rx="6" fill="none" stroke="#1f2735" stroke-dasharray="4 3"/>
+    <text x="554" y="184" fill="#8b98ab" font-size="11" text-anchor="middle">other 4 specialists on NVMe · loaded on route · ~5–10 s swap</text>
+    <text x="760" y="184" fill="#dbe4f0" font-size="13" font-weight="800">≈ 24 GB peak</text>
+    <text x="30" y="222" fill="#8b98ab" font-size="12">Orchestrator batches work per specialist (all frontend tasks, then all backend tasks) so swaps stay rare.</text>
+
+    <rect x="30" y="248" width="920" height="56" rx="10" fill="#0f1420" stroke="#1f2735"/>
+    <text x="46" y="272" fill="#fbbf24" font-size="12.5" font-weight="700">Training budget (separate from serving):</text>
+    <text x="46" y="292" fill="#8b98ab" font-size="12">QLoRA on 8–14B via Unsloth = 8–16 GB VRAM, 1–4 h per run. Every model in this plan trains on ONE consumer GPU, one at a time.</text>
+  </svg>
+  <div class="cap">Verdict: fleet serves today in swap mode on existing hardware; all-resident is a hardware purchase decision for later, not a blocker.</div>
+  </div>
+
+  <!-- DATASET FACTORY -->
+  <h2><span class="n">06</span>Dataset Factory — Custom Data, Generated with Fable 5</h2>
+  <div class="lead">Standard 2026 recipe, proven numbers: small human seed → frontier teacher generates → judge filters hard → train. Fable 5 plays both teacher and judge. The judge filter is the single most important step — unfiltered synthetic data is worse than a smaller filtered set.</div>
+
+  <div class="svgcard">
+  <svg viewBox="0 0 980 250" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,sans-serif">
+    <defs><marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#5eead4"/></marker></defs>
+    <g>
+      <rect x="20" y="60" width="150" height="92" rx="12" fill="#121722" stroke="#a78bfa" stroke-width="1.5"/>
+      <text x="95" y="88" fill="#a78bfa" font-size="13" text-anchor="middle" font-weight="700">1 · SEED</text>
+      <text x="95" y="110" fill="#8b98ab" font-size="11" text-anchor="middle">50–100 gold pairs</text>
+      <text x="95" y="126" fill="#8b98ab" font-size="11" text-anchor="middle">written/curated BY YOU</text>
+      <text x="95" y="142" fill="#8b98ab" font-size="11" text-anchor="middle">defines the taste bar</text>
+    </g>
+    <line x1="170" y1="106" x2="212" y2="106" stroke="#5eead4" stroke-width="2" marker-end="url(#ar3)"/>
+    <g>
+      <rect x="216" y="60" width="170" height="92" rx="12" fill="#0f1a2b" stroke="#5eead4" stroke-width="2"/>
+      <text x="301" y="88" fill="#5eead4" font-size="13" text-anchor="middle" font-weight="700">2 · GENERATE</text>
+      <text x="301" y="110" fill="#8b98ab" font-size="11" text-anchor="middle">Fable 5 as teacher:</text>
+      <text x="301" y="126" fill="#8b98ab" font-size="11" text-anchor="middle">5–10K task/solution pairs</text>
+      <text x="301" y="142" fill="#8b98ab" font-size="11" text-anchor="middle">varied by topic matrix</text>
+    </g>
+    <line x1="386" y1="106" x2="428" y2="106" stroke="#5eead4" stroke-width="2" marker-end="url(#ar3)"/>
+    <g>
+      <rect x="432" y="60" width="170" height="92" rx="12" fill="#0f1a2b" stroke="#fbbf24" stroke-width="2"/>
+      <text x="517" y="88" fill="#fbbf24" font-size="13" text-anchor="middle" font-weight="700">3 · JUDGE FILTER</text>
+      <text x="517" y="110" fill="#8b98ab" font-size="11" text-anchor="middle">Fable 5 as judge, rubric</text>
+      <text x="517" y="126" fill="#8b98ab" font-size="11" text-anchor="middle">scoring; keep top ~30%</text>
+      <text x="517" y="142" fill="#fbbf24" font-size="11" text-anchor="middle" font-weight="700">most important step</text>
+    </g>
+    <line x1="602" y1="106" x2="644" y2="106" stroke="#5eead4" stroke-width="2" marker-end="url(#ar3)"/>
+    <g>
+      <rect x="648" y="60" width="150" height="92" rx="12" fill="#121722" stroke="#34d399" stroke-width="1.5"/>
+      <text x="723" y="88" fill="#34d399" font-size="13" text-anchor="middle" font-weight="700">4 · SPOT CHECK</text>
+      <text x="723" y="110" fill="#8b98ab" font-size="11" text-anchor="middle">hand-review 100</text>
+      <text x="723" y="126" fill="#8b98ab" font-size="11" text-anchor="middle">random samples —</text>
+      <text x="723" y="142" fill="#8b98ab" font-size="11" text-anchor="middle">human control gate</text>
+    </g>
+    <line x1="798" y1="106" x2="840" y2="106" stroke="#5eead4" stroke-width="2" marker-end="url(#ar3)"/>
+    <g>
+      <rect x="844" y="60" width="116" height="92" rx="12" fill="#121722" stroke="#818cf8" stroke-width="1.5"/>
+      <text x="902" y="88" fill="#818cf8" font-size="13" text-anchor="middle" font-weight="700">5 · TRAIN</text>
+      <text x="902" y="110" fill="#8b98ab" font-size="11" text-anchor="middle">~2K best pairs</text>
+      <text x="902" y="126" fill="#8b98ab" font-size="11" text-anchor="middle">JSONL → Unsloth</text>
+      <text x="902" y="142" fill="#8b98ab" font-size="11" text-anchor="middle">QLoRA, 1–4 h</text>
+    </g>
+    <text x="490" y="196" fill="#8b98ab" font-size="12.5" text-anchor="middle">Specialist #1: hard cap $100 + 2 weekends (kill-test) · later specialists ≈ 1 week, $50–200 · 20–30% general data mixed in</text>
+    <text x="490" y="220" fill="#5eead4" font-size="12.5" text-anchor="middle" font-weight="700">Loop: eval failures from section 08's harness become next round's seed tasks — dataset v2, v3 … each retrain is one overnight run</text>
+  </svg>
+  <div class="cap">Every pair passes a machine judge AND a human spot check before entering training — this is where "entire control over what we give it" is enforced in practice.</div>
+  </div>
+
+  <div class="grid3">
+    <div class="stat"><div class="v">50–100</div><div class="l">hand-written gold seed pairs per domain — the only truly manual work</div></div>
+    <div class="stat"><div class="v">~2,000</div><div class="l">filtered pairs per specialist to start — small + clean beats big + noisy</div></div>
+    <div class="stat"><div class="v">80–90%</div><div class="l">of human-curated dataset quality at ~1/100th cost (2026 synthetic-data guides)</div></div>
+  </div>
+  <p><b class="hl">Trajectory format is mandatory.</b> Because every model must drive tools (section 03), training pairs are <i>agentic trajectories</i>, not plain Q/A: <code>task → tool_call(read file) → result → tool_call(edit) → result → tool_call(bash test) → result → final answer</code>. Fable generates these as full multi-turn conversations in the harness's tool-call format. Mix: ~60% domain trajectories · 15–20% general function-calling data (keeps tool JSON sharp) · 20–30% general instruction data — research shows adapter fine-tuning on narrow structured data measurably degrades tool planning, and 20–30% general mix is the documented mitigation.</p>
+  <p><b class="hl">Domain must be tight.</b> "Frontend" is too broad — the only published small-beats-big wins are single-framework scale (a 14B tuned on one Rust framework beat a 32B by +21 points <i>on that framework</i>). Specialist #1's domain = your exact stack, e.g. "React + your design system + your conventions", not a whole discipline.</p>
+  <p style="color:var(--muted)">⚠️ One legal checkbox before generating at scale: provider terms restrict using frontier-model outputs to train <i>competing</i> models. A private internal specialist tool is a different situation than a commercial rival model — read Anthropic's current usage policy once before committing the pipeline to Fable outputs, and keep the option of an open-weight teacher (DeepSeek/Qwen-Max class) as licensing fallback.</p>
+
+  <!-- RISKS -->
+  <h2><span class="n">07</span>Honest Risks (updated for v2)</h2>
+  <div class="card">
+    <div class="risk"><b>Fine-tuning erodes tool calling.</b> Train on plain Q/A pairs and the specialist gets domain-smart but starts emitting malformed tool JSON or stops using tools — fleet becomes chat bots. <div class="fix">Fix: trajectory-format datasets (section 06 mix), tool-calling eval in every gate (valid-JSON rate, right-tool rate), train with the exact chat template the harness uses.</div></div>
+    <div class="risk"><b>Catastrophic forgetting on hard specialization.</b> Pure frontend-only data makes the model stylish but dumber at reasoning. <div class="fix">Fix: LoRA not full fine-tune, 20–30% general data mixed in (documented mitigation), before/after general-reasoning eval every train.</div></div>
+    <div class="risk"><b>Orchestrator quality caps the whole system.</b> Now that it also judges and merges specialist output (not just routes), its dataset is the hardest to build. <div class="fix">Fix: train it last, on real logged traffic from phases 1–2, not synthetic guesses. Include explicit "unsure → ask user / escalate" route class.</div></div>
+    <div class="risk"><b>Self-graded eval gate.</b> Same person writes seeds, teacher prompts, judge rubric, and eval — the specialist can "win" by matching the Fable data distribution, not by being better. <div class="fix">Fix: eval tasks pulled from real repo history (closed issues, actual diffs) BEFORE any dataset work starts; eval stays frozen and held out of all generation prompts; gate baseline = stock Qwen3-Coder-30B, not base Qwen3-8B; score task completion in the live harness, not answer similarity.</div></div>
+    <div class="risk"><b>Specialists ≠ automatic wins; published data scale is against us.</b> Real agentic distillation wins used 100–250K trajectories, and 7B still lost to 32B on SWE-bench. 2K pairs buys format + stack conventions, not deep capability. <div class="fix">Fix: tight domain per specialist, hard kill-gate per model, no fleet commitment — a losing domain keeps routing to the stock generalist.</div></div>
+    <div class="risk"><b>Swap latency × agent loops.</b> Real tasks are 20–100 serial model calls; interleaving specialists mid-task means 5–10 s load + KV re-prefill per hop — minutes of dead time. Multi-agent handoffs are also the documented failure zone (MAST audit: 79% of failures are coordination breakdowns). <div class="fix">Fix: route ONE specialist per whole task, never interleave mid-task; cross-domain tasks go to the stock generalist; all-resident fleet is a later hardware decision.</div></div>
+    <div class="risk"><b>Teacher-output licensing.</b> See section 05 checkbox. <div class="fix">Fix: read policy once; fallback open-weight teacher ready.</div></div>
+  </div>
+
+  <!-- ROADMAP -->
+  <h2><span class="n">08</span>Roadmap — Kill-Test First, Fleet Conditional</h2>
+  <div class="phase"><div class="dot">0</div><div class="body"><b>The 48-hour test (this weekend, $0, no training).</b> Pull 20 real tasks from your own repo history (closed issues, actual diffs). Run stock Qwen3-Coder-30B-A3B in pi/Hermes on all 20; score task completion + tool-call validity. Freeze this eval set forever — it is written BEFORE any dataset exists and never appears in generation prompts. <div class="meta">Output: the baseline number every specialist must beat. If stock 30B already handles your daily work — project done, you won for $0.</div></div></div>
+  <div class="phase"><div class="dot">1</div><div class="body"><b>Specialist #1 kill-test (2 weekends, hard cap $100).</b> ONE tight domain — your exact stack ("React + your design system"), not "frontend". Factory run: 50–100 seeds → Fable trajectories → judge filter → spot check → ~2K pairs (60/20/25 mix) → QLoRA on Qwen3 8B. <div class="meta">GATE: beats stock Qwen3-Coder-30B on the frozen eval, in the live harness. Win → phase 2. Loss → STOP training; ship phase 0 setup + frontier escalation, keep harness + factory as assets.</div></div></div>
+  <div class="phase"><div class="dot">2</div><div class="body"><b>Conditional — second specialist + simple routing.</b> Repeat factory for next tight domain (backend stack or code review). Routing stays dumb and harness-level: one specialist per whole task, cross-domain → stock generalist, hard → frontier. Log every route + outcome. <div class="meta">Unlocked only by phase 1 gate win</div></div></div>
+  <div class="phase"><div class="dot">3</div><div class="body"><b>Conditional — orchestrator fine-tune on 30B-A3B.</b> Only when ≥3 specialists exist and routing logs show the dumb router losing measurable quality. Trained on YOUR logged traffic (request → route → outcome), not synthetic guesses. Routes one specialist per task; includes escalate + ask-user classes. <div class="meta">The hierarchy earns existence here or never</div></div></div>
+  <div class="phase"><div class="dot">4</div><div class="body"><b>Conditional — remaining specialists + hardware call.</b> Security/testing slots only if their domains pass their own gates; 48 GB all-resident upgrade only if swap latency measurably hurts daily use. <div class="meta">Full fleet = outcome of repeated wins, not the plan</div></div></div>
+
+  <!-- SOURCES -->
+  <h2><span class="n">09</span>Sources</h2>
+  <div class="card srcs">
+    <ul>
+      <li><a href="https://logicstar.ai/blog/swe-star">SWE-Star: agent-trajectory distillation at 250K scale (LogicStar)</a></li>
+      <li><a href="https://florinelchis.medium.com/fine-tuning-a-code-model-for-your-framework-a-14b-model-that-beat-a-32b-0c116bb4e937">14B beats 32B on one framework — the tight-domain precedent</a></li>
+      <li><a href="https://arxiv.org/pdf/2605.17774">Adapter fine-tuning degrades tool planning; general-mix mitigation (arXiv)</a></li>
+      <li><a href="https://orq.ai/blog/why-do-multi-agent-llm-systems-fail">MAST audit: why multi-agent LLM systems fail (orq.ai)</a></li>
+      <li><a href="https://zylos.ai/research/2026-01-29-llm-routing-intelligent-model-selection/">RouteLLM-style routing: 85% cost cut at 95% quality (Zylos)</a></li>
+      <li><a href="https://modal.com/resources/best-open-source-code-llms-tool-calling-agents">Best Open-Source Code LLMs for Tool-Calling Agents (Modal)</a></li>
+      <li><a href="https://www.kdnuggets.com/5-small-language-models-for-agentic-tool-calling">5 Small Language Models for Agentic Tool Calling (KDnuggets)</a></li>
+      <li><a href="https://github.com/QwenLM/Qwen3">Qwen3 — official repo: tool calling + Qwen-Agent/MCP support</a></li>
+      <li><a href="https://huggingface.co/mistralai/Ministral-3-14B-Instruct-2512">Ministral 3 14B Instruct — native function calling (HF)</a></li>
+      <li><a href="https://www.ertas.ai/blog/best-open-source-model-fine-tune-2026">Which Open-Source Model Should You Fine-Tune in 2026? (Ertas AI)</a></li>
+      <li><a href="https://huggingface.co/blog/daya-shankar/open-source-llms">Best Open-Source LLM Models in 2026 (HuggingFace blog)</a></li>
+      <li><a href="https://insiderllm.com/guides/qwen-models-guide/">Best Qwen Models Ranked, Mid-2026 (InsiderLLM)</a></li>
+      <li><a href="https://www.digitalapplied.com/blog/synthetic-data-generation-llm-training-decision-guide-2026">Synthetic Data for LLM Training: Decision Guide 2026 (DigitalApplied)</a></li>
+      <li><a href="https://blog.premai.io/how-to-generate-synthetic-training-data-for-llm-fine-tuning-2026-guide/">Generate Synthetic Training Data for Fine-Tuning, 2026 Guide (PremAI)</a></li>
+      <li><a href="https://futureagi.com/blog/synthetic-data-fine-tuning-llms/">Synthetic Data for LLM Fine-Tuning: Methods &amp; Stack (FutureAGI)</a></li>
+      <li><a href="https://rlhfbook.com/c/12-synthetic-data">Synthetic Data &amp; Distillation (RLHF Book, Nathan Lambert)</a></li>
+      <li><a href="https://www.promptquorum.com/local-llms/fine-tuning-local-llms-lora">LoRA Fine-Tuning Local LLMs: Unsloth on 8 GB VRAM (PromptQuorum)</a></li>
+    </ul>
+  </div>
+
+</div>
