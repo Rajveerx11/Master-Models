@@ -40,3 +40,25 @@ training/    Unsloth QLoRA configs + GGUF export notes
 - Eval tasks are frozen and never appear in any generation prompt.
 - One specialist per whole task at inference — no mid-task model interleaving.
 - Every specialist has a kill-gate. Losing a gate is a valid, cheap outcome.
+
+## Progress log
+
+**2026-07-27**
+- Research distilled into `plan/dataset-generation-research.md` (quality>quantity,
+  engineered diversity, judge calibration, Hermes/Qwen3 format fit).
+- **Batch 1 generated + judged**: 25 frontend-stack trajectories
+  (`forms × bug fix × medium`), 25/25 schema-valid via `scripts/validate_jsonl.py`,
+  judge mean 8.08, 0 auto-rejects. Raw data local-only (gitignored by design);
+  5 batch-2 lessons logged in the research note.
+- **Design skills integrated**: taste-skill / ui-ux-pro-max / impeccable /
+  playwright-skill installed (user-level); distilled into
+  `prompts/frontend-design-conventions.md` (97 checkable rules) — now the STYLE
+  GUIDE block for frontend generation; judge enforces; `design-polish` task type
+  added to the topic matrix.
+- **Baseline probed**: stock Qwen3-Coder-30B, 16 edge-case probes
+  (`scripts/probe_baseline.py`, informal — not the frozen gate). 9/16 → 11/16
+  with harness guards (tool mechanics 9/9). Conventions-in-context stayed 0/5:
+  React habits need training, not prompting. Full analysis in
+  `evals/results/2026-07-27-baseline-probe.md`.
+- **Open blocker**: eval sets still empty — must be frozen (20 real repo tasks
+  per domain) before batch-2 scale-up. Claude teacher access expires ~07-31.

@@ -19,7 +19,8 @@ Score each dimension 0-2, sum = final score:
 2. TRAJECTORY LOGIC: steps follow (read before edit, verify after change);
    tool results actually inform the next action; recovery from errors is sane.
 3. CODE QUALITY: final code is correct, idiomatic, matches the stated
-   conventions, would pass review.
+   conventions, would pass review. (frontend-stack: conventions =
+   prompts/frontend-design-conventions.md — check the anti-slop bans hardest.)
 4. TASK REALISM: task is something a real developer asks; scope matches a
    5-40 line diff; not toy, not padded.
 5. DIVERSITY VALUE: not a near-duplicate of common patterns; teaches something

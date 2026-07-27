@@ -16,6 +16,9 @@ DOMAIN (tight scope): {DOMAIN_SCOPE}
 
 STYLE GUIDE / CONVENTIONS:
 {PASTE_PROJECT_CONVENTIONS}
+  For frontend-stack: paste prompts/frontend-design-conventions.md (distilled from
+  taste-skill, ui-ux-pro-max, impeccable) + any project-specific overrides.
+  Generated code AND final states must obey it — it is what the specialist learns.
 
 GOLD EXAMPLES (match this quality and format exactly):
 {3_SEED_EXAMPLES_JSONL}
@@ -48,7 +51,8 @@ Cross these axes; one cell = one batch:
 
 - **Feature area:** forms · tables/lists · modals/overlays · routing · state mgmt ·
   styling/layout · animations · accessibility · data fetching · error states
-- **Task type:** build new · bug fix · refactor · extend existing · review-and-fix
+- **Task type:** build new · bug fix · refactor · extend existing · review-and-fix ·
+  design-polish (working-but-plain UI gets states/a11y/motion per conventions file)
 - **Difficulty:** easy (1-2 tool turns) · medium (3-5) · hard (6-8, with a failing
   test or tool error to recover from)
 
