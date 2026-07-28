@@ -76,3 +76,18 @@ training/    Unsloth QLoRA configs + GGUF export notes
   produced five identical bugs per cell, and parallel generators recycled
   recovery gimmicks, domains, and even a ticket id. Batch-3 fixes logged in
   `plan/dataset-generation-research.md`.
+- **Frontend evals FROZEN** (commit `f2fb8f1`): 20 tasks mined from real commit
+  history in `terax-ai` (17) and Tessera (3), difficulty split 5 easy / 9 medium
+  / 6 hard. Each records its start commit, a symptom-only prompt, checkable
+  criteria, and a graders-only reference solution. This unblocked scale-up.
+- **Batch 3 in flight**: 100 trajectories, 10 generators, contract in
+  `prompts/batch3-spec.md` — disjoint cell / archetype / sector / recovery /
+  ticket-id slices per generator, plus a 3 easy / 4 medium / 3 hard mix inside
+  each one. Generator E landed first (10/10 valid).
+- **Throughput lesson**: 10 concurrent generators exhaust the session window
+  before any of them writes a file. Waves of 5 are the sustainable shape.
+- **Second teacher**: Opus is now the fallback when Fable's window closes.
+  Mixed-teacher parts are tagged so judge scores can be compared per teacher.
+- **v1 scope revised** in `plan/v1-release-plan.md`: one domain (frontend-stack),
+  300-600 raw instead of 2K per domain, and the full remaining path written out
+  in four phases to the gate result.
