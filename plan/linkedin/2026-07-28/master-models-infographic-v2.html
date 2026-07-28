@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Master Models - Intro Post Infographic v2</title>
+<style>
+  :root {
+    --bg: #0b0c0b;
+    --ink: #f1ede6;
+    --muted: #8d877f;
+    --muted-2: #5f5a55;
+    --line: #24211d;
+    --line-soft: #171512;
+    --accent: #ff5a36;
+    --accent-soft: rgba(255, 90, 54, 0.18);
+    --success: #d9d3ca;
+    --mono: "Cascadia Code", "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+    --sans: "Aptos", "Segoe UI", system-ui, sans-serif;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    margin: 0;
+    background: var(--bg);
+    width: 1200px;
+    height: 1500px;
+    overflow: hidden;
+  }
+
+  body {
+    font-family: var(--sans);
+    color: var(--ink);
+  }
+
+  .poster {
+    width: 1200px;
+    height: 1500px;
+    margin: 0 auto;
+    background:
+      radial-gradient(circle at 88% 11%, rgba(255, 90, 54, 0.08), transparent 23%),
+      linear-gradient(180deg, #0b0c0b 0%, #090909 100%);
+    padding: 72px 88px 58px;
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    overflow: hidden;
+  }
+
+  .meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    color: var(--muted);
+    font: 500 13px/1.2 var(--mono);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+  }
+
+  .meta .right {
+    color: var(--muted-2);
+    letter-spacing: 0.18em;
+  }
+
+  .hero {
+    margin-top: 54px;
+    max-width: 1000px;
+  }
+
+  .hero h1 {
+    margin: 0;
+    font-size: 90px;
+    line-height: 0.94;
+    letter-spacing: -0.07em;
+    font-weight: 700;
+  }
+
+  .hero .accent {
+    color: var(--accent);
+  }
+
+  .hero .sub {
+    margin-top: 22px;
+    max-width: 850px;
+    color: var(--muted);
+    font: 500 17px/1.5 var(--mono);
+    letter-spacing: 0.01em;
+  }
+
+  .field {
+    margin-top: 50px;
+    display: grid;
+    gap: 40px;
+    align-content: start;
+  }
+
+  .section {
+    border-top: 1px solid var(--line);
+    padding-top: 18px;
+  }
+
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 24px;
+    color: var(--muted);
+    font: 600 14px/1.2 var(--mono);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  .section-head .note {
+    color: var(--muted-2);
+    letter-spacing: 0.08em;
+    text-transform: none;
+    font-weight: 500;
+  }
+
+  .rows {
+    margin-top: 24px;
+    display: grid;
+    gap: 18px;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 320px 1fr 110px;
+    align-items: center;
+    gap: 26px;
+    min-height: 88px;
+  }
+
+  .label {
+    color: var(--ink);
+    font: 600 18px/1.35 var(--mono);
+    letter-spacing: -0.01em;
+  }
+
+  .label.muted {
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .score {
+    text-align: right;
+    font-size: 50px;
+    line-height: 1;
+    letter-spacing: -0.05em;
+    font-weight: 650;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .score small {
+    color: var(--muted-2);
+    font-size: 0.54em;
+    font-weight: 500;
+    margin-left: 4px;
+  }
+
+  .score.accent {
+    color: var(--accent);
+  }
+
+  .bars {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 96px;
+  }
+
+  .bar {
+    width: 8px;
+    height: 68px;
+    border-radius: 999px;
+    background: var(--line);
+  }
+
+  .bar.on {
+    background: var(--success);
+  }
+
+  .bar.on-soft {
+    background: #b2aba1;
+  }
+
+  .bar.fail {
+    background: transparent;
+    border: 1px solid var(--accent-soft);
+  }
+
+  .insight {
+    margin-top: 12px;
+    margin-left: 346px;
+    max-width: 590px;
+    color: var(--muted);
+    font: 500 15px/1.45 var(--mono);
+  }
+
+  .insight b {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .thesis {
+    align-self: end;
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: 28px;
+    border-top: 1px solid var(--line);
+    padding-top: 28px;
+  }
+
+  .thesis-copy {
+    max-width: 780px;
+  }
+
+  .thesis-copy .line-1,
+  .thesis-copy .line-2 {
+    display: block;
+    font-size: 58px;
+    line-height: 0.95;
+    letter-spacing: -0.06em;
+    font-weight: 680;
+  }
+
+  .thesis-copy .line-2 {
+    color: #4c4843;
+    margin-top: 8px;
+  }
+
+  .footer-note {
+    color: var(--muted);
+    font: 500 14px/1.5 var(--mono);
+    align-self: end;
+    text-align: right;
+  }
+
+  .footer-note .strong {
+    color: var(--ink);
+  }
+</style>
+</head>
+<body>
+  <main class="poster">
+    <div class="meta">
+      <div>MASTER MODELS / BUILD LOG 01</div>
+      <div class="right">LOCAL QWEN3-CODER-30B / 16 AUTO-SCORED PROBES</div>
+    </div>
+
+    <section class="hero">
+      <h1>97 rules in the prompt.<br><span class="accent">0 of 5</span> followed.</h1>
+      <div class="sub">
+        Stock Qwen3-Coder-30B, running locally. The harness failures moved with engineering.
+        The house-style failures did not move with prompting.
+      </div>
+    </section>
+
+    <section class="field">
+      <div class="section">
+        <div class="section-head">
+          <div>TOOL MECHANICS</div>
+          <div class="note">two harness guards fixed malformed calls and empty-file stalls</div>
+        </div>
+        <div class="rows">
+          <div class="row">
+            <div class="label muted">plain prompt</div>
+            <div class="bars" aria-hidden="true">
+              <span class="bar on"></span>
+              <span class="bar on"></span>
+              <span class="bar on"></span>
+              <span class="bar on"></span>
+              <span class="bar on"></span>
+              <span class="bar on"></span>
+              <span class="bar"></span>
+              <span class="bar"></span>
+              <span class="bar"></span>
+            </div>
+            <div class="score">6<small>/9</small></div>
+          </div>
+          <div class="row">
+            <div class="label">+ two guards in the harness</div>
+            <div class="bars" aria-hidden="true">
+              <span class="bar on-soft"></span>
+              <span class="bar on-soft"></span>
+              <span class="bar on-soft"></span>
+              <span class="bar on-soft"></span>
+              <span class="bar on-soft"></span>
+              <span class="bar on-soft"></span>
+              <span class="bar on-soft"></span>
+              <span class="bar on-soft"></span>
+              <span class="bar on-soft"></span>
+            </div>
+            <div class="score">9<small>/9</small></div>
+          </div>
+        </div>
+        <div class="insight"><b>Conclusion:</b> tool reliability lived in the harness, not the model weights.</div>
+      </div>
+
+      <div class="section">
+        <div class="section-head">
+          <div>CODE CONVENTIONS</div>
+          <div class="note">the repo style guide had 97 explicit rules and bans</div>
+        </div>
+        <div class="rows">
+          <div class="row">
+            <div class="label muted">plain prompt</div>
+            <div class="bars" aria-hidden="true">
+              <span class="bar on"></span>
+              <span class="bar"></span>
+              <span class="bar"></span>
+              <span class="bar"></span>
+              <span class="bar"></span>
+            </div>
+            <div class="score">1<small>/5</small></div>
+          </div>
+          <div class="row">
+            <div class="label">+ 97-rule guide in context</div>
+            <div class="bars" aria-hidden="true">
+              <span class="bar fail"></span>
+              <span class="bar fail"></span>
+              <span class="bar fail"></span>
+              <span class="bar fail"></span>
+              <span class="bar fail"></span>
+            </div>
+            <div class="score accent">0<small>/5</small></div>
+          </div>
+          <div class="row">
+            <div class="label">+ bigger output budget</div>
+            <div class="bars" aria-hidden="true">
+              <span class="bar fail"></span>
+              <span class="bar fail"></span>
+              <span class="bar fail"></span>
+              <span class="bar fail"></span>
+              <span class="bar fail"></span>
+            </div>
+            <div class="score accent">0<small>/5</small></div>
+          </div>
+        </div>
+        <div class="insight"><b>Conclusion:</b> prompting did not erase the learned habits. The bans still lost to what the model had already internalized.</div>
+      </div>
+    </section>
+
+    <section class="thesis">
+      <div class="thesis-copy">
+        <span class="line-1">Mechanics live in the harness.</span>
+        <span class="line-2">Habits live in the weights.</span>
+      </div>
+      <div class="footer-note">
+        <div class="strong">master-models</div>
+        <div>fine-tune small open models into repo-native specialists</div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
