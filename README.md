@@ -62,3 +62,17 @@ training/    Unsloth QLoRA configs + GGUF export notes
   `evals/results/2026-07-27-baseline-probe.md`.
 - **Open blocker**: eval sets still empty — must be frozen (20 real repo tasks
   per domain) before batch-2 scale-up. Claude teacher access expires ~07-31.
+
+**2026-07-28**
+- **Judge calibrated**: `prompts/judge-rubric.md` gained worked 3/5/8 anchors,
+  anti-anchors, and reasoning-before-score output. Measured effect below.
+- **Batch 2 generated + judged**: 25 trajectories across 5 cells (error-states,
+  data-fetching, state-mgmt, styling/design-polish, accessibility), 5 parallel
+  generators. 25/25 schema-valid, 0 near-dups, pure ASCII / no BOM, tool turns
+  avg 6.0, 18/25 carry an error-recovery turn (batch 1: 5/25).
+- **Judge mean 6.68** (batch 1: 8.08), median 7, spread 5-8, 0 auto-rejects —
+  the anchors moved the scale and widened the distribution.
+- Weakest dimension batch-wide: **diversity value**. Archetype-per-generator
+  produced five identical bugs per cell, and parallel generators recycled
+  recovery gimmicks, domains, and even a ticket id. Batch-3 fixes logged in
+  `plan/dataset-generation-research.md`.

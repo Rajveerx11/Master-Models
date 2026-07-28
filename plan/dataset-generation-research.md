@@ -92,3 +92,39 @@ Result: 25/25 schema-valid (scripts/validate_jsonl.py), 0 near-dup tasks, judge 
 5. **Encoding hygiene.** Generator output had mojibake (â€” for —, âœ“ for ✓) and
    PS5.1 `Out-File utf8` added a BOM. Batch 2 prompts: ASCII-only prose. Merges:
    use python (utf-8, no BOM). Validator now the gate before judging.
+
+## Batch-2 results + lessons (2026-07-28, feed into batch 3)
+Cells: 5 x 5 — error-states×bugfix, data-fetching×extend, state-mgmt×refactor,
+styling×design-polish, accessibility×review-and-fix. Result: 25/25 schema-valid,
+0 near-dups, pure ASCII / no BOM, tool turns avg 6.0 (range 4-8), 18/25 carry an
+error-recovery turn (batch 1: 5/25). Judge mean **6.68**, median 7, min 5, max 8,
+0 auto-rejects. Scores in `generated/raw/batch2_scores.jsonl`.
+
+What the batch-1 fixes bought:
+- **Calibration anchors work.** Mean fell 8.08 -> 6.68 and the distribution
+  actually spread (3x5, 7x6, 10x7, 5x8) instead of clustering at 8. Keep them.
+- **Skeleton + verification variety worked.** Openers now grep / failing-test /
+  bash / read_file; verification now vitest, jest-axe, npm build, tsc.
+- **Encoding fixed.** Zero non-ASCII bytes, no BOM, python merge.
+
+New failures to fix in batch 3:
+1. **Archetype-per-generator just moved the monoculture inside the cell.**
+   Assigning one archetype per GENERATOR produced five identical bugs per cell.
+   Fix: one archetype per TRAJECTORY. Cap each archetype at one appearance per
+   batch, drawn from a wider pool.
+2. **Parallel generators recycle gimmicks and domains.** ENOENT recovery twice,
+   edit-fail-then-retry twice, blind test overwrite twice, ticket id "QA-2214"
+   in two different files, and EV charging / beekeeping / ski resort / vinyl
+   records each invented by two generators. Agents cannot see each other. Fix:
+   hand each generator a disjoint, explicit list — domains, recovery gimmick,
+   ticket-id range.
+3. **Verification incoherence (new automatic-reject candidate).** Several
+   trajectories run a "pre-existing" test that asserts copy or behavior invented
+   in the same diff. New hard rule for prompts AND rubric: if a test verifies new
+   behavior, the trajectory must write that test.
+4. **Judge still has no floor.** Nothing scored below 5 and nothing was rejected,
+   across two batches. Add a 1-2 anchor and a worked auto-reject example so the
+   bottom of the scale is reachable.
+5. **Topic matrix is too narrow.** Batch 3 should pull cells not yet touched:
+   optimistic updates, i18n, routing, virtualization, file uploads, websockets,
+   tables/lists, modals, animations.
