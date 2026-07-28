@@ -26,6 +26,15 @@ evals/
   results/                gate runs: <date>-<model>-vs-baseline.md
 ```
 
+## Status
+
+- **frontend-stack: FROZEN 2026-07-28** — 20 tasks mined from real commit history in
+  `terax-ai` (17) and `Testing IDE` / Tessera (3). Difficulty split 5 easy / 9 medium
+  / 6 hard. Each task names its start commit (`<hash>~1`) and keeps the reference
+  solution as a graders-only `git show`. None of these tasks, or their wording, may
+  enter a generation prompt.
+- backend-stack, code-review: not written.
+
 ## Task template
 
 ```markdown
