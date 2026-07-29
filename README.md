@@ -91,3 +91,22 @@ training/    Unsloth QLoRA configs + GGUF export notes
 - **v1 scope revised** in `plan/v1-release-plan.md`: one domain (frontend-stack),
   300-600 raw instead of 2K per domain, and the full remaining path written out
   in four phases to the gate result.
+
+**2026-07-29**
+- **Batch 3 complete**: 100 trajectories, 10 generators, 100/100 schema-valid,
+  0 near-dups, pure ASCII, avg 5.7 tool turns. Judge mean **7.34** (1 auto-reject).
+- **Batch 1 re-judged on the calibrated scale: 8.08 -> 5.32.** Same 25
+  trajectories, same rubric, different anchors, cross-model judge. The
+  uncalibrated judge was inflating by ~2.8 points. Quality trend is now real and
+  comparable: **5.32 -> 6.68 -> 7.34**.
+- **Corpus: 150 raw, mean 6.89.** First keep-set written to
+  `datasets/frontend-stack/filtered/keep_ge7.jsonl` — 109 trajectories at score
+  >= 7, validated clean (0 FAIL, 42 with recovery turns). A >= 8 cut would keep
+  54; 7 was chosen for volume at this corpus size, and the index file records
+  every kept line's batch and score so the cut can be tightened later.
+- **Second teacher confirmed**: session limits are per-model, so Opus generates
+  while Fable is capped. Fable-written 7.20 (n=10) vs Opus-written 7.36 (n=90) —
+  noise, not a quality difference.
+- Batch-4 fixes logged in `plan/dataset-generation-research.md`: batch-wide
+  lesson-family ledger, varied recovery shapes, non-templated ticket phrasing,
+  hard per-generator quota on test-based verification.

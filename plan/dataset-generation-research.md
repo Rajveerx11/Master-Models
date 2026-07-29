@@ -128,3 +128,65 @@ New failures to fix in batch 3:
 5. **Topic matrix is too narrow.** Batch 3 should pull cells not yet touched:
    optimistic updates, i18n, routing, virtualization, file uploads, websockets,
    tables/lists, modals, animations.
+
+## Batch-3 results + the recalibration finding (2026-07-29)
+
+Batch 3: 100 trajectories, 10 generators (spec: `prompts/batch3-spec.md`), one cell
+each, 20-archetype rotation, disjoint sectors / recovery modes / ticket ranges, and a
+3 easy / 4 medium / 3 hard difficulty mix inside every generator. 100/100 schema-valid,
+0 near-dups, pure ASCII, no BOM, tool turns avg 5.7.
+
+### The judge was inflating by ~2.8 points — measured, not guessed
+
+Batch 1 was re-judged on the calibrated scale by a different model (Opus judging
+Fable-written data, so no self-preference):
+
+| Batch | Judge | Mean |
+|-------|-------|------|
+| 1 | uncalibrated | 8.08 |
+| 1 | **re-judged, anchored, cross-model** | **5.32** |
+| 2 | anchored | 6.68 |
+| 3 | anchored | 7.34 |
+
+Same 25 trajectories, same rubric text, 2.76 points apart. The anchors are the only
+difference. This also makes the quality trend real and comparable: 5.32 -> 6.68 ->
+7.34 across three batches, on one scale.
+
+Combined pool (n=150): mean 6.89, distribution
+`{0:1, 4:7, 5:16, 6:17, 7:55, 8:47, 9:7}`.
+
+### What batch 3 got right
+
+- **Difficulty mixing works.** Per-generator 3/4/3 produced a real spread instead of a
+  single band, and mirrors the frozen eval's own 5/9/6 split.
+- **The fake-test ban bit.** 6 trajectories were caught running a "pre-existing" suite
+  that asserts behaviour invented in the same diff. Judges flagged every one.
+- **The judge finally rejected something.** Line 4 scored 0: final file calls
+  `useState`/`useCallback` with no React import anywhere in the shown content, yet
+  `tsc --noEmit` returns clean. First automatic reject in three batches.
+- **Two teachers are interchangeable at this task.** Fable-written 7.20 (n=10) vs
+  Opus-written 7.36 (n=90). The gap is noise at that n; neither teacher is better.
+
+### What is still wrong — batch 4 fixes
+
+1. **Diversity value is still the weakest dimension** (50 of 100 lines). Capping an
+   archetype to once per GENERATOR does not stop the same lesson family recurring
+   across the batch: key=index 5x, twMerge class-merge 4x, default-param shadowing 5x.
+   Fix: maintain a batch-wide ledger of lesson families and forbid a repeat outright,
+   not just per generator.
+2. **Recovery motifs recycle within a generator.** "Write to the wrong place, read a
+   config, move it" appeared 5x in one half. Assign each of a generator's 3 recovery
+   turns a different *shape*, not just a different file.
+3. **Ticket-template monoculture.** Judge 1 noted nearly every prompt is the same
+   "do X, and warning: bug Y" shape. Batch 4 should vary the ask itself: some tickets
+   describe only a symptom with no diagnosis, some are a user quote, some are a
+   failing CI log pasted in.
+4. **tsc-only verification survives at ~a third of lines** despite the rule. Make it a
+   hard per-generator quota checked by the generator before it writes.
+
+### Tooling note
+
+`scripts/validate_jsonl.py` counts recovery turns by keyword-matching tool output for
+"error"/"not found"/"no matches". Silent recoveries — a file written to the wrong
+directory, caught by the next read — produce no such string, so the reported
+`recoveries` figure is a floor, not a count. Do not treat it as a metric.

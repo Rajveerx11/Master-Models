@@ -1,0 +1,547 @@
+[
+ {
+  "batch": "batch1",
+  "line": 10,
+  "score": 7
+ },
+ {
+  "batch": "batch1",
+  "line": 11,
+  "score": 7
+ },
+ {
+  "batch": "batch1",
+  "line": 14,
+  "score": 8
+ },
+ {
+  "batch": "batch1",
+  "line": 22,
+  "score": 7
+ },
+ {
+  "batch": "batch1",
+  "line": 23,
+  "score": 7
+ },
+ {
+  "batch": "batch2",
+  "line": 6,
+  "score": 8
+ },
+ {
+  "batch": "batch2",
+  "line": 7,
+  "score": 7
+ },
+ {
+  "batch": "batch2",
+  "line": 8,
+  "score": 7
+ },
+ {
+  "batch": "batch2",
+  "line": 9,
+  "score": 8
+ },
+ {
+  "batch": "batch2",
+  "line": 11,
+  "score": 8
+ },
+ {
+  "batch": "batch2",
+  "line": 12,
+  "score": 7
+ },
+ {
+  "batch": "batch2",
+  "line": 13,
+  "score": 8
+ },
+ {
+  "batch": "batch2",
+  "line": 14,
+  "score": 7
+ },
+ {
+  "batch": "batch2",
+  "line": 15,
+  "score": 7
+ },
+ {
+  "batch": "batch2",
+  "line": 17,
+  "score": 7
+ },
+ {
+  "batch": "batch2",
+  "line": 19,
+  "score": 7
+ },
+ {
+  "batch": "batch2",
+  "line": 20,
+  "score": 7
+ },
+ {
+  "batch": "batch2",
+  "line": 21,
+  "score": 8
+ },
+ {
+  "batch": "batch2",
+  "line": 22,
+  "score": 7
+ },
+ {
+  "batch": "batch2",
+  "line": 24,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 1,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 2,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 3,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 5,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 6,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 8,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 9,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 10,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 11,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 12,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 13,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 14,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 15,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 16,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 17,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 18,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 19,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 20,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 21,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 22,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 23,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 25,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 26,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 27,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 28,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 29,
+  "score": 9
+ },
+ {
+  "batch": "batch3",
+  "line": 30,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 31,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 32,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 33,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 34,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 35,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 36,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 37,
+  "score": 9
+ },
+ {
+  "batch": "batch3",
+  "line": 38,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 39,
+  "score": 9
+ },
+ {
+  "batch": "batch3",
+  "line": 40,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 43,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 44,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 45,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 46,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 47,
+  "score": 9
+ },
+ {
+  "batch": "batch3",
+  "line": 48,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 49,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 50,
+  "score": 9
+ },
+ {
+  "batch": "batch3",
+  "line": 51,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 52,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 53,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 54,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 55,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 56,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 57,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 58,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 59,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 60,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 61,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 62,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 63,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 64,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 65,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 66,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 67,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 68,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 69,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 70,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 74,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 75,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 76,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 78,
+  "score": 9
+ },
+ {
+  "batch": "batch3",
+  "line": 79,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 80,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 81,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 82,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 83,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 84,
+  "score": 9
+ },
+ {
+  "batch": "batch3",
+  "line": 85,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 88,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 89,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 90,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 91,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 92,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 93,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 94,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 95,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 96,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 97,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 98,
+  "score": 7
+ },
+ {
+  "batch": "batch3",
+  "line": 99,
+  "score": 8
+ },
+ {
+  "batch": "batch3",
+  "line": 100,
+  "score": 8
+ }
+]
