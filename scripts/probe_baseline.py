@@ -4,6 +4,20 @@ Usage: python scripts/probe_baseline.py [outfile]
 Writes one JSON result per probe to evals/results/<date>-baseline-probe.jsonl (default).
 Not the frozen gate — an informal failure-map probe. Auto-checks are heuristics;
 borderline cases need a human/Fable read of the saved raw outputs.
+
+DO NOT REUSE THIS AS THE GATE HARNESS (2026-07-31)
+--------------------------------------------------
+The TOOLS block below declares read_file/write_file/edit_file with
+edit_file {path, old, new}. That is a THIRD schema: it matches neither the
+training data (which used old_string/new_string) nor pi, the real serving
+harness, which exposes read/write/edit with edit {path, edits:[{oldText,newText}]}
+(see @earendil-works/pi-coding-agent/dist/core/tools/*.js).
+
+It is left unchanged on purpose so the recorded 2026-07-27 baseline numbers in
+evals/results/ stay internally comparable. The gate (v1-release-plan Phase 4)
+must run BOTH the specialist and the stock baseline through a harness using pi's
+schema — port Guard A (XML repair + one re-prompt) and Guard B (empty-file
+sentinel) out of this file into that harness rather than reusing this one.
 """
 import json
 import os

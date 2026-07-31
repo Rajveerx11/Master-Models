@@ -1,7 +1,13 @@
 """Validate generated trajectory JSONL: schema, tool discipline, dedup, stats.
 
-Usage: python scripts/validate_jsonl.py <file-or-glob> [more...]
+Usage: python scripts/validate_jsonl.py [--pi] <file-or-glob> [more...]
 Exit 1 on any hard schema failure. Warnings don't fail.
+
+--pi validates against pi's real serving schema (read/write/edit, edit takes an
+edits[] array) instead of our authoring schema. Use it on files produced by
+scripts/to_pi_format.py. Argument KEYS are checked in --pi mode: a key pi does
+not accept is silently dropped at serving time, which is how a schema drift
+becomes a mystery eval failure.
 """
 import glob
 import json
@@ -11,13 +17,47 @@ from difflib import SequenceMatcher
 TOOLS = {"read_file", "write_file", "edit_file", "bash", "grep"}
 SYSTEM = "You are a coding agent with tools: read_file, write_file, edit_file, bash, grep."
 
+PI_TOOLS = {"read", "write", "edit", "bash", "grep"}
+# single source of truth lives in scripts/to_pi_format.py
+try:
+    from to_pi_format import NEW_SYSTEM as PI_SYSTEM
+except ImportError:  # run from repo root
+    sys.path.insert(0, __file__.rsplit("\\", 1)[0].rsplit("/", 1)[0])
+    from to_pi_format import NEW_SYSTEM as PI_SYSTEM
+# from @earendil-works/pi-coding-agent/dist/core/tools/*.js -- required, optional
+PI_ARGS = {
+    "read": ({"path"}, {"offset", "limit"}),
+    "write": ({"path", "content"}, set()),
+    "edit": ({"path", "edits"}, set()),
+    "bash": ({"command"}, {"timeout"}),
+    "grep": ({"pattern"}, {"path", "glob", "ignoreCase", "literal", "context", "limit"}),
+}
 
-def check(traj, where):
+
+def check_pi_args(name, args, where, i, errs):
+    req, opt = PI_ARGS[name]
+    keys = set(args)
+    if missing := req - keys:
+        errs.append(f"{where}: msg {i} {name} missing {sorted(missing)}")
+    if unknown := keys - req - opt:
+        errs.append(f"{where}: msg {i} {name} has args pi will drop: {sorted(unknown)}")
+    if name == "edit":
+        edits = args.get("edits")
+        if not isinstance(edits, list) or not edits:
+            errs.append(f"{where}: msg {i} edit.edits must be a non-empty array")
+        else:
+            for e in edits:
+                if not isinstance(e, dict) or set(e) != {"oldText", "newText"}:
+                    errs.append(f"{where}: msg {i} edit entry must be {{oldText,newText}}")
+
+
+def check(traj, where, pi=False):
+    tools, system = (PI_TOOLS, PI_SYSTEM) if pi else (TOOLS, SYSTEM)
     errs, warns = [], []
     m = traj.get("messages")
     if not isinstance(m, list) or len(m) < 4:
         return [f"{where}: messages missing/too short"], warns, 0
-    if m[0].get("role") != "system" or m[0].get("content") != SYSTEM:
+    if m[0].get("role") != "system" or m[0].get("content") != system:
         errs.append(f"{where}: bad system message")
     if m[1].get("role") != "user" or not m[1].get("content", "").strip():
         errs.append(f"{where}: bad user message")
@@ -27,10 +67,12 @@ def check(traj, where):
         if role == "assistant" and "tool_calls" in msg:
             tool_turns += 1
             for tc in msg["tool_calls"]:
-                if tc.get("name") not in TOOLS:
+                if tc.get("name") not in tools:
                     errs.append(f"{where}: unknown tool {tc.get('name')!r}")
                 if not isinstance(tc.get("arguments"), dict):
                     errs.append(f"{where}: msg {i} arguments not an object")
+                elif pi and tc.get("name") in PI_ARGS:
+                    check_pi_args(tc["name"], tc["arguments"], where, i, errs)
             nxt = m[i + 1] if i + 1 < len(m) else {}
             if nxt.get("role") != "tool" or nxt.get("name") != msg["tool_calls"][0].get("name"):
                 errs.append(f"{where}: msg {i} tool_call not followed by matching tool result")
@@ -47,6 +89,8 @@ def check(traj, where):
 
 
 def main(patterns):
+    pi = "--pi" in patterns
+    patterns = [p for p in patterns if p != "--pi"]
     files = sorted(f for p in patterns for f in glob.glob(p))
     if not files:
         sys.exit("no files matched")
@@ -61,7 +105,7 @@ def main(patterns):
             except json.JSONDecodeError as e:
                 errs.append(f"{where}: invalid JSON ({e})")
                 continue
-            e, w, t = check(traj, where)
+            e, w, t = check(traj, where, pi)
             errs += e
             warns += w
             turn_counts.append(t)

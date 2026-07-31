@@ -1,0 +1,26 @@
+{
+ "114": {
+  "reason": "summary states a false React mechanism (setState bailout) as the flicker cause",
+  "source": {
+   "batch": "batch4",
+   "line": 9,
+   "score": 7
+  }
+ },
+ "176": {
+  "reason": "claims compiler will catch new nullable fields when JSON.parse gives any; describes a file never opened",
+  "source": {
+   "batch": "batch4",
+   "line": 100,
+   "score": 7
+  }
+ },
+ "195": {
+  "reason": "invents corroborating evidence (screenshot/drag observation) nobody reported",
+  "source": {
+   "batch": "batch5",
+   "line": 25,
+   "score": 7
+  }
+ }
+}

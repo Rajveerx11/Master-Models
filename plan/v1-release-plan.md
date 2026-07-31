@@ -136,12 +136,51 @@ happen any time after). Nothing else is required to reach a gate result.
 
 ### Known gaps that block Phase 4
 
-- **The pi/Hermes harness location was never provided.** Steps 13-14 cannot run until
-  that repo path is known and the tool names in the dataset are confirmed to match
-  its schema. This is the highest-priority unknown after the dataset.
-- Harness guards (malformed tool-call repair-and-retry, empty-file sentinel) currently
-  exist only inside `scripts/probe_baseline.py`. They need porting into the real
-  harness or the gate compares an unguarded specialist against guarded probe numbers.
+**RESOLVED 2026-07-31 — the harness is Neura (`C:\Neura`)**, the user's own layer on top
+of pi (`@earendil-works/pi-coding-agent`, installed globally at
+`%APPDATA%\npm\node_modules`). Neura adds identity, guardrails, memory, checkpoints and a
+proof-gate; the TOOLS are pi's built-ins, so pi's tool schema is the contract.
+
+**The tool schema did NOT match, and it would have failed silently.** Authoritative
+source: `pi-coding-agent/dist/core/tools/*.js`, `allToolNames = {read, bash, edit, write,
+grep, find, ls}`.
+
+| dataset (authoring) | pi (serving) | issue |
+|---|---|---|
+| `bash {command}` | `bash {command, timeout?}` | ok |
+| `grep {pattern, path}` | `grep {pattern, path?, glob?, ignoreCase?, literal?, context?, limit?}` | ok |
+| `read_file {path}` | `read {path, offset?, limit?}` | renamed |
+| `write_file {path, content}` | `write {path, content}` | renamed |
+| `edit_file {path, old_string, new_string}` | `edit {path, edits:[{oldText,newText}]}` | renamed AND restructured |
+
+`edit` is the dangerous one: pi takes an ARRAY of edits. A model trained on the authoring
+schema emits a tool pi does not have, with arguments it cannot parse — every edit call
+fails, and it would look like training destroyed tool use.
+
+Converting the data is a script; converting after training is impossible. So:
+`scripts/to_pi_format.py` performs the transform (structured fields only, never prose)
+and `validate_jsonl.py --pi` checks the result against pi's real schema INCLUDING
+argument keys.
+
+**Second finding: argument-key drift the validator never caught.** It only checked that
+`arguments` is a dict. Across the keep-set: `edit_file` appears with `old/new` (11x) as
+well as `old_string/new_string` (318x); `read_file` with `start_line/end_line` (4x) and
+`offset/limit` (1x); `grep` with `after_context` and `context_lines`. pi silently DROPS
+an argument it does not accept, so this class of drift becomes a mystery eval failure.
+`--pi` mode now rejects unknown keys.
+
+Still open:
+- Harness guards (malformed tool-call repair-and-retry, empty-file sentinel) exist only
+  in `scripts/probe_baseline.py`. Note `probe_baseline.py` also declares the OLD tool
+  names and `edit_file {path, old, new}` — it must be updated to pi's schema before it
+  is used for any baseline the gate compares against, or the two runs differ.
+- **System-prompt fidelity.** Our trajectories carry a one-line system message; pi builds
+  its own system prompt at runtime (`dist/core/system-prompt.js`). Training on a system
+  line pi never sends is a train/serve mismatch. Decide before training: either train on
+  pi's real rendered system prompt, or accept the mismatch knowingly.
+- Neura's own extensions (checkpoint, check-gate, guardrail) run per turn and will affect
+  eval timing/behaviour. Run the gate with a fixed, recorded Neura config for both the
+  specialist and the stock baseline.
 
 ## Budget caps
 

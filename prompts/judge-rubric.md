@@ -1,7 +1,28 @@
 # Judge Rubric (Fable 5 as judge)
 
-Purpose: score every generated trajectory 0–10; keep top ~30%. Judge runs in a
-SEPARATE conversation from generation (no shared context, no self-leniency).
+Purpose: score every generated trajectory 0–10. Judge runs in a SEPARATE
+conversation from generation (no shared context, no self-leniency).
+
+## The keep bar: score >= 7, hard-reject every automatic 0
+
+Revised 2026-07-31. This file previously said "keep top ~30%", written when the
+plan assumed 5–10K raw trajectories per domain. That target was abandoned when
+session limits capped throughput (see `plan/v1-release-plan.md` status table).
+
+At the real corpus size the old rule inverts the intent: 350 raw x 30% = 105
+trajectories, well under the plan's own 200 floor for training. Keeping >= 7
+yields 245 of 350 (70%), which matches the revised scope of 300–600 raw and
+150–200 kept.
+
+So the bar is an ABSOLUTE quality threshold, not a percentile:
+
+- **Keep score >= 7.** Kept set lives in `datasets/*/filtered/keep_ge7.jsonl`.
+- **Drop every automatic 0** regardless of anything else.
+- Do NOT re-tune the bar to hit a volume target. If yield is too low, regenerate
+  weak cells with a fixed prompt — never lower the bar to pad the count.
+- >= 8 would keep ~30% and is the right bar if raw volume ever reaches 1K+.
+
+The judge does not apply this bar. The judge scores; selection happens after.
 
 ## Prompt template
 
@@ -89,8 +110,14 @@ contents alone, or for using many tools. Length is not quality.
 
 0. Every judge request includes the calibration anchors above. Without them the judge
    drifts ~3 points high (measured on batch 1: mean 8.08, zero rejects).
-1. Judge every raw trajectory (batch 20-50 per request).
-2. Keep top ~30% by score; hard-reject all automatic-0s regardless of volume.
+1. Judge every raw trajectory. Batch **25 per request** — a session limit then costs
+   25 scores rather than 50, and 4x25 was measurably fine on batches 4-5.
+2. Keep score >= 7 (see the keep bar above); hard-reject all automatic-0s.
+   Judges must NOT be told the bar — scoring and selection stay separate.
+2b. Do not change this rubric mid-corpus. Batches 1-5 are comparable only because
+   the text stayed byte-identical. A new defect class gets REPORTED alongside the
+   score (as the batch-5 fabricated-green-test check did), not folded into the
+   scale. Changing the scale forfeits the trend line.
 3. Human spot check: 100 random survivors per domain.
    - If >10% of the spot check is bad → tighten the rubric's weak dimension and
      RE-JUDGE the whole pool. Do not hand-rescue individual examples.
