@@ -7,7 +7,12 @@ for any step here — this all happens after dataset week.
 
 - Base: `unsloth/Qwen3-8B` (4-bit)
 - Method: QLoRA — r=16, alpha=32, dropout=0, target all attention + MLP proj layers
-- Data: `datasets/<domain>/final/train.jsonl` (~2K trajectories, 60/20/25 mix)
+- Data: `datasets/<domain>/final/train.jsonl` — built from
+  `datasets/frontend-stack/filtered/keep_ge7.pi.jsonl` (**the pi-schema file, never
+  the authoring one**). 242 domain trajectories at 60% of the mix ⇒ **~404 total**:
+  242 domain / ~81 general tool-calling / ~81 general instruction (60/20/20).
+  The old "~2K, 60/20/25" figure was wrong twice — 2K no longer exists, and 60/20/25
+  sums to 105%.
 - Chat template: **Qwen3 template with tool-call support — must byte-match what
   llama.cpp serves later.** Template mismatch silently destroys tool calling; this
   is the #1 failure mode to check.
@@ -24,14 +29,24 @@ for any step here — this all happens after dataset week.
    template) — same flags as the existing local-coder setup
 4. Point pi/Hermes at it as model name `frontend-stack`
 
-## Gate run (after training)
+## Gate run (after training) — THREE arms
 
-1. Run all 20 frozen eval tasks (`evals/tasks/frontend-stack/`) through the live
-   harness with the specialist.
-2. Same 20 tasks with stock Qwen3-Coder-30B-A3B, same harness, same day.
-3. Score: task completion, tool-call validity rate, right-tool rate.
-4. Record in `evals/results/<date>-frontend-stack-vs-baseline.md`.
-5. Win → next specialist. Loss → STOP (see plan). Both outcomes get committed.
+20 frozen tasks (`evals/tasks/frontend-stack/`) × 3 arms = 60 runs. Same harness,
+same day, same recorded Neura config, same scoring.
+
+| Arm | Model | Answers |
+|-----|-------|---------|
+| A | frontend-stack specialist (trained) | — |
+| B | **stock Qwen3-8B (same base, untrained)** | did training do anything? |
+| C | stock Qwen3-Coder-30B-A3B | is a small specialist worth a big generalist? |
+
+Arm B is the control and is **not optional**. Without it, A losing to C cannot be
+told apart from "8B is a third the size of 30B", and the old two-arm rule killed
+the project on that.
+
+Score per arm: task completion (pass/partial/fail), tool-call validity rate,
+right-tool rate. Record in `evals/results/<date>-frontend-stack-vs-baseline.md`.
+Decision rule lives in `plan/v1-release-plan.md` Phase 4 — all outcomes get committed.
 
 ## Sanity checks before the gate (cheap, catch disasters early)
 

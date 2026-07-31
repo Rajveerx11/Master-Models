@@ -40,8 +40,8 @@ V1 ships:
 1. Frozen eval sets (written first, before any dataset work).
 2. Complete filtered datasets for **3 tight domains** (generation needs Claude;
    training doesn't — so we bank datasets now even though only one trains first).
-3. One trained specialist (frontend-stack) with a gate result vs stock
-   Qwen3-Coder-30B-A3B.
+3. One trained specialist (frontend-stack) with a gate result vs **two** stock
+   baselines: Qwen3-8B (same base, the control) and Qwen3-Coder-30B-A3B.
 
 V1 does NOT ship: the 5-model fleet, the fine-tuned orchestrator, any hardware
 purchase. Those are conditional on gate wins (see master plan section 08).
@@ -96,16 +96,21 @@ happen any time after). Nothing else is required to reach a gate result.
 
 ### Phase 2 — assemble the training file (LOCAL)
 
-5. **Select survivors.** Take the top ~30% by judge score across all batches, drop
-   every automatic reject regardless of score. Keep the per-cell counts so weak cells
-   are visible.
+5. **Select survivors.** ✅ done — absolute bar **score ≥ 7** across all batches (not
+   "top ~30%", which was a leftover from the abandoned 5-10K plan and would have left
+   105 of 350, under the 200 floor). Every automatic reject dropped regardless of
+   score. 350 raw → 245 kept → 242 after a 24-sample adversarial spot-check dropped 3.
+   Bar is recorded in `prompts/judge-rubric.md`.
 6. **Dedup across batches.** The validator's near-duplicate check runs per file;
    re-run it across the merged pool before training.
-7. **Mix in anti-forgetting data** at roughly 60% domain / 20% general tool-calling /
-   20% general instruction. Candidate open sources (verify licence and format before
+7. **Mix in anti-forgetting data** at 60% domain / 20% general tool-calling / 20%
+   general instruction. Concretely: **242 domain ⇒ ~404 total**, so ~81 tool-calling +
+   ~81 general instruction. Candidate open sources (verify licence and format before
    use): NousResearch Hermes function-calling data, glaive function-calling v2,
    OpenHermes-2.5, Tulu 3 SFT mixture. Convert everything to the same
-   `messages` + `tool_calls` shape the domain data uses.
+   `messages` + `tool_calls` shape — which is now **pi's** shape (`read`/`write`/`edit`/
+   `bash`/`grep`, `edit` taking `edits:[{oldText,newText}]`), matching
+   `filtered/keep_ge7.pi.jsonl`, not the authoring file.
 8. **Write `datasets/frontend-stack/final/train.jsonl`**, shuffled, plus a 5% holdout
    for loss tracking only. This holdout is NOT the frozen eval.
 
@@ -122,17 +127,40 @@ happen any time after). Nothing else is required to reach a gate result.
 
 ### Phase 4 — the gate (LOCAL)
 
-13. Run all 20 frozen tasks in `evals/tasks/frontend-stack/` through the live harness
-    with the specialist. Each task starts from its recorded `<hash>~1` commit.
-14. Run the same 20 with stock Qwen3-Coder-30B-A3B — same harness, same day, same
-    scoring.
+13. Run all 20 frozen tasks in `evals/tasks/frontend-stack/` through the live harness,
+    **three arms**, 60 runs total. Each task starts from its recorded `<hash>~1` commit.
+    Same harness, same day, same recorded Neura config for every arm.
+
+    | Arm | Model | Question it answers |
+    |-----|-------|---------------------|
+    | **A** | frontend-stack specialist (trained) | — |
+    | **B** | **stock Qwen3-8B — same base, untrained** | did training do anything? |
+    | **C** | stock Qwen3-Coder-30B-A3B | is a small specialist worth a big generalist? |
+
+14. **Arm B is the control and is not optional.** Revised 2026-07-31: the earlier
+    two-arm design scored an 8B only against a 30B and called anything short of a win
+    a STOP. That rule cannot tell "training failed" from "8B is a third the size of
+    30B", so a size gap would have killed a working recipe. A vs B isolates the
+    training effect; A vs C is the separate, commercial question.
 15. Score each task pass / partial / fail against its own criteria, plus tool-call
-    validity rate and right-tool rate. Record in
+    validity rate and right-tool rate, per arm. Record in
     `evals/results/<date>-frontend-stack-vs-baseline.md`.
-16. **Decision rule.** Specialist beats stock on task completion without a tool-call
-    regression → v1 wins, bank the recipe and consider domain #2. Anything else →
-    STOP training. Keep the harness guards, the eval set, and the dataset as assets,
-    ship stock-30B with the guards, and write the loss up honestly.
+16. **Decision rule.** Read A vs B first — that is the training verdict. A vs C only
+    sizes the result.
+
+    | Outcome | Verdict | Action |
+    |---------|---------|--------|
+    | A > B **and** A ≥ C | Recipe works, size sufficient | **v1 wins.** Bank recipe, start domain #2. |
+    | A > B **and** A < C | **Training works, model too small.** NOT a loss. | Bank recipe. Next call is base size (train a bigger base / MoE) vs shipping stock-30B for now — a scope decision, not a kill. |
+    | A ≈ B | Training did nothing | STOP adding data. Diagnose recipe: masking, lr, epochs, mix ratio. More trajectories will not fix a no-op. |
+    | A < B | Training actively hurt | STOP. Suspect chat template, train-on-responses-only masking, or pi-schema conversion **before** blaming data quality. |
+
+    **Hard fail, overrides the table:** tool-call validity rate for A materially below
+    B. That is a train/serve mismatch (template or schema), not a capability result —
+    fix it and re-run before any of the rows above are read as real.
+
+    On any STOP: keep the harness guards, the eval set, and the dataset as assets, ship
+    stock-30B with the guards, and write the loss up honestly.
 
 ### Known gaps that block Phase 4
 
@@ -193,7 +221,12 @@ Still open:
 - [ ] 200+ filtered, spot-checked frontend trajectories in
       `datasets/frontend-stack/final/train.jsonl`
 - [ ] Specialist #1 trained, GGUF exported, tool JSON verified against the serving template
-- [ ] Gate result recorded in `evals/results/` (win or loss — both count as done)
+- [ ] Gate result recorded in `evals/results/` — all three arms (specialist, stock
+      Qwen3-8B control, stock Qwen3-Coder-30B-A3B). Win or loss, both count as done.
+
+**Gate prerequisite, not yet met:** a stock `Qwen3-8B` GGUF at the same quant as the
+specialist (Q4_K_M) must be on disk for arm B. Same quant matters — comparing Q4 against
+Q8 measures the quantizer, not the training.
 
 Dropped from v1: backend-stack and code-review datasets, the 2K-per-domain volume
 target, and hand-curated seed pairs. Reasons are in the status table above.
