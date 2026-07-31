@@ -31,6 +31,26 @@ for any step here — this all happens after dataset week.
 - Train-on-responses-only masking: assistant turns are targets; system, user, and
   tool turns are context.
 
+## Run it
+
+```bash
+python scripts/train_qlora.py --check-only   # guards + one formatted sample, no training
+python scripts/train_qlora.py                # train
+```
+
+Run inside the Unsloth environment. `--check-only` is worth doing first: it runs both
+guards and prints a formatted sample so you can see the `<tools>` block with your own
+eyes before spending GPU time.
+
+The two guards exist because both failure modes are silent — training completes, loss
+looks healthy, and tool calling is dead at serve time:
+
+1. **Template guard** — the tokenizer's `chat_template` must equal
+   `training/templates/qwen3-8b.jinja`, the copy the data was built and verified
+   against. Unsloth shipping a different Qwen3 template would invalidate that check.
+2. **Tools guard** — every record with `tools` must render a `<tools>` block. This is
+   the mismatch that was nearly shipped.
+
 ## Export + serve
 
 1. Merge LoRA → save merged 16-bit
