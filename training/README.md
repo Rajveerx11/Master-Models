@@ -7,19 +7,29 @@ for any step here — this all happens after dataset week.
 
 - Base: `unsloth/Qwen3-8B` (4-bit)
 - Method: QLoRA — r=16, alpha=32, dropout=0, target all attention + MLP proj layers
-- Data: `datasets/<domain>/final/train.jsonl` — built from
-  `datasets/frontend-stack/filtered/keep_ge7.pi.jsonl` (**the pi-schema file, never
-  the authoring one**). 242 domain trajectories at 60% of the mix ⇒ **~404 total**:
-  242 domain / ~81 general tool-calling / ~81 general instruction (60/20/20).
-  The old "~2K, 60/20/25" figure was wrong twice — 2K no longer exists, and 60/20/25
-  sums to 105%.
+- Data: **`datasets/frontend-stack/final/train.jsonl`** — 384 records, built by
+  `python scripts/build_train_mix.py` (seed 731, deterministic). Mix is
+  242 domain / 81 general tool-calling / 81 general instruction = **404**, split
+  384 train + 20 stratified holdout. Sources, licences, and every shape decision are
+  in `datasets/frontend-stack/final/MANIFEST.md`. The old "~2K, 60/20/25" figure was
+  wrong twice — 2K no longer exists, and 60/20/25 sums to 105%.
+- **Each record is `{messages, tools, source}`. The formatter must pass BOTH
+  `messages` and `tools` to `apply_chat_template` and ignore `source`.** Dropping
+  `tools` removes the `<tools>` block from the prompt and produces exactly the silent
+  tool-calling failure this plan keeps warning about — pi always sends tools at serve
+  time (`pi-ai/dist/api/openai-completions.js` → `convertTools`).
+- `max_seq_length = 8192` — longest record ≈ 6.2k tokens, p90 ≈ 4.5k.
 - Chat template: **Qwen3 template with tool-call support — must byte-match what
-  llama.cpp serves later.** Template mismatch silently destroys tool calling; this
-  is the #1 failure mode to check.
+  llama.cpp serves later.** A copy of Qwen3-8B's template is pinned at
+  `training/templates/qwen3-8b.jinja`, and the build renders every record through it,
+  so a template break surfaces at build time rather than mid-training. That check uses
+  transformers-side Jinja; **the byte-match against `llama-server` itself is still
+  required** (minja emits `{"a":1}` where Jinja emits `{"a": 1}`).
 - Epochs: 2-3 (watch eval loss, small sets overfit fast) · lr 2e-4 cosine ·
   batch: whatever fits with gradient accumulation to effective 16
-- Hold out 5% of train.jsonl as validation — this is NOT the frozen eval, just
-  loss tracking.
+- `holdout.jsonl` (20 records) is validation loss only — **not** the frozen eval.
+- Train-on-responses-only masking: assistant turns are targets; system, user, and
+  tool turns are context.
 
 ## Export + serve
 

@@ -22,6 +22,9 @@ unsloth_compiled_cache/
 # large raw generation dumps stay local; filtered sets are committed
 datasets/*/generated/raw/
 
+# public anti-forgetting corpora, 33 MB, re-fetched by scripts/build_train_mix.py
+datasets/general/raw/
+
 # os / editor
 .DS_Store
 Thumbs.db

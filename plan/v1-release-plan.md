@@ -103,16 +103,17 @@ happen any time after). Nothing else is required to reach a gate result.
    Bar is recorded in `prompts/judge-rubric.md`.
 6. **Dedup across batches.** The validator's near-duplicate check runs per file;
    re-run it across the merged pool before training.
-7. **Mix in anti-forgetting data** at 60% domain / 20% general tool-calling / 20%
-   general instruction. Concretely: **242 domain ⇒ ~404 total**, so ~81 tool-calling +
-   ~81 general instruction. Candidate open sources (verify licence and format before
-   use): NousResearch Hermes function-calling data, glaive function-calling v2,
-   OpenHermes-2.5, Tulu 3 SFT mixture. Convert everything to the same
-   `messages` + `tool_calls` shape — which is now **pi's** shape (`read`/`write`/`edit`/
-   `bash`/`grep`, `edit` taking `edits:[{oldText,newText}]`), matching
-   `filtered/keep_ge7.pi.jsonl`, not the authoring file.
-8. **Write `datasets/frontend-stack/final/train.jsonl`**, shuffled, plus a 5% holdout
-   for loss tracking only. This holdout is NOT the frozen eval.
+7. **Mix in anti-forgetting data.** ✅ done — 242 domain / 81 `hermes-function-calling-v1`
+   (Apache-2.0) / 81 `databricks-dolly-15k` (CC-BY-SA-3.0) = 404 at 60/20/20. Rejected
+   OpenHermes-2.5 and smoltalk (no declared licence) and no_robots (non-commercial).
+   Hermes was re-shaped rather than used raw: it ships its own `<tool_call>` XML syntax
+   inside message text, which competes with Qwen3's. Full licence table and every shape
+   decision: `datasets/frontend-stack/final/MANIFEST.md`.
+8. **Write `datasets/frontend-stack/final/train.jsonl`.** ✅ done — 384 train + 20
+   holdout, stratified 5% per source so the holdout is not accidentally all one kind.
+   Built by `python scripts/build_train_mix.py` (seed 731, deterministic, `--demo`
+   self-check). Every record is rendered through the pinned Qwen3-8B template at build
+   time, so a template break surfaces before training. The holdout is NOT the frozen eval.
 
 ### Phase 3 — train and serve (LOCAL)
 
@@ -197,18 +198,43 @@ well as `old_string/new_string` (318x); `read_file` with `start_line/end_line` (
 an argument it does not accept, so this class of drift becomes a mystery eval failure.
 `--pi` mode now rejects unknown keys.
 
+**Third finding, 2026-07-31: the `tools` field was missing entirely — a second, deeper
+mismatch than the tool names.** pi does not describe its tools only in prose. It sends
+them as the request's top-level `tools` array of JSON Schemas
+(`pi-ai/dist/api/openai-completions.js` → `convertTools`), and `llama-server --jinja`
+renders that into the prompt's `<tools>` block. The corpus had no `tools` field, so the
+model would have trained on a prompt shape it never sees when served. Fixed: pi's real
+schemas are dumped by `node scripts/dump_pi_tools.mjs` into `training/pi_tools.json`
+(7 tools — `read bash edit write grep find ls`) and attached to every domain record.
+
+Two related shape questions were settled by reading Qwen3-8B's actual template
+(pinned at `training/templates/qwen3-8b.jinja`) rather than by assumption: flat
+`tool_calls` render byte-identical to OpenAI's nested form because the template unwraps
+`.function` when present and ignores `id`/`tool_call_id`; and `arguments` stays a dict
+because llama.cpp parses the wire string into an object before templating. Both are
+asserted in `build_train_mix.py --demo`.
+
+**System-prompt fidelity — RESOLVED.** Neura *appends* to pi's system prompt
+(`return { systemPrompt: event.systemPrompt + persona }` in `agent/extensions/neura.ts`,
+same pattern in `neura-memory.ts` and `ship-report.ts`); it does not replace it. So pi's
+`buildSystemPrompt` output is the real base and training on its stable core is correct.
+The corpus prompt listed the five tools it uses; `find` and `ls` were appended so the
+prose list matches pi's seven-tool surface. Volatile parts stay excluded on purpose:
+machine-specific doc paths, cwd, project context files, skills catalog, Neura persona
+and memory.
+
 Still open:
 - Harness guards (malformed tool-call repair-and-retry, empty-file sentinel) exist only
   in `scripts/probe_baseline.py`. Note `probe_baseline.py` also declares the OLD tool
   names and `edit_file {path, old, new}` — it must be updated to pi's schema before it
   is used for any baseline the gate compares against, or the two runs differ.
-- **System-prompt fidelity.** Our trajectories carry a one-line system message; pi builds
-  its own system prompt at runtime (`dist/core/system-prompt.js`). Training on a system
-  line pi never sends is a train/serve mismatch. Decide before training: either train on
-  pi's real rendered system prompt, or accept the mismatch knowingly.
+- **Byte-match against `llama-server`, not transformers.** The build renders every record
+  through the pinned template with Python Jinja, which catches template breaks but not
+  whitespace drift: Jinja's `tojson` emits `{"a": 1}` where llama.cpp's minja emits
+  `{"a":1}`. Affects prior assistant turns in context, not parsing of fresh output — but
+  the real comparison must be run against the server once the GGUF exists.
 - Neura's own extensions (checkpoint, check-gate, guardrail) run per turn and will affect
-  eval timing/behaviour. Run the gate with a fixed, recorded Neura config for both the
-  specialist and the stock baseline.
+  eval timing/behaviour. Run the gate with a fixed, recorded Neura config for all three arms.
 
 ## Budget caps
 
@@ -218,8 +244,9 @@ Still open:
 ## Definition of done (v1, revised 2026-07-28)
 
 - [x] Frontend eval set frozen + committed (`f2fb8f1`, 20 tasks, 5/9/6 difficulty split)
-- [ ] 200+ filtered, spot-checked frontend trajectories in
-      `datasets/frontend-stack/final/train.jsonl`
+- [x] 200+ filtered, spot-checked frontend trajectories in
+      `datasets/frontend-stack/final/train.jsonl` — **242** domain trajectories inside a
+      404-record mix (384 train / 20 holdout), `MANIFEST.md` alongside
 - [ ] Specialist #1 trained, GGUF exported, tool JSON verified against the serving template
 - [ ] Gate result recorded in `evals/results/` — all three arms (specialist, stock
       Qwen3-8B control, stock Qwen3-Coder-30B-A3B). Win or loss, both count as done.
