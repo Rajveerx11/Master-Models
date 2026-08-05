@@ -1,0 +1,44 @@
+{
+  "frozen_holdout": "datasets\\frontend-stack\\final\\holdout.jsonl",
+  "frozen_holdout_sha256": "8d59b5c22ee6df65d8b1843d0bdf08dc352aa6640efee07d8fc6d17158485372",
+  "holdout_split": {
+    "dropped_over_cap": 2,
+    "input_records": 20,
+    "output_sha256": "a159f1e54ed57df08829689722db5ed348c4a8df8d36d433a6114d70b48b8a78",
+    "rendered_tokens": {
+      "max": 3914,
+      "mean": 2194.056,
+      "min": 88
+    },
+    "retained_by_source": {
+      "databricks-dolly-15k": 4,
+      "frontend-stack": 10,
+      "hermes-function-calling-v1": 4
+    },
+    "retained_records": 18
+  },
+  "schema_version": 1,
+  "selection": "whole-record filter; no message or text truncation",
+  "source_train": "datasets\\frontend-stack\\final\\train.jsonl",
+  "source_train_sha256": "f4c36ca2b83d98137841777eb2d64024d929c82fdacfad75292607be5777d19d",
+  "template_sha256": "0958f6ebb716badab20903885efa1a26ee5a8d2ce9162bfcfe982ff43cff4077",
+  "token_cap": 4096,
+  "token_counting": "pinned apply_chat_template(add_generation_prompt=False, enable_thinking=False), tokenizer(rendered), plus TRL terminal <|im_end|>",
+  "tokenizer": "unsloth/Qwen3-8B-unsloth-bnb-4bit",
+  "training_split": {
+    "dropped_over_cap": 56,
+    "input_records": 384,
+    "output_sha256": "3bafb8cbc6c793c302fbc0d81b8fa5793959cc0a3d748842ab40daf0b8643504",
+    "rendered_tokens": {
+      "max": 4069,
+      "mean": 2200.698,
+      "min": 27
+    },
+    "retained_by_source": {
+      "databricks-dolly-15k": 77,
+      "frontend-stack": 174,
+      "hermes-function-calling-v1": 77
+    },
+    "retained_records": 328
+  }
+}

@@ -8,7 +8,7 @@ datasets/
     seeds/        50-100 hand-curated gold pairs (seeds.jsonl)
     generated/    raw Fable output, per topic-matrix cell (raw/ is gitignored)
     filtered/     top ~30% after judge + spot check
-    final/        train.jsonl ready for Unsloth (with general-data mix folded in)
+    final/        source train.jsonl plus bounded train-short4096.jsonl for Unsloth
   backend-stack/
   code-review/
 ```
@@ -40,5 +40,8 @@ painful.
 - Nothing from `evals/tasks/` may appear here, ever, in any form.
 - `final/train.jsonl` mix: ~60% domain / 15-20% general tool-calling / 20-30%
   general instruction (see prompts/teacher-generation-prompt.md).
+- Build `final/train-short4096.jsonl` with `python scripts/build_short_train.py`
+  before QLoRA on 8 GB VRAM. It filters whole rendered records at ≤4096 tokens;
+  never truncate inside a message or a tool-call/result pair.
 - Keep judge scores alongside filtered data (`filtered/scores.jsonl`) for later
   ablations.

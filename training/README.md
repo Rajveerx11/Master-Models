@@ -7,18 +7,24 @@ for any step here — this all happens after dataset week.
 
 - Base: `unsloth/Qwen3-8B` (4-bit)
 - Method: QLoRA — r=16, alpha=32, dropout=0, target all attention + MLP proj layers
-- Data: **`datasets/frontend-stack/final/train.jsonl`** — 384 records, built by
-  `python scripts/build_train_mix.py` (seed 731, deterministic). Mix is
-  242 domain / 81 general tool-calling / 81 general instruction = **404**, split
-  384 train + 20 stratified holdout. Sources, licences, and every shape decision are
-  in `datasets/frontend-stack/final/MANIFEST.md`. The old "~2K, 60/20/25" figure was
-  wrong twice — 2K no longer exists, and 60/20/25 sums to 105%.
+- Source mix: `datasets/frontend-stack/final/train.jsonl` — 384 records, built by
+  `python scripts/build_train_mix.py` (seed 731, deterministic). Full frozen holdout
+  remains `holdout.jsonl` (20 records) and is never training input.
+- Training mix: **`datasets/frontend-stack/final/train-short4096.jsonl`** — built by
+  `python scripts/build_short_train.py`. It keeps only complete source records whose
+  exact pinned-Qwen render plus TRL terminal token is ≤4096 tokens; it never truncates a string, turn, tool
+  call, or tool result. Its JSON manifest records source/template hashes, counts, token
+  range, and the unchanged holdout hash. Rebuild it whenever source data or pinned
+  template changes.
 - **Each record is `{messages, tools, source}`. The formatter must pass BOTH
   `messages` and `tools` to `apply_chat_template` and ignore `source`.** Dropping
   `tools` removes the `<tools>` block from the prompt and produces exactly the silent
   tool-calling failure this plan keeps warning about — pi always sends tools at serve
   time (`pi-ai/dist/api/openai-completions.js` → `convertTools`).
-- `max_seq_length = 8192` — longest record ≈ 6.2k tokens, p90 ≈ 4.5k.
+- `max_seq_length = 4096` — 328 whole training records, including 174/230 domain
+  trajectories (53.0% specialist share). The 4608-token candidate restored 215 domain
+  trajectories but its deterministic 4587-token one-step probe OOMed on RTX 4060 8 GB.
+  This cap must pass its deterministic longest-record one-step hardware probe before a full run.
 - Chat template: **Qwen3 template with tool-call support — must byte-match what
   llama.cpp serves later.** A copy of Qwen3-8B's template is pinned at
   `training/templates/qwen3-8b.jinja`, and the build renders every record through it,
@@ -27,15 +33,22 @@ for any step here — this all happens after dataset week.
   required** (minja emits `{"a":1}` where Jinja emits `{"a": 1}`).
 - Epochs: 2-3 (watch eval loss, small sets overfit fast) · lr 2e-4 cosine ·
   batch: whatever fits with gradient accumulation to effective 16
-- `holdout.jsonl` (20 records) is validation loss only — **not** the frozen eval.
+- `holdout-short4096.jsonl` (18 whole records) is bounded validation loss tracking
+  only — **not** the frozen eval. Its source is the 20-record `holdout.jsonl`; the
+  two over-cap records are excluded, never moved into training.
 - Train-on-responses-only masking: assistant turns are targets; system, user, and
   tool turns are context.
 
 ## Run it
 
 ```bash
+python scripts/build_short_train.py            # deterministic 4096-token bounded split
+python scripts/build_short_train.py --check    # prove split/manifest reproduce exactly
 python scripts/train_qlora.py --check-only   # guards + one formatted sample, no training
+python scripts/train_qlora.py --probe-longest --output-dir outputs/frontend-stack/probe-longest
 python scripts/train_qlora.py                # train
+python scripts/train_qlora.py --resume-from-checkpoint outputs/frontend-stack/checkpoint-24
+python scripts/export_gguf.py                # merge LoRA + export Q4_K_M
 ```
 
 Run inside the Unsloth environment. `--check-only` is worth doing first: it runs both
@@ -51,10 +64,33 @@ looks healthy, and tool calling is dead at serve time:
 2. **Tools guard** — every record with `tools` must render a `<tools>` block. This is
    the mismatch that was nearly shipped.
 
+The script restores the repository-pinned template after model loading because Unsloth
+replaces Qwen3's tokenizer template at runtime. On the 8 GB RTX 4060 it also caps each
+fused cross-entropy chunk at 0.02 GB; without that budget Unsloth sees negligible free
+VRAM after the forward pass and aborts before step 1. Override only after proving a
+larger value fits: `--ce-loss-target-gb <GiB>`. On Windows it disables Unsloth's
+optional double-buffered gradient offload: that path records cross-stream CUDA events
+and can terminate the process after a long backward pass. Single buffering preserves
+training semantics and lowers peak VRAM at the cost of some copy/compute overlap.
+The optimizer is `paged_adamw_8bit`: ordinary AdamW 8-bit exhausted VRAM on its first
+update after 16 accumulated examples, while the paged form can move optimizer pages
+through CUDA unified memory when the GPU is full.
+It saves after every optimizer step and retains two recent checkpoints, so
+`--resume-from-checkpoint` can recover from a late GPU failure.
+
+`--probe-longest` selects the longest rendered training record deterministically,
+forces one optimizer step with accumulation 1, and refuses data above `MAX_SEQ`; use it
+before the full run. For an arbitrary cheap hardware-path probe:
+
+```bash
+python scripts/train_qlora.py --max-steps 1 --gradient-accumulation-steps 1 \
+  --output-dir outputs/frontend-stack/probe
+```
+
 ## Export + serve
 
-1. Merge LoRA → save merged 16-bit
-2. Convert to GGUF Q4_K_M (Unsloth `save_pretrained_gguf` does both steps)
+1. Run `python scripts/export_gguf.py`; Unsloth merges the LoRA and converts it to
+   GGUF Q4_K_M.
 3. Serve: `llama-server -m <model>.gguf --jinja` (--jinja enables the tool-call
    template) — same flags as the existing local-coder setup
 4. Point pi/Hermes at it as model name `frontend-stack`
