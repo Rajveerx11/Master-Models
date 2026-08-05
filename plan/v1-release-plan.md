@@ -1,268 +1,137 @@
-# V1 Release Plan — Dataset Sprint + First Specialist
+# V1 release plan — frontend-stack specialist
 
-**Date:** 2026-07-24 · **Last revised:** 2026-07-28 · **Hard deadline:** Claude access
-expires ~2026-07-31.
-**Master plan:** `hierarchical-specialist-models.html` (this folder). This file is the
-execution plan for v1 only.
+**Last revised:** 2026-08-06
 
-## Status at 2026-07-28 (day 5 of 7)
+**Scope:** one Qwen3-8B frontend-stack specialist, exported as Q4_K_M and evaluated
+against two stock controls.
 
-| Item | Planned | Actual |
-|------|---------|--------|
-| Evals frozen | day 1, 3 domains | frontend-stack only, frozen day 5 (commit `f2fb8f1`) |
-| Seed pairs | 50-100 per domain | skipped — batches generate straight from the spec |
-| Raw trajectories | 5-10K per domain | 50 judged + 100 in flight (frontend only) |
-| Judged | all | batch 1 (mean 8.08, uncalibrated), batch 2 (mean 6.68, calibrated) |
-| Domains started | 3 | 1 |
+## Release objective
 
-**Two things forced the revision.** Session limits cap throughput at roughly 50-100
-trajectories per limit window, not thousands per day. And 10 parallel generators
-produce nothing — they exhaust the window before writing a file.
+Determine whether frontend specialization improves Qwen3-8B and whether that improved
+8B is competitive with stock Qwen3-Coder-30B-A3B on 20 frozen real-repository tasks.
 
-### Revised v1 scope (what actually ships)
+V1 finishes when verified results exist, not only when weights exist. A loss still
+finishes the experiment if evidence is complete and honestly recorded.
 
-- **One domain: frontend-stack.** backend-stack and code-review datasets are dropped
-  from v1. Their evals were never written, so generating for them now would violate
-  the freeze-first rule anyway.
-- **Volume target: 300-600 raw, floor 200.** Not 2K. LIMA-scale curation is the bet:
-  ~150-200 kept pairs after the 30% filter, mixed up to ~300-350 total with
-  anti-forgetting data.
-- **Two teachers.** Fable 5 wrote batches 1-2 and part of batch 3; Opus is the
-  fallback teacher when Fable's window closes. Mixed-teacher data is tagged so judge
-  scores can be compared per teacher.
+## Current checkpoint
 
-## What v1 is
+| Workstream | State |
+|---|---|
+| Frontend eval freeze | Complete: 20 tasks, commit `f2fb8f1` |
+| Dataset generation and judging | Complete: 350 raw, 245 score-qualified |
+| Adversarial spot-check | Complete: 242 retained domain trajectories |
+| Final source mix | Complete: 404 records, 384 train / 20 holdout |
+| 4,096-token bounded split | Complete: 328 train / 18 holdout |
+| Colab notebook | Complete, self-contained, repository/Drive hashes match |
+| Training | Reported complete in Colab handoff; local proof not yet downloaded |
+| Specialist GGUF | Not confirmed locally or in expected Drive artifact folder |
+| Template and smoke qualification | Pending |
+| Gate A/B/C | Pending |
 
-Everything that needs Fable 5, done in 7 days — then one specialist trained and
-gated after expiry, using only local tools (Unsloth + llama.cpp).
+Live resume evidence: `STATUS.md`. Operational commands: `training/README.md`.
 
-V1 ships:
-1. Frozen eval sets (written first, before any dataset work).
-2. Complete filtered datasets for **3 tight domains** (generation needs Claude;
-   training doesn't — so we bank datasets now even though only one trains first).
-3. One trained specialist (frontend-stack) with a gate result vs **two** stock
-   baselines: Qwen3-8B (same base, the control) and Qwen3-Coder-30B-A3B.
+## Scope decisions
 
-V1 does NOT ship: the 5-model fleet, the fine-tuned orchestrator, any hardware
-purchase. Those are conditional on gate wins (see master plan section 08).
+- Frontend-stack only. Backend-stack and code-review remain deferred.
+- No local training after RTX 4060 `nvlddmkm.sys` bugcheck.
+- Whole-record 4,096-token training set; no trajectory truncation.
+- One specialist handles one whole task; no mid-task model interleaving.
+- Arm B, stock Qwen3-8B, is mandatory to isolate training effect.
+- All models use Q4_K_M for a fair quantization comparison.
+- Every outcome is committed. A losing gate is useful evidence, not hidden failure.
 
-## The three v1 domains (tight, not broad)
+## Phase 1 — acquire verified specialist artifact
 
-| # | Domain | Scope (exact, not a discipline) | Trains in v1? |
-|---|--------|--------------------------------|---------------|
-| 1 | frontend-stack | React + our component/design conventions + CSS | ✅ first |
-| 2 | backend-stack | Our API/DB stack: routes, schema, migrations | after gate 1 |
-| 3 | code-review | Diff → findings + fixes in our style | after gate 1 |
+1. Inspect active Colab final export cell.
+2. Re-run only that cell if `artifact.json` and download completion are absent.
+3. Confirm final filename, size, `GGUF` header, SHA-256, and Q4_K_M metadata.
+4. Download `frontend-stack-qwen3-8b-q4_k_m.gguf` fully.
+5. Compare local byte count and SHA-256 with Colab metadata.
 
-"Security" and "testing" are deferred — weakest published fit for small models,
-and the week is short.
+Exit criterion: one locally readable specialist GGUF with matching artifact metadata.
 
-## Day-by-day (the week that matters)
+## Phase 2 — qualify served candidate
 
-| Day | Work | Needs Claude? | Output |
-|-----|------|---------------|--------|
-| 1 | Freeze evals: 20 real tasks per domain from repo history. Commit. | No | `evals/tasks/*` frozen |
-| 1–2 | Hand-curate 50–100 seed pairs per domain | Helps | `datasets/*/seeds/` |
-| 2–4 | Fable generates 5–10K trajectories per domain (`prompts/teacher-generation-prompt.md`) | **YES** | `datasets/*/generated/` |
-| 4–5 | Fable judges all trajectories (`prompts/judge-rubric.md`), keep top ~30% | **YES** | `datasets/*/filtered/` |
-| 5–6 | Human spot check: 100 random survivors per domain; fix rubric + re-judge if reject rate > 10% | **YES** (re-judge) | QC'd filtered sets |
-| 6–7 | Buffer: regenerate weak topics, mix in general/tool-calling data, final JSONL for Unsloth | **YES** | `datasets/*/final/train.jsonl` |
+1. Start llama-server with specialist GGUF and `--jinja` on port 18081.
+2. Run `scripts/verify_server_template.py` directly against llama-server.
+3. Require `json_whitespace_normalized_match: true`.
+4. Run six guard-proxy unit tests.
+5. Start guard proxy on port 18080.
+6. Run `scripts/smoke_model.py` through proxy.
+7. Require 10/10.
 
-**Rule: anything needing Fable finishes by day 7. No exceptions.**
+Broken tool JSON, template mismatch, or smoke failure blocks the gate. Fix serving
+contract before changing dataset or comparing capability.
 
-## Remaining path, end to end
+## Phase 3 — prepare controls
 
-Every step below is either **CLAUDE** (must finish before ~07-31) or **LOCAL** (can
-happen any time after). Nothing else is required to reach a gate result.
+Required artifacts:
 
-### Phase 1 — finish the dataset (CLAUDE, by 07-31)
+- Arm A: trained frontend-stack Qwen3-8B Q4_K_M
+- Arm B: stock Qwen3-8B Q4_K_M from same base family
+- Arm C: stock Qwen3-Coder-30B-A3B Q4_K_M
 
-1. **Generate in waves until the window closes.** `prompts/batch3-spec.md` is the
-   current contract: 10 generators, disjoint cell / archetype / sector / recovery /
-   ticket-id slices, 3 easy + 4 medium + 3 hard per generator. Later batches reuse it
-   with a fresh sector list and the next archetype rotation.
-   - Launch at most 5 generators per wave. 10-wide reliably yields zero.
-   - Any generator that dies on a limit is relaunched verbatim; partial files are
-     never patched by hand.
-2. **Validate every part on arrival** — `python scripts/validate_jsonl.py <file>`.
-   0 FAIL is the gate into judging. Merge parts with a Python script (utf-8, no BOM),
-   never PowerShell `Out-File`.
-3. **Judge each batch as it lands, not all at the end.** Separate context, rubric +
-   calibration anchors from `prompts/judge-rubric.md`. Judging is Claude-dependent, so
-   an unjudged batch on 08-01 is a wasted batch.
-4. **Spot-check 100 survivors by hand** (or all of them, at this scale). If more than
-   10% are bad, fix the weak rubric dimension and re-judge the whole pool — this also
-   needs Claude, so it must happen inside the window, not after.
+Record path, byte count, SHA-256, llama-server version, Neura commit/config, and model
+metadata for each arm. Keep guard behavior identical.
 
-### Phase 2 — assemble the training file (LOCAL)
+Exit criterion: all three artifacts resolve locally and each arm can serve through the
+same proxy/harness configuration.
 
-5. **Select survivors.** ✅ done — absolute bar **score ≥ 7** across all batches (not
-   "top ~30%", which was a leftover from the abandoned 5-10K plan and would have left
-   105 of 350, under the 200 floor). Every automatic reject dropped regardless of
-   score. 350 raw → 245 kept → 242 after a 24-sample adversarial spot-check dropped 3.
-   Bar is recorded in `prompts/judge-rubric.md`.
-6. **Dedup across batches.** The validator's near-duplicate check runs per file;
-   re-run it across the merged pool before training.
-7. **Mix in anti-forgetting data.** ✅ done — 242 domain / 81 `hermes-function-calling-v1`
-   (Apache-2.0) / 81 `databricks-dolly-15k` (CC-BY-SA-3.0) = 404 at 60/20/20. Rejected
-   OpenHermes-2.5 and smoltalk (no declared licence) and no_robots (non-commercial).
-   Hermes was re-shaped rather than used raw: it ships its own `<tool_call>` XML syntax
-   inside message text, which competes with Qwen3's. Full licence table and every shape
-   decision: `datasets/frontend-stack/final/MANIFEST.md`.
-8. **Write `datasets/frontend-stack/final/train.jsonl`.** ✅ done — 384 train + 20
-   holdout, stratified 5% per source so the holdout is not accidentally all one kind.
-   Built by `python scripts/build_train_mix.py` (seed 731, deterministic, `--demo`
-   self-check). Every record is rendered through the pinned Qwen3-8B template at build
-   time, so a template break surfaces before training. The holdout is NOT the frozen eval.
+## Phase 4 — run frozen gate
 
-### Phase 3 — train and serve (LOCAL)
+Run all 20 tasks for A, B, and C: 60 total runs.
 
-9. Train per `training/README.md` — Unsloth QLoRA on Qwen3 8B, train-on-responses-only
-   masking so tool results and user turns are context, not targets.
-10. **Verify the chat template byte-matches what llama.cpp will serve.** Template drift
-    silently destroys tool calling and is the single most likely way this fails.
-11. Merge LoRA, export GGUF Q4_K_M, serve with `llama-server --jinja`.
-12. Smoke test 10 prompts: valid tool JSON, and sane answers to general questions
-    (forgetting check). Broken tool JSON means template mismatch — fix that before
-    blaming the data.
+For each arm:
 
-### Phase 4 — the gate (LOCAL)
+1. Launch exact model on 18081 with `--jinja`.
+2. Launch fresh arm-specific proxy log on 18080.
+3. Run `scripts/run_gate.py --arm <A|B|C> --tasks all` with exact model path.
+4. Inspect failures and resume only matching manifests.
+5. Grade against each frozen task's success criteria.
 
-13. Run all 20 frozen tasks in `evals/tasks/frontend-stack/` through the live harness,
-    **three arms**, 60 runs total. Each task starts from its recorded `<hash>~1` commit.
-    Same harness, same day, same recorded Neura config for every arm.
+Use same day, harness, Neura configuration, prompts, timeouts, dependency policy, and
+scoring standard where practical. Record every unavoidable deviation.
 
-    | Arm | Model | Question it answers |
-    |-----|-------|---------------------|
-    | **A** | frontend-stack specialist (trained) | — |
-    | **B** | **stock Qwen3-8B — same base, untrained** | did training do anything? |
-    | **C** | stock Qwen3-Coder-30B-A3B | is a small specialist worth a big generalist? |
+## Decision rule
 
-14. **Arm B is the control and is not optional.** Revised 2026-07-31: the earlier
-    two-arm design scored an 8B only against a 30B and called anything short of a win
-    a STOP. That rule cannot tell "training failed" from "8B is a third the size of
-    30B", so a size gap would have killed a working recipe. A vs B isolates the
-    training effect; A vs C is the separate, commercial question.
-15. Score each task pass / partial / fail against its own criteria, plus tool-call
-    validity rate and right-tool rate, per arm. Record in
-    `evals/results/<date>-frontend-stack-vs-baseline.md`.
-16. **Decision rule.** Read A vs B first — that is the training verdict. A vs C only
-    sizes the result.
+Read A versus B first; that is training verdict. Read A versus C second; that is size
+and deployment verdict.
 
-    | Outcome | Verdict | Action |
-    |---------|---------|--------|
-    | A > B **and** A ≥ C | Recipe works, size sufficient | **v1 wins.** Bank recipe, start domain #2. |
-    | A > B **and** A < C | **Training works, model too small.** NOT a loss. | Bank recipe. Next call is base size (train a bigger base / MoE) vs shipping stock-30B for now — a scope decision, not a kill. |
-    | A ≈ B | Training did nothing | STOP adding data. Diagnose recipe: masking, lr, epochs, mix ratio. More trajectories will not fix a no-op. |
-    | A < B | Training actively hurt | STOP. Suspect chat template, train-on-responses-only masking, or pi-schema conversion **before** blaming data quality. |
-
-    **Hard fail, overrides the table:** tool-call validity rate for A materially below
-    B. That is a train/serve mismatch (template or schema), not a capability result —
-    fix it and re-run before any of the rows above are read as real.
-
-    On any STOP: keep the harness guards, the eval set, and the dataset as assets, ship
-    stock-30B with the guards, and write the loss up honestly.
-
-### Known gaps that block Phase 4
-
-**RESOLVED 2026-07-31 — the harness is Neura (`C:\Neura`)**, the user's own layer on top
-of pi (`@earendil-works/pi-coding-agent`, installed globally at
-`%APPDATA%\npm\node_modules`). Neura adds identity, guardrails, memory, checkpoints and a
-proof-gate; the TOOLS are pi's built-ins, so pi's tool schema is the contract.
-
-**The tool schema did NOT match, and it would have failed silently.** Authoritative
-source: `pi-coding-agent/dist/core/tools/*.js`, `allToolNames = {read, bash, edit, write,
-grep, find, ls}`.
-
-| dataset (authoring) | pi (serving) | issue |
+| Outcome | Verdict | Action |
 |---|---|---|
-| `bash {command}` | `bash {command, timeout?}` | ok |
-| `grep {pattern, path}` | `grep {pattern, path?, glob?, ignoreCase?, literal?, context?, limit?}` | ok |
-| `read_file {path}` | `read {path, offset?, limit?}` | renamed |
-| `write_file {path, content}` | `write {path, content}` | renamed |
-| `edit_file {path, old_string, new_string}` | `edit {path, edits:[{oldText,newText}]}` | renamed AND restructured |
+| A > B and A ≥ C | Training works; 8B size sufficient | Bank recipe; v1 wins; consider domain 2 |
+| A > B and A < C | Training works; 8B remains weaker than 30B | Bank recipe; decide larger base versus stock 30B |
+| A ≈ B | Training had no material effect | Stop adding data; diagnose masking, learning rate, epochs, and mix |
+| A < B | Training hurt base | Stop; inspect template, response masking, schema conversion, then data |
 
-`edit` is the dangerous one: pi takes an ARRAY of edits. A model trained on the authoring
-schema emits a tool pi does not have, with arguments it cannot parse — every edit call
-fails, and it would look like training destroyed tool use.
+Hard invalidation: A's tool-call validity materially below B. Treat as train/serve
+mismatch, repair it, and rerun before reading capability scores.
 
-Converting the data is a script; converting after training is impossible. So:
-`scripts/to_pi_format.py` performs the transform (structured fields only, never prose)
-and `validate_jsonl.py --pi` checks the result against pi's real schema INCLUDING
-argument keys.
+## Definition of done
 
-**Second finding: argument-key drift the validator never caught.** It only checked that
-`arguments` is a dict. Across the keep-set: `edit_file` appears with `old/new` (11x) as
-well as `old_string/new_string` (318x); `read_file` with `start_line/end_line` (4x) and
-`offset/limit` (1x); `grep` with `after_context` and `context_lines`. pi silently DROPS
-an argument it does not accept, so this class of drift becomes a mystery eval failure.
-`--pi` mode now rejects unknown keys.
+- [x] Frontend eval frozen and committed.
+- [x] 242 spot-checked domain trajectories mixed with licensed anti-forgetting data.
+- [x] Deterministic 384/20 source split and 328/18 bounded split committed.
+- [x] Final standalone Colab workflow committed and mirrored.
+- [ ] Specialist Q4_K_M GGUF downloaded and hash-verified.
+- [ ] Server-template normalized match passes.
+- [ ] Local post-export smoke test passes 10/10.
+- [ ] Stock Qwen3-8B Q4_K_M control available.
+- [ ] Stock Qwen3-Coder-30B-A3B Q4_K_M control available.
+- [ ] Arms A, B, and C complete and graded.
+- [ ] Consolidated result committed under `evals/results/`.
 
-**Third finding, 2026-07-31: the `tools` field was missing entirely — a second, deeper
-mismatch than the tool names.** pi does not describe its tools only in prose. It sends
-them as the request's top-level `tools` array of JSON Schemas
-(`pi-ai/dist/api/openai-completions.js` → `convertTools`), and `llama-server --jinja`
-renders that into the prompt's `<tools>` block. The corpus had no `tools` field, so the
-model would have trained on a prompt shape it never sees when served. Fixed: pi's real
-schemas are dumped by `node scripts/dump_pi_tools.mjs` into `training/pi_tools.json`
-(7 tools — `read bash edit write grep find ls`) and attached to every domain record.
+## Preserved historical deviations
 
-Two related shape questions were settled by reading Qwen3-8B's actual template
-(pinned at `training/templates/qwen3-8b.jinja`) rather than by assumption: flat
-`tool_calls` render byte-identical to OpenAI's nested form because the template unwraps
-`.function` when present and ignores `id`/`tool_call_id`; and `arguments` stays a dict
-because llama.cpp parses the wire string into an object before templating. Both are
-asserted in `build_train_mix.py --demo`.
+- Original plan targeted three domains and thousands of trajectories. Throughput and
+  quality evidence reduced v1 to one domain and 350 generated trajectories.
+- Seed-first design was not followed beyond early pilots; later batches generated from
+  explicit contracts and calibrated judge anchors.
+- Batches 1 and 2 preceded eval freeze. Tasks were mined later from private repository
+  history, preventing leakage, but ordering deviation remains real.
+- Original two-arm gate omitted stock Qwen3-8B. Arm B was added because A versus C
+  alone confounds training effect with model size.
 
-**System-prompt fidelity — RESOLVED.** Neura *appends* to pi's system prompt
-(`return { systemPrompt: event.systemPrompt + persona }` in `agent/extensions/neura.ts`,
-same pattern in `neura-memory.ts` and `ship-report.ts`); it does not replace it. So pi's
-`buildSystemPrompt` output is the real base and training on its stable core is correct.
-The corpus prompt listed the five tools it uses; `find` and `ls` were appended so the
-prose list matches pi's seven-tool surface. Volatile parts stay excluded on purpose:
-machine-specific doc paths, cwd, project context files, skills catalog, Neura persona
-and memory.
-
-Still open:
-- Harness guards (malformed tool-call repair-and-retry, empty-file sentinel) exist only
-  in `scripts/probe_baseline.py`. Note `probe_baseline.py` also declares the OLD tool
-  names and `edit_file {path, old, new}` — it must be updated to pi's schema before it
-  is used for any baseline the gate compares against, or the two runs differ.
-- **Byte-match against `llama-server`, not transformers.** The build renders every record
-  through the pinned template with Python Jinja, which catches template breaks but not
-  whitespace drift: Jinja's `tojson` emits `{"a": 1}` where llama.cpp's minja emits
-  `{"a":1}`. Affects prior assistant turns in context, not parsing of fresh output — but
-  the real comparison must be run against the server once the GGUF exists.
-- Neura's own extensions (checkpoint, check-gate, guardrail) run per turn and will affect
-  eval timing/behaviour. Run the gate with a fixed, recorded Neura config for all three arms.
-
-## Budget caps
-
-- Generation: aim $0 extra (covered by existing Claude plan — that's why this week).
-- Specialist #1 total: $100 hard cap, 2 weekends of human time.
-
-## Definition of done (v1, revised 2026-07-28)
-
-- [x] Frontend eval set frozen + committed (`f2fb8f1`, 20 tasks, 5/9/6 difficulty split)
-- [x] 200+ filtered, spot-checked frontend trajectories in
-      `datasets/frontend-stack/final/train.jsonl` — **242** domain trajectories inside a
-      404-record mix (384 train / 20 holdout), `MANIFEST.md` alongside
-- [ ] Specialist #1 trained, GGUF exported, tool JSON verified against the serving template
-- [ ] Gate result recorded in `evals/results/` — all three arms (specialist, stock
-      Qwen3-8B control, stock Qwen3-Coder-30B-A3B). Win or loss, both count as done.
-
-**Gate prerequisite, not yet met:** a stock `Qwen3-8B` GGUF at the same quant as the
-specialist (Q4_K_M) must be on disk for arm B. Same quant matters — comparing Q4 against
-Q8 measures the quantizer, not the training.
-
-Dropped from v1: backend-stack and code-review datasets, the 2K-per-domain volume
-target, and hand-curated seed pairs. Reasons are in the status table above.
-
-## Honesty note
-
-Eval-freeze rule 1 says tasks are committed before any generation for that domain
-begins. Batches 1 and 2 ran before the freeze, as pilots. That ordering is a real
-deviation, recorded here rather than quietly ignored. The mitigation is that the eval
-tasks were mined from private repo history after those batches were already written,
-so no eval task or its wording could have reached a generation prompt. Every batch
-from 3 onward runs under the intended order.
+Research timeline, teacher calibration, batch lessons, and schema investigations remain
+in `plan/dataset-generation-research.md`, `prompts/`, and
+`datasets/frontend-stack/final/MANIFEST.md`.

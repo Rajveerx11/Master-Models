@@ -1,7 +1,8 @@
 """OpenAI-compatible guard proxy for the frozen three-arm gate.
 
-Pi/Neura connects to port 8080. llama-server runs on port 8081. The proxy keeps
-both documented harness guards identical across every arm:
+Recommended gate setup uses Pi/Neura on port 18080 and llama-server on port 18081;
+ports remain configurable through CLI arguments. The proxy keeps both documented
+harness guards identical across every arm:
 
 1. Empty tool results become an explicit empty-file sentinel.
 2. Raw Qwen XML tool calls are repaired; unparseable XML gets one retry.

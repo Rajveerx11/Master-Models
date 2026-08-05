@@ -1,6 +1,7 @@
-"""Merge the trained frontend-stack LoRA and export a Q4_K_M GGUF.
+"""Reference local merge/export path for a trained frontend-stack LoRA.
 
-Run inside the same Unsloth environment used for training:
+The approved current export runs in the self-contained Colab notebook. Use this script
+only in a separately approved Unsloth environment with an existing LoRA:
 
     python scripts/export_gguf.py
 """

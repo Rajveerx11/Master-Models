@@ -1,121 +1,219 @@
-# Training — Unsloth QLoRA
+# Frontend-stack training and evaluation runbook
 
-Trainer: **Unsloth** (already installed locally / Unsloth Studio). No Claude needed
-for any step here — this all happens after dataset week.
+This is the canonical operational path from Colab training to the three-arm gate.
+Current resume state lives in `STATUS.md`.
 
-## Recipe per specialist
+## Non-negotiable safety rule
 
-- Base: `unsloth/Qwen3-8B` (4-bit)
-- Method: QLoRA — r=16, alpha=32, dropout=0, target all attention + MLP proj layers
-- Source mix: `datasets/frontend-stack/final/train.jsonl` — 384 records, built by
-  `python scripts/build_train_mix.py` (seed 731, deterministic). Full frozen holdout
-  remains `holdout.jsonl` (20 records) and is never training input.
-- Training mix: **`datasets/frontend-stack/final/train-short4096.jsonl`** — built by
-  `python scripts/build_short_train.py`. It keeps only complete source records whose
-  exact pinned-Qwen render plus TRL terminal token is ≤4096 tokens; it never truncates a string, turn, tool
-  call, or tool result. Its JSON manifest records source/template hashes, counts, token
-  range, and the unchanged holdout hash. Rebuild it whenever source data or pinned
-  template changes.
-- **Each record is `{messages, tools, source}`. The formatter must pass BOTH
-  `messages` and `tools` to `apply_chat_template` and ignore `source`.** Dropping
-  `tools` removes the `<tools>` block from the prompt and produces exactly the silent
-  tool-calling failure this plan keeps warning about — pi always sends tools at serve
-  time (`pi-ai/dist/api/openai-completions.js` → `convertTools`).
-- `max_seq_length = 4096` — 328 whole training records, including 174/230 domain
-  trajectories (53.0% specialist share). The 4608-token candidate restored 215 domain
-  trajectories but its deterministic 4587-token one-step probe OOMed on RTX 4060 8 GB.
-  This cap must pass its deterministic longest-record one-step hardware probe before a full run.
-- Chat template: **Qwen3 template with tool-call support — must byte-match what
-  llama.cpp serves later.** A copy of Qwen3-8B's template is pinned at
-  `training/templates/qwen3-8b.jinja`, and the build renders every record through it,
-  so a template break surfaces at build time rather than mid-training. That check uses
-  transformers-side Jinja; **the byte-match against `llama-server` itself is still
-  required** (minja emits `{"a":1}` where Jinja emits `{"a": 1}`).
-- Epochs: 2-3 (watch eval loss, small sets overfit fast) · lr 2e-4 cosine ·
-  batch: whatever fits with gradient accumulation to effective 16
-- `holdout-short4096.jsonl` (18 whole records) is bounded validation loss tracking
-  only — **not** the frozen eval. Its source is the 20-record `holdout.jsonl`; the
-  two over-cap records are excluded, never moved into training.
-- Train-on-responses-only masking: assistant turns are targets; system, user, and
-  tool turns are context.
+**Do not run sustained QLoRA on the local RTX 4060.** The previous local run caused an
+NVIDIA `nvlddmkm.sys` bugcheck. `scripts/train_qlora.py` and
+`scripts/export_gguf.py` remain reproducibility/reference tools, not the approved path
+for this machine.
 
-## Run it
+Train and export in Google Colab. Use local hardware only for GGUF inference and
+evaluation.
 
-```bash
-python scripts/build_short_train.py            # deterministic 4096-token bounded split
-python scripts/build_short_train.py --check    # prove split/manifest reproduce exactly
-python scripts/train_qlora.py --check-only   # guards + one formatted sample, no training
-python scripts/train_qlora.py --probe-longest --output-dir outputs/frontend-stack/probe-longest
-python scripts/train_qlora.py                # train
-python scripts/train_qlora.py --resume-from-checkpoint outputs/frontend-stack/checkpoint-24
-python scripts/export_gguf.py                # merge LoRA + export Q4_K_M
+## Canonical notebook
+
+File: `notebooks/frontend_stack_qwen3_8b_colab.ipynb`
+
+SHA-256: `87355EDDA48F2425AADB2698B505685020CDAECB618B9EF8AEDBBEF6C6FCAE86`
+
+Revision: `2026-08-06-self-contained-v8-gguf-fix`
+
+The notebook is standalone. It embeds the frozen source train/holdout files, pi tool
+schemas, and pinned Qwen3 template. It does not clone this repository.
+
+Approved runtime:
+
+- Colab GPU runtime
+- T4 16 GiB minimum; L4/A100 acceptable
+- fresh runtime with at least 10 GiB free VRAM before model load
+- default `USE_GOOGLE_DRIVE = False`
+
+Default output root is temporary Colab storage:
+`/content/Master-Models-Colab/frontend-stack-qwen3-8b/`. The final cell starts a
+browser download. With `USE_GOOGLE_DRIVE = True`, output root becomes
+`MyDrive/Master-Models-Colab/frontend-stack-qwen3-8b/`.
+
+## Fixed recipe
+
+| Setting | Value |
+|---|---|
+| Base | `unsloth/Qwen3-8B` |
+| Quantized load | BitsAndBytes 4-bit |
+| Context | 4,096 tokens |
+| Train / holdout | 328 / 18 whole records |
+| LoRA | rank 16, alpha 32, dropout 0 |
+| Target modules | attention and MLP projection layers |
+| Epochs | 2 |
+| Learning rate | `2e-4`, cosine, 5% warmup |
+| Effective batch | 16 |
+| Optimizer | `paged_adamw_8bit` |
+| Seed | 731 |
+| Targets | assistant responses only |
+| Export | GGUF `Q4_K_M` |
+
+The notebook filters the committed 384/20 source split at render time. A record passes
+only when the exact pinned-template rendering plus TRL terminal token fits 4,096.
+Nothing inside a record is truncated.
+
+Every tool-bearing record passes both `messages` and top-level `tools` to
+`apply_chat_template`. Dropping `tools` removes the `<tools>` block and silently trains
+against the wrong serving prompt.
+
+## Resume and export in Colab
+
+For a fresh run, select **Runtime → Change runtime type → GPU**, then **Run all**.
+
+For the current run, inspect before rerunning:
+
+- `TRAINING_COMPLETE.json` proves training completed.
+- `lora/` contains final adapter and tokenizer/template.
+- `SMOKE_TEST.json` contains two cheap pre-export checks.
+- `gguf/artifact.json` proves final GGUF verification.
+
+If training is complete but export status is uncertain, run only the final export cell.
+It searches both Unsloth locations, including `<save_directory>_gguf`, and reuses
+exactly one valid existing Q4_K_M file. With no valid prior file, it removes only known
+temporary export directories and performs one clean conversion.
+
+Successful final-cell evidence:
+
+- final filename `frontend-stack-qwen3-8b-q4_k_m.gguf`;
+- file larger than 1 GiB;
+- first four bytes equal `GGUF`;
+- copied byte count equals source byte count;
+- SHA-256 printed and stored in `gguf/artifact.json`;
+- `quantization` equals `Q4_K_M`;
+- temporary export directories cleaned;
+- browser download started, or Drive sync reported.
+
+Keep the Colab tab open until download completes.
+
+## Local artifact verification
+
+Place the downloaded model under the ignored output tree:
+
+```powershell
+New-Item -ItemType Directory -Force -Path 'outputs\frontend-stack\gguf'
+Move-Item -LiteralPath 'C:\Users\rajve\Downloads\frontend-stack-qwen3-8b-q4_k_m.gguf' -Destination 'outputs\frontend-stack\gguf\frontend-stack-qwen3-8b-q4_k_m.gguf'
+$specialist = (Resolve-Path 'outputs\frontend-stack\gguf\frontend-stack-qwen3-8b-q4_k_m.gguf').Path
+Get-Item -LiteralPath $specialist | Select-Object FullName,Length
+Get-FileHash -Algorithm SHA256 -LiteralPath $specialist
+Get-Content -LiteralPath $specialist -Encoding Byte -TotalCount 4 | Format-Hex
 ```
 
-Run inside the Unsloth environment. `--check-only` is worth doing first: it runs both
-guards and prints a formatted sample so you can see the `<tools>` block with your own
-eyes before spending GPU time.
+Compare size and SHA-256 with Colab `artifact.json`. Hex output must begin with
+`47 47 55 46` (`GGUF`). Stop if any value differs.
 
-The two guards exist because both failure modes are silent — training completes, loss
-looks healthy, and tool calling is dead at serve time:
+## Start serving stack
 
-1. **Template guard** — the tokenizer's `chat_template` must equal
-   `training/templates/qwen3-8b.jinja`, the copy the data was built and verified
-   against. Unsloth shipping a different Qwen3 template would invalidate that check.
-2. **Tools guard** — every record with `tools` must render a `<tools>` block. This is
-   the mismatch that was nearly shipped.
+Use dedicated gate ports: llama-server on 18081, guard proxy on 18080. Keep each
+long-running command in its own PowerShell window.
 
-The script restores the repository-pinned template after model loading because Unsloth
-replaces Qwen3's tokenizer template at runtime. On the 8 GB RTX 4060 it also caps each
-fused cross-entropy chunk at 0.02 GB; without that budget Unsloth sees negligible free
-VRAM after the forward pass and aborts before step 1. Override only after proving a
-larger value fits: `--ce-loss-target-gb <GiB>`. On Windows it disables Unsloth's
-optional double-buffered gradient offload: that path records cross-stream CUDA events
-and can terminate the process after a long backward pass. Single buffering preserves
-training semantics and lowers peak VRAM at the cost of some copy/compute overlap.
-The optimizer is `paged_adamw_8bit`: ordinary AdamW 8-bit exhausted VRAM on its first
-update after 16 accumulated examples, while the paged form can move optimizer pages
-through CUDA unified memory when the GPU is full.
-It saves after every optimizer step and retains two recent checkpoints, so
-`--resume-from-checkpoint` can recover from a late GPU failure.
+Start llama-server:
 
-`--probe-longest` selects the longest rendered training record deterministically,
-forces one optimizer step with accumulation 1, and refuses data above `MAX_SEQ`; use it
-before the full run. For an arbitrary cheap hardware-path probe:
-
-```bash
-python scripts/train_qlora.py --max-steps 1 --gradient-accumulation-steps 1 \
-  --output-dir outputs/frontend-stack/probe
+```powershell
+llama-server -m $specialist --host 127.0.0.1 --port 18081 --jinja
 ```
 
-## Export + serve
+Confirm direct server-template compatibility:
 
-1. Run `python scripts/export_gguf.py`; Unsloth merges the LoRA and converts it to
-   GGUF Q4_K_M.
-3. Serve: `llama-server -m <model>.gguf --jinja` (--jinja enables the tool-call
-   template) — same flags as the existing local-coder setup
-4. Point pi/Hermes at it as model name `frontend-stack`
+```powershell
+python scripts/verify_server_template.py --server http://127.0.0.1:18081 --report outputs/frontend-stack/template-verification.json
+```
 
-## Gate run (after training) — THREE arms
+Pass condition: `json_whitespace_normalized_match` is `true`. An exact mismatch caused
+only by JSON whitespace is expected across Python Jinja and llama.cpp minja; any other
+difference fails qualification.
 
-20 frozen tasks (`evals/tasks/frontend-stack/`) × 3 arms = 60 runs. Same harness,
-same day, same recorded Neura config, same scoring.
+Verify guard logic:
 
-| Arm | Model | Answers |
-|-----|-------|---------|
-| A | frontend-stack specialist (trained) | — |
-| B | **stock Qwen3-8B (same base, untrained)** | did training do anything? |
-| C | stock Qwen3-Coder-30B-A3B | is a small specialist worth a big generalist? |
+```powershell
+python -m unittest scripts.test_gate_proxy
+```
 
-Arm B is the control and is **not optional**. Without it, A losing to C cannot be
-told apart from "8B is a third the size of 30B", and the old two-arm rule killed
-the project on that.
+Start proxy:
 
-Score per arm: task completion (pass/partial/fail), tool-call validity rate,
-right-tool rate. Record in `evals/results/<date>-frontend-stack-vs-baseline.md`.
-Decision rule lives in `plan/v1-release-plan.md` Phase 4 — all outcomes get committed.
+```powershell
+python scripts/gate_proxy.py --host 127.0.0.1 --port 18080 --upstream http://127.0.0.1:18081 --log outputs/frontend-stack/gate-proxy-specialist.jsonl
+```
 
-## Sanity checks before the gate (cheap, catch disasters early)
+The proxy applies the same two harness guards to every arm: malformed Qwen tool-call
+repair/retry and empty tool-result normalization.
 
-- 10-prompt smoke test: does it still emit valid tool JSON? Does it still answer
-  general questions sanely (forgetting check)?
-- If tool JSON is broken → chat template mismatch, fix before touching data.
+## Required 10/10 smoke test
+
+With llama-server and proxy running:
+
+```powershell
+python scripts/smoke_model.py --api http://127.0.0.1:18080 --output outputs/frontend-stack/smoke.jsonl
+```
+
+All ten cases must pass. They cover read-before-edit behavior, pi `edit` schema, valid
+tool JSON, unknown-tool refusal, missing/empty file recovery, arithmetic, general
+knowledge, JSON-only output, and a short general explanation.
+
+Do not enter the gate with 9/10. Diagnose template, proxy, or model behavior first.
+
+## Gate prerequisites
+
+Three Q4_K_M artifacts are required:
+
+| Arm | Artifact |
+|---|---|
+| A | trained `frontend-stack-qwen3-8b-q4_k_m.gguf` |
+| B | stock Qwen3-8B Q4_K_M from the same base family |
+| C | stock Qwen3-Coder-30B-A3B Q4_K_M |
+
+Also required:
+
+- source repositories referenced by frozen tasks at their recorded paths;
+- `pnpm` and lockfile-compatible dependency installation;
+- pi launcher at `%APPDATA%\npm\pi.cmd` or explicit `--pi` path;
+- `C:\Neura` Git checkout;
+- fixed Neura configuration for all arms;
+- ports 18080 and 18081 free before each model launch.
+
+## Run arms A, B, and C
+
+`run_gate.py` does not start llama-server. For each arm:
+
+1. Stop previous proxy and server.
+2. Start llama-server on 18081 with that arm's GGUF and `--jinja`.
+3. Start a fresh proxy on 18080 with an arm-specific log.
+4. Set `$modelPath` to the exact GGUF being served.
+5. Run the matching command.
+
+```powershell
+$modelPath = (Resolve-Path 'outputs\frontend-stack\gguf\frontend-stack-qwen3-8b-q4_k_m.gguf').Path
+python scripts/run_gate.py --arm A --tasks all --model-path $modelPath --server-url http://127.0.0.1:18080
+```
+
+Repeat with `--arm B` and `--arm C` after relaunching the serving stack with each stock
+model. Never claim a different `--model-path` from the model actually loaded upstream.
+
+The runner creates isolated depth-1 checkouts at each task's recorded start commit,
+installs frozen dependencies, invokes Neura/pi, records tool metrics, archives patches,
+runs TypeScript checking, and leaves `grade` as `ungraded`. It never edits source
+repositories.
+
+Resume a matching interrupted arm with the same model and task selection:
+
+```powershell
+python scripts/run_gate.py --arm A --tasks all --model-path $modelPath --server-url http://127.0.0.1:18080 --resume
+```
+
+An incomplete task directory without `result.json` requires inspection; the runner
+will not overwrite it.
+
+## Grade and report
+
+Grade every task `pass`, `partial`, or `fail` against its frozen success criteria.
+Record tool-call validity and right-tool use. Then write one consolidated report:
+
+`evals/results/<date>-frontend-stack-vs-baseline.md`
+
+Interpret A versus B first. Interpret A versus C second. Decision matrix lives in
+`plan/v1-release-plan.md`.

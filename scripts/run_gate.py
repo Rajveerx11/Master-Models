@@ -1,8 +1,12 @@
 """Run frozen frontend tasks through one live Neura/model arm.
 
-Prerequisites:
-  - llama-server for the selected model on 127.0.0.1:8081
-  - scripts/gate_proxy.py on 127.0.0.1:8080
+Recommended setup:
+  - llama-server for the selected model on 127.0.0.1:18081
+  - scripts/gate_proxy.py on 127.0.0.1:18080
+  - --server-url http://127.0.0.1:18080
+
+The CLI default remains 8080 for backward compatibility. The dedicated provider used
+by this gate defaults to 18080, so pass --server-url explicitly.
 
 The runner never checks out or edits the source repositories. Each task gets a
 depth-1 isolated repository containing only its recorded start commit, preventing

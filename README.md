@@ -1,112 +1,101 @@
 # Master Models
 
-Local specialist-model factory: fine-tune small open models (Qwen3 8B base) into
-dedicated domain specialists, gated against a stock Qwen3-Coder-30B-A3B baseline,
-served locally via llama.cpp and driven by agentic harnesses (pi / Hermes).
+Master Models tests one concrete bet: can a carefully trained small specialist beat
+its stock base and remain competitive with a much larger general coding model on real
+repository work?
 
-**This is a quality bet, not a cost play.** Token cost is already ~$0 with the stock
-local 30B. A specialist ships only if it beats that baseline on a frozen eval of
-real repo tasks. See `plan/` for the full (roasted and reshaped) plan.
+The first specialist targets frontend-stack work: React, TypeScript, CSS, component
+design conventions, and pi-compatible tool use. Training uses Qwen3-8B QLoRA. Serving
+uses llama.cpp. Release requires a frozen, three-arm gate—not subjective output review.
 
-## Urgent constraint
+## Current status
 
-Claude (Fable 5) access expires in ~1 week. Fable is the dataset teacher + judge.
-Therefore: **all dataset generation happens this week.** Training (Unsloth, local)
-and evaluation can happen after expiry — they don't need Claude.
+Status checked **2026-08-06** at commit
+`6facf0605af5aac09fc6b28ebc1ff4c33af14828`.
 
-## Repo structure
+| Stage | State | Evidence |
+|---|---|---|
+| Frozen frontend eval | Complete | 20 tasks, 5 easy / 9 medium / 6 hard |
+| Training mix | Complete | 404 records; 384 train / 20 holdout |
+| T4-safe bounded split | Complete | 328 train / 18 holdout, whole records only |
+| Colab workflow | Complete | Self-contained final notebook, repository and Drive hashes match |
+| QLoRA training | Reported complete in active Colab runtime | Final export completion still unconfirmed locally |
+| Verified specialist GGUF | Blocked | No local or Drive GGUF found at last check |
+| Template verification | Pending | Requires downloaded GGUF and running llama-server |
+| Local smoke test | Pending | Requires 10/10 |
+| Gate arms A/B/C | Pending | No gate results exist |
 
+**Next task:** run or confirm the final export cell in the active Colab runtime,
+capture its `artifact.json` metadata, and finish downloading
+`frontend-stack-qwen3-8b-q4_k_m.gguf`.
+
+See [STATUS.md](STATUS.md) for exact resume state and
+[training/README.md](training/README.md) for the operational runbook.
+
+## Safety constraint
+
+**Do not train this model locally.** Sustained QLoRA on the local RTX 4060 caused an
+NVIDIA `nvlddmkm.sys` bugcheck. Use the guarded Colab T4 workflow. Local GPU use begins
+only after the GGUF exists and is limited to inference, template verification, smoke
+testing, and gate runs.
+
+## Repository map
+
+```text
+datasets/    Curated trajectories, final train/holdout mix, bounded split, manifests
+evals/       Frozen real-repository tasks and recorded probe/gate results
+notebooks/   Final self-contained Colab QLoRA and Q4_K_M export workflow
+plan/        Current v1 execution plan plus historical research
+prompts/     Historical teacher, judge, batch, and frontend convention contracts
+scripts/     Dataset checks, local verification, guard proxy, smoke test, gate runner
+training/    Pinned pi tool schemas, Qwen3 template, and operational runbook
+outputs/     Ignored local artifacts and evaluation runs
 ```
-plan/        Master plan (visual HTML + v1 release plan)
-evals/       Frozen eval tasks + rules. WRITTEN FIRST, never used in generation.
-prompts/     Teacher generation prompts + judge rubric (the factory's source code)
-datasets/    seeds/ -> generated/ -> filtered/ per domain (JSONL trajectories)
-training/    Unsloth QLoRA configs + GGUF export notes
-```
 
-## Workflow (the factory)
+## Fixed experiment
 
-1. **Freeze evals** — 20 real tasks from repo history, before any dataset work.
-2. **Seed** — 50–100 hand-curated gold trajectory pairs per domain.
-3. **Generate** — Fable 5 expands seeds to 5–10K multi-turn tool-call trajectories.
-4. **Judge** — Fable 5 scores against rubric; keep top ~30%.
-5. **Spot check** — hand-review 100 random survivors.
-6. **Train** — Unsloth QLoRA on Qwen3 8B, ~2K pairs, 60/20/25 domain/tool/general mix.
-7. **Gate** — beat stock Qwen3-Coder-30B on the frozen eval in the live harness,
-   or STOP.
+Training input:
 
-## Hard rules
+- Base: `unsloth/Qwen3-8B`
+- Method: 4-bit BitsAndBytes QLoRA, LoRA rank 16, alpha 32
+- Context: 4,096 tokens
+- Data: 328 whole training records and 18 whole holdout records
+- No truncation of trajectories, messages, tool calls, or tool results
+- Assistant responses are targets; system, user, and tool messages remain context
+- Tool contract: pi's `read`, `bash`, `edit`, `write`, `grep`, `find`, and `ls`
 
-- Eval tasks are frozen and never appear in any generation prompt.
-- One specialist per whole task at inference — no mid-task model interleaving.
-- Every specialist has a kill-gate. Losing a gate is a valid, cheap outcome.
+Release comparison:
 
-## Progress log
+| Arm | Model | Question |
+|---|---|---|
+| A | Trained frontend-stack Qwen3-8B Q4_K_M | Does specialist work? |
+| B | Stock Qwen3-8B Q4_K_M | Did training improve the base? |
+| C | Stock Qwen3-Coder-30B-A3B Q4_K_M | Is specialist competitive with larger generalist? |
 
-**2026-07-27**
-- Research distilled into `plan/dataset-generation-research.md` (quality>quantity,
-  engineered diversity, judge calibration, Hermes/Qwen3 format fit).
-- **Batch 1 generated + judged**: 25 frontend-stack trajectories
-  (`forms × bug fix × medium`), 25/25 schema-valid via `scripts/validate_jsonl.py`,
-  judge mean 8.08, 0 auto-rejects. Raw data local-only (gitignored by design);
-  5 batch-2 lessons logged in the research note.
-- **Design skills integrated**: taste-skill / ui-ux-pro-max / impeccable /
-  playwright-skill installed (user-level); distilled into
-  `prompts/frontend-design-conventions.md` (97 checkable rules) — now the STYLE
-  GUIDE block for frontend generation; judge enforces; `design-polish` task type
-  added to the topic matrix.
-- **Baseline probed**: stock Qwen3-Coder-30B, 16 edge-case probes
-  (`scripts/probe_baseline.py`, informal — not the frozen gate). 9/16 → 11/16
-  with harness guards (tool mechanics 9/9). Conventions-in-context stayed 0/5:
-  React habits need training, not prompting. Full analysis in
-  `evals/results/2026-07-27-baseline-probe.md`.
-- **Open blocker**: eval sets still empty — must be frozen (20 real repo tasks
-  per domain) before batch-2 scale-up. Claude teacher access expires ~07-31.
+All arms use the same 20 frozen tasks, Neura/pi harness, guard proxy, quantization
+family, and scoring rules. Arm B is mandatory: A versus B measures training effect;
+A versus C measures model-size competitiveness.
 
-**2026-07-28**
-- **Judge calibrated**: `prompts/judge-rubric.md` gained worked 3/5/8 anchors,
-  anti-anchors, and reasoning-before-score output. Measured effect below.
-- **Batch 2 generated + judged**: 25 trajectories across 5 cells (error-states,
-  data-fetching, state-mgmt, styling/design-polish, accessibility), 5 parallel
-  generators. 25/25 schema-valid, 0 near-dups, pure ASCII / no BOM, tool turns
-  avg 6.0, 18/25 carry an error-recovery turn (batch 1: 5/25).
-- **Judge mean 6.68** (batch 1: 8.08), median 7, spread 5-8, 0 auto-rejects —
-  the anchors moved the scale and widened the distribution.
-- Weakest dimension batch-wide: **diversity value**. Archetype-per-generator
-  produced five identical bugs per cell, and parallel generators recycled
-  recovery gimmicks, domains, and even a ticket id. Batch-3 fixes logged in
-  `plan/dataset-generation-research.md`.
-- **Frontend evals FROZEN** (commit `f2fb8f1`): 20 tasks mined from real commit
-  history in `terax-ai` (17) and Tessera (3), difficulty split 5 easy / 9 medium
-  / 6 hard. Each records its start commit, a symptom-only prompt, checkable
-  criteria, and a graders-only reference solution. This unblocked scale-up.
-- **Batch 3 in flight**: 100 trajectories, 10 generators, contract in
-  `prompts/batch3-spec.md` — disjoint cell / archetype / sector / recovery /
-  ticket-id slices per generator, plus a 3 easy / 4 medium / 3 hard mix inside
-  each one. Generator E landed first (10/10 valid).
-- **Throughput lesson**: 10 concurrent generators exhaust the session window
-  before any of them writes a file. Waves of 5 are the sustainable shape.
-- **Second teacher**: Opus is now the fallback when Fable's window closes.
-  Mixed-teacher parts are tagged so judge scores can be compared per teacher.
-- **v1 scope revised** in `plan/v1-release-plan.md`: one domain (frontend-stack),
-  300-600 raw instead of 2K per domain, and the full remaining path written out
-  in four phases to the gate result.
+## Reproducibility anchors
 
-**2026-07-29**
-- **Batch 3 complete**: 100 trajectories, 10 generators, 100/100 schema-valid,
-  0 near-dups, pure ASCII, avg 5.7 tool turns. Judge mean **7.34** (1 auto-reject).
-- **Batch 1 re-judged on the calibrated scale: 8.08 -> 5.32.** Same 25
-  trajectories, same rubric, different anchors, cross-model judge. The
-  uncalibrated judge was inflating by ~2.8 points. Quality trend is now real and
-  comparable: **5.32 -> 6.68 -> 7.34**.
-- **Corpus: 150 raw, mean 6.89.** First keep-set written to
-  `datasets/frontend-stack/filtered/keep_ge7.jsonl` — 109 trajectories at score
-  >= 7, validated clean (0 FAIL, 42 with recovery turns). A >= 8 cut would keep
-  54; 7 was chosen for volume at this corpus size, and the index file records
-  every kept line's batch and score so the cut can be tightened later.
-- **Second teacher confirmed**: session limits are per-model, so Opus generates
-  while Fable is capped. Fable-written 7.20 (n=10) vs Opus-written 7.36 (n=90) —
-  noise, not a quality difference.
-- Batch-4 fixes logged in `plan/dataset-generation-research.md`: batch-wide
-  lesson-family ledger, varied recovery shapes, non-templated ticket phrasing,
-  hard per-generator quota on test-based verification.
+- Notebook:
+  `notebooks/frontend_stack_qwen3_8b_colab.ipynb`
+- Notebook SHA-256:
+  `87355EDDA48F2425AADB2698B505685020CDAECB618B9EF8AEDBBEF6C6FCAE86`
+- Bounded-data manifest:
+  `datasets/frontend-stack/final/train-short4096.manifest.json`
+- Pinned template:
+  `training/templates/qwen3-8b.jinja`
+- pi tool schemas:
+  `training/pi_tools.json`
+
+## Integrity rules
+
+- Frozen eval tasks never enter training, prompts, or rubric examples.
+- `holdout*.jsonl` tracks validation loss; it is not the frozen gate.
+- Generation prompts and batch specifications are historical provenance. Do not edit
+  them to describe current operations.
+- Every exported GGUF must have a `GGUF` header, byte count, SHA-256, and declared
+  `Q4_K_M` quantization before evaluation.
+- Broken tool JSON or a materially lower tool-validity rate invalidates capability
+  comparisons until the train/serve mismatch is fixed.

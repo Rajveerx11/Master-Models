@@ -1,10 +1,11 @@
-"""QLoRA fine-tune Qwen3-8B on the frontend-stack mix.
+"""Reference QLoRA trainer for the frontend-stack mix.
 
-    python scripts/train_qlora.py                  # train
     python scripts/train_qlora.py --check-only     # guards + one formatted sample, no training
 
-Run this inside the Unsloth environment (needs torch/transformers/unsloth/trl).
-Recipe and rationale: training/README.md. Data manifest:
+Do not run sustained training on this repository's local RTX 4060; a prior run caused
+an NVIDIA nvlddmkm.sys bugcheck. The approved workflow is the self-contained Colab
+notebook. Full execution of this reference script is only for a separately approved
+Unsloth environment. See training/README.md and the data manifest at
 datasets/frontend-stack/final/MANIFEST.md.
 
 The two guards at the top are the point of this file. Both failure modes they catch are

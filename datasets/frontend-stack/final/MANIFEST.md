@@ -72,10 +72,27 @@ pi presents seven. Snippets are the first sentence of pi's own tool descriptions
 it, so pi's stable core is the right training target — volatile parts (Neura persona,
 memory, doc paths, cwd, skills catalog) stay out on purpose.
 
-## Sizing
+## T4-safe bounded derivative
 
-Longest record ≈ **6.2k tokens** estimated (22 KB of JSON at ~3.6 chars/token),
-p90 ≈ 4.5k. `max_seq_length = 8192` covers the set with headroom.
+The 404-record source corpus remains frozen as 384 train / 20 holdout. Colab training
+uses a deterministic whole-record derivative capped at **4,096 rendered tokens**:
+
+| Split | Source | Retained | Dropped over cap | Rendered range |
+|---|---:|---:|---:|---:|
+| Train | 384 | 328 | 56 | 27–4,069 |
+| Holdout | 20 | 18 | 2 | 88–3,914 |
+
+Bounded train composition is 174 frontend-stack, 77 Hermes, and 77 Dolly records.
+This retains 174/230 source-train domain records, or 53.0% of the bounded set. The
+holdout remains validation-only and never moves into training.
+
+`scripts/build_short_train.py` renders with the pinned template, counts the TRL
+terminal token, rejects over-cap records whole, checks train/holdout non-overlap, and
+writes `train-short4096.manifest.json`. That JSON manifest is authoritative for source,
+template, and output hashes.
+
+The approved run is the self-contained Colab notebook, not local QLoRA. Notebook
+SHA-256: `87355EDDA48F2425AADB2698B505685020CDAECB618B9EF8AEDBBEF6C6FCAE86`.
 
 ## Residual risk carried forward
 
