@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://master-models.local/schema/source-candidate-v1.schema.json",
+  "title": "Master Models source candidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "specialist", "repository", "commit", "parent", "subject", "authored_at", "changed_files", "score", "reasons"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "specialist": {"type": "string"},
+    "repository": {"type": "string"},
+    "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "parent": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "subject": {"type": "string", "minLength": 1},
+    "authored_at": {"type": "string", "format": "date-time"},
+    "changed_files": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "score": {"type": "integer", "minimum": 1},
+    "reasons": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    }
+  }
+}

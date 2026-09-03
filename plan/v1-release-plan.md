@@ -1,4 +1,7 @@
-# V1 release plan — frontend-stack specialist
+# Archived V1 release plan — frontend-stack Qwen3-8B
+
+> Historical record. V2 uses Qwen3-4B and is defined in
+> `plan/v2-master-plan.md`. Do not use this file as the active runbook.
 
 **Last revised:** 2026-08-06
 

@@ -1,102 +1,65 @@
-# Evaluation protocol
+# V2 evaluation protocol
 
-Evaluation is the release boundary. Model outputs are judged by repository-task
-completion, not answer similarity or author preference.
+Evaluation is the release boundary. A low training loss does not prove a specialist.
 
-## Frozen-set rules
+## Freeze-before-generate rule
 
-1. Tasks are committed before production dataset generation.
-2. Frozen tasks never change. Corrections create a versioned successor set.
-3. No task wording, paraphrase, reference diff, or solution fragment enters training.
-4. Tasks come from real repository history, not synthetic teacher output.
-5. Every arm starts from the same recorded commit and uses the same harness settings.
-6. Results are committed whether the specialist wins, loses, or invalidates the run.
+Each specialist needs 20 real repository tasks committed before its training queue is
+opened. Every task records:
 
-Historical exception: batches 1 and 2 were pilots created before the frontend eval
-freeze. Eval tasks were mined later from private repository history, preventing task
-leakage. This deviation remains recorded in `plan/v1-release-plan.md`.
+- source repository and immutable reference commit;
+- parent/start commit;
+- verbatim agent prompt;
+- checkable success criteria;
+- verification command;
+- graders-only reference evidence;
+- easy, medium, or hard difficulty.
 
-## Frozen frontend set
+All reference commits, patches, prompts, and close paraphrases are excluded from train,
+holdout, prompts, and demonstrations. Corrections create a versioned successor set;
+frozen tasks are not silently edited.
 
-Status: **frozen 2026-07-28**, commit `f2fb8f1`.
+## Current freeze state
 
-- 20 tasks
-- 5 easy / 9 medium / 6 hard
-- 17 from `terax-ai`
-- 3 from Testing IDE / Tessera
-- each task records source repository, reference commit, start revision, verbatim agent
-  prompt, checkable success criteria, and graders-only reference evidence
+| Specialist | Frozen tasks | State |
+|---|---:|---|
+| frontend-stack | 20 | Frozen V1 set, reusable for V2 |
+| backend-stack | 0 | Build from source inventory |
+| security-review | 0 | Build from source inventory |
+| code-review | 0 | Build from source inventory |
+| testing-qa | 0 | Build from source inventory |
 
-Backend-stack and code-review evals remain deferred.
+## Required comparison
 
-## Three required arms
+Each domain gate uses the same tasks, harness, template, quantization family, context
+limit, and scoring rules for both arms.
 
-| Arm | Model | Primary comparison |
+| Arm | Model | Purpose |
 |---|---|---|
-| A | trained frontend-stack Qwen3-8B Q4_K_M | candidate |
-| B | stock Qwen3-8B Q4_K_M | training effect: A versus B |
-| C | stock Qwen3-Coder-30B-A3B Q4_K_M | size competitiveness: A versus C |
+| A | trained domain Qwen3-4B Q4_K_M | candidate |
+| B | stock Qwen3-4B Q4_K_M | isolates fine-tuning effect |
 
-Arm B is mandatory. A two-arm A-versus-C test cannot distinguish ineffective training
-from an ordinary 8B-versus-30B size gap.
+A larger coding model may be added as a reference arm, but it is not required to prove
+that specialization improved the base.
 
-## Qualification before gate
+## Qualification
 
-Candidate A must pass:
+Before the gate, arm A must pass:
 
-- local byte count, `GGUF` header, and SHA-256 match against Colab artifact metadata;
-- llama-server template verification with normalized prompt match;
-- guard-proxy unit tests;
-- 10/10 post-export smoke test through the served stack.
+- GGUF header, byte count, SHA-256, and declared quantization check;
+- training-template versus server-template normalized match;
+- structural tool-call tests;
+- 10/10 domain smoke suite;
+- no eval-overlap report failures.
 
-Full commands and prerequisites: `training/README.md`.
+## Release rule
 
-## Gate execution
+Ship a specialist only when it:
 
-`scripts/run_gate.py` runs one arm. It creates an isolated depth-1 repository for each
-task at the recorded start commit, installs frozen dependencies, invokes Neura/pi,
-archives logs and patches, records tool metrics, runs TypeScript checking, and leaves
-grading to the evaluator. Source repositories remain untouched.
+1. beats stock 4B on pass rate;
+2. does not materially reduce tool-call validity;
+3. has no critical safety regression;
+4. records all results, including failures.
 
-Recommended ports:
-
-- guard proxy: `127.0.0.1:18080`
-- llama-server: `127.0.0.1:18081`
-
-Example after serving the arm-A model and starting the proxy:
-
-```powershell
-$modelPath = (Resolve-Path 'outputs\frontend-stack\gguf\frontend-stack-qwen3-8b-q4_k_m.gguf').Path
-python scripts/run_gate.py --arm A --tasks all --model-path $modelPath --server-url http://127.0.0.1:18080
-```
-
-Repeat for B and C only after relaunching llama-server with that arm's exact model.
-Use the same Neura configuration for all arms.
-
-## Scoring and report
-
-For every task and arm, record:
-
-- `pass`, `partial`, or `fail` against frozen success criteria;
-- verification/test evidence;
-- tool-call count and validity;
-- right-tool use;
-- tool errors and malformed stream lines;
-- relevant failure notes.
-
-Write one consolidated result:
-`evals/results/<date>-frontend-stack-vs-baseline.md`.
-
-Read A versus B first. Tool validity for A materially below B invalidates capability
-comparison and triggers train/serve diagnosis. Then read A versus C. Exact decision
-matrix: `plan/v1-release-plan.md`.
-
-## Layout
-
-```text
-evals/
-  tasks/frontend-stack/   Frozen 20-task set
-  tasks/backend-stack/    Deferred placeholder
-  tasks/code-review/      Deferred placeholder
-  results/                Historical probes and final gate report
-```
+If A ties or loses B, improve data or stop that specialist. Do not hide the result by
+changing the frozen set.

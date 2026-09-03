@@ -1,0 +1,20 @@
+{
+  "candidate_count": 276,
+  "candidate_count_by_repository": {
+    "neura": 30,
+    "terax-ai": 105,
+    "testing-ide": 141
+  },
+  "candidates_sha256": "3d3d916b4d92291624938aa46bc1c2039b29a3df397c2ff35e0f655c0998e1a3",
+  "eval_state": "not_frozen",
+  "generation_gate": "freeze_eval_first",
+  "purpose": "source candidates only; not approved training data",
+  "reserved_commit_count": 36,
+  "schema_version": 1,
+  "source_heads": {
+    "neura": "d0bb9ac679f4058f94d26dd93455bb84ffc53336",
+    "terax-ai": "868a5254f030f099fe4de6edebd626e65720a1dc",
+    "testing-ide": "f3dcda3977fcac6f24a0fe47bb077d2e1ee91699"
+  },
+  "specialist": "backend-stack"
+}

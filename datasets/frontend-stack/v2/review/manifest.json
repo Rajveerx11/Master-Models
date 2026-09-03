@@ -1,0 +1,8 @@
+{
+  "accept_rule": "all five checks true and decision=keep or repair",
+  "purpose": "semantic re-audit of every retained V1 score-7 frontend trajectory",
+  "queue_sha256": "c4cb6c7a9ba8753249b48b359bac45dd6c505679c1a4f1cb3322290d4ea608bd",
+  "record_count": 121,
+  "schema_version": 1,
+  "source": "datasets/frontend-stack/filtered/keep_ge7.index.json"
+}

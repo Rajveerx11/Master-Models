@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://master-models.local/schema/trajectory-v2.schema.json",
+  "title": "Master Models V2 trajectory",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "schema_version", "specialist", "source", "messages", "tools", "quality"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^[a-z0-9-]+:[a-z0-9._-]+$"},
+    "schema_version": {"const": 2},
+    "specialist": {"type": "string"},
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "commit", "parent", "files", "license"],
+      "properties": {
+        "repository": {"type": "string"},
+        "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "parent": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "files": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "license": {"type": "string", "minLength": 1}
+      }
+    },
+    "messages": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["role"],
+        "properties": {
+          "role": {"enum": ["system", "user", "assistant", "tool"]},
+          "content": {"type": "string"},
+          "name": {"type": "string"},
+          "tool_calls": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["name", "arguments"],
+              "properties": {
+                "name": {"type": "string"},
+                "arguments": {"type": "object"}
+              }
+            }
+          },
+          "metadata": {
+            "type": "object",
+            "properties": {"exit_code": {"type": "integer"}}
+          }
+        }
+      }
+    },
+    "tools": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["type", "function"],
+        "properties": {
+          "type": {"const": "function"},
+          "function": {
+            "type": "object",
+            "required": ["name", "description", "parameters"]
+          }
+        }
+      }
+    },
+    "quality": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["difficulty", "skills", "verification_commands", "review_state"],
+      "properties": {
+        "difficulty": {"enum": ["easy", "medium", "hard"]},
+        "skills": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "verification_commands": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "review_state": {"enum": ["generated", "judge_passed", "human_approved", "rejected"]},
+        "judge_score": {"type": "integer", "minimum": 0, "maximum": 10}
+      }
+    }
+  }
+}

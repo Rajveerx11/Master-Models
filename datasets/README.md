@@ -1,91 +1,93 @@
-# Datasets
+# V2 datasets
 
-Current v1 contains one completed domain: `frontend-stack`. Backend-stack and
-code-review remain deferred and contain placeholders only.
+The V2 corpus is a collection of small, difficult, source-grounded datasets for five
+Qwen3-4B specialists. Quality and eval isolation matter more than row count.
 
-## Frontend-stack pipeline
+## Specialists
+
+| ID | Target work | Current reusable data |
+|---|---|---|
+| `frontend-stack` | React, TypeScript, CSS, UI state and accessibility | 242 V1 trajectories pending re-audit |
+| `backend-stack` | APIs, services, persistence, concurrency, providers | None yet |
+| `security-review` | trust boundaries, injection, path/auth/secret safety | None yet |
+| `code-review` | defect discovery, evidence, severity, precise fixes | None yet |
+| `testing-qa` | test design, flaky tests, mutation, integration and CI | None yet |
+
+Machine-readable status lives in `datasets/v2-registry.json`.
+
+## Required order
 
 ```text
-datasets/frontend-stack/
-  seeds/       Early pilot inputs
-  generated/   Raw batch outputs; raw files stay local and are gitignored
-  filtered/    Score-threshold keep set, pi-schema conversion, spot-check record
-  final/       Frozen source mix, holdout, 4,096-token derivatives, manifests
+real Git history
+  -> source candidate inventory
+  -> frozen eval tasks and reserved commits
+  -> training generation queue excluding all eval evidence
+  -> source-grounded tool trajectories
+  -> structural validation
+  -> judge scoring + deterministic checks
+  -> semantic spot-check
+  -> deduplication and contamination scan
+  -> train/holdout split
+  -> whole-record token-bound derivative
 ```
 
-Verified counts:
+For any domain whose eval state is not `frozen`, training generation is blocked.
 
-| Stage | Records | Notes |
-|---|---:|---|
-| Generated and judged | 350 | Historical raw corpus |
-| Score at least 7 | 245 | Automatic rejects removed |
-| After adversarial spot-check | 242 | Three records dropped |
-| Final mixed corpus | 404 | 242 domain / 81 Hermes / 81 Dolly |
-| Source train / holdout | 384 / 20 | Stratified 95/5 split |
-| T4-safe train / holdout | 328 / 18 | Whole records at no more than 4,096 tokens |
+## V2 trajectory contract
 
-The 18-record bounded holdout tracks validation loss. It is not the 20-task frozen
-repository eval under `evals/tasks/frontend-stack/`.
+One JSON object per line. The normative schema is
+`datasets/schema/trajectory-v2.schema.json`.
 
-## Final record schema
+Required fields:
 
-One JSON object per line:
+- `id`: stable domain-prefixed identifier.
+- `schema_version`: integer `2`.
+- `specialist`: one registry specialist ID.
+- `source`: repository, commit, parent, file paths, and license/provenance note.
+- `messages`: complete user/assistant/tool trajectory.
+- `tools`: the exact serving tool schemas for tool-bearing records.
+- `quality`: difficulty, skills, verification commands, and review state.
 
-```json
-{
-  "messages": [
-    {"role": "system", "content": "You are an expert coding assistant operating inside pi."},
-    {"role": "user", "content": "Fix the disabled SaveButton in src/SaveButton.tsx."},
-    {"role": "assistant", "tool_calls": [{"name": "read", "arguments": {"path": "src/SaveButton.tsx"}}]},
-    {"role": "tool", "name": "read", "content": "export function SaveButton() { ... }"},
-    {"role": "assistant", "tool_calls": [{"name": "edit", "arguments": {"path": "src/SaveButton.tsx", "edits": [{"oldText": "...", "newText": "..."}]}}]},
-    {"role": "tool", "name": "edit", "content": "ok"},
-    {"role": "assistant", "content": "Fixed the state reset and verified the focused test."}
-  ],
-  "tools": [
-    {"type": "function", "function": {"name": "read", "description": "Read a file", "parameters": {"type": "object"}}}
-  ],
-  "source": "frontend-stack"
-}
-```
+The final assistant message may claim a check passed only when a preceding tool result
+contains that successful check. Tool results must be contiguous with their calls.
 
-Actual `tools` arrays use the complete schemas in `training/pi_tools.json`. Domain
-records carry all seven pi tools. Re-shaped Hermes records carry their example tools.
-Dolly plain-chat records deliberately omit `tools`.
+## Size targets
 
-Tool calls stay in the repository's flat `{name, arguments}` representation. The
-pinned Qwen3 template accepts both this form and OpenAI's nested `function` form.
-Arguments remain JSON objects, matching llama.cpp's server-side template input.
+These are quality targets, not quotas.
 
-## Integrity rules
+| Split component | Per specialist |
+|---|---:|
+| Gold domain trajectories | 180-300 |
+| Loss holdout | 5%, minimum 12 |
+| General/tool anti-forgetting | 60-100 shared records |
+| Frozen repository eval | 20 tasks, never in train/holdout |
 
-- Never copy an eval task, paraphrase, reference diff, or solution fragment into data.
-- Never truncate a message, call, result, or trajectory to meet context limits.
-- Every assistant tool call must have its complete contiguous tool-result set.
-- The formatter must pass both `messages` and `tools`; `source` is metadata only.
-- pi-domain validation rejects unknown tool names and argument keys.
-- Public-source licenses and conversion decisions stay recorded in
-  `frontend-stack/final/MANIFEST.md`.
+Prefer 2-8 meaningful tool calls, one real failure/recovery where natural, and at least
+one actual verification step. Reject padded or theatrical tool use.
 
-## Reproduction checks
+## Context policy
 
-Validate the pi-converted domain keep set:
+V2 targets 3,072 rendered tokens, with a 2,048 fallback for T4 instability. Filtering
+keeps or drops an entire trajectory. It never truncates a message, call, result, or
+assistant answer.
+
+## V1 data
+
+`datasets/frontend-stack/filtered/` and `datasets/frontend-stack/final/` are preserved
+as V1 evidence. Do not overwrite them. V2 outputs use explicit `v2/` subdirectories.
+
+The old 242-record frontend keep set remains valuable because its tool traces validate
+and its tasks match the domain. It is not accepted unchanged: all score-7 examples and
+any record with unsupported red/green or test claims require semantic review.
+
+## Commands
 
 ```powershell
-python scripts/validate_jsonl.py datasets/frontend-stack/filtered/keep_ge7.pi.jsonl --pi
+py -3 scripts/build_v2_source_inventory.py
+py -3 scripts/build_v2_queues.py
+py -3 scripts/validate_v2_dataset.py --registry datasets/v2-registry.json
 ```
 
-Check deterministic mixed-corpus shape without writing:
-
-```powershell
-python scripts/build_train_mix.py --demo
-```
-
-Reproduce the bounded split inside an environment containing the pinned tokenizer:
-
-```powershell
-python scripts/build_short_train.py --check
-```
-
-Authoritative bounded hashes and token statistics live in
-`frontend-stack/final/train-short4096.manifest.json`.
+The validator treats an absent not-yet-generated split as `pending`. It fails malformed
+files, duplicate IDs/content, eval-commit overlap, invalid tool exchanges, or unsupported
+verification claims.

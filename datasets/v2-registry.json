@@ -1,0 +1,76 @@
+{
+  "schema_version": 2,
+  "base_model": {
+    "training_id": "unsloth/Qwen3-4B-bnb-4bit",
+    "canonical_id": "Qwen/Qwen3-4B",
+    "context_tokens": 3072,
+    "fallback_context_tokens": 2048,
+    "quantization": "Q4_K_M"
+  },
+  "source_repositories": {
+    "terax-ai": {
+      "path": "C:/terax-ai",
+      "license": "Apache-2.0"
+    },
+    "testing-ide": {
+      "path": "C:/Testing IDE",
+      "license": "MIT"
+    },
+    "neura": {
+      "path": "C:/Neura",
+      "license": "Proprietary; owner-provided local source"
+    }
+  },
+  "specialists": [
+    {
+      "id": "frontend-stack",
+      "eval_state": "frozen",
+      "eval_task_count": 20,
+      "generation_gate": "v1_truthfulness_reaudit",
+      "target_gold_records": [180, 220],
+      "sources": ["terax-ai", "testing-ide"],
+      "subject_keywords": ["frontend", "ui", "react", "css", "sidebar", "dialog", "editor", "terminal", "explorer", "settings", "layout", "shortcut"],
+      "path_patterns": ["\\.(tsx|jsx|css|scss)$", "(^|/)(components|frontend|ui)/"]
+    },
+    {
+      "id": "backend-stack",
+      "eval_state": "not_frozen",
+      "eval_task_count": 0,
+      "generation_gate": "freeze_eval_first",
+      "target_gold_records": [200, 280],
+      "sources": ["testing-ide", "terax-ai", "neura"],
+      "subject_keywords": ["backend", "api", "service", "provider", "server", "database", "stream", "timeout", "persistence", "concurrency", "sandbox", "rust", "python"],
+      "path_patterns": ["(^|/)(backend|server|services?|providers?|api|src-tauri|agent)/", "\\.(rs|py)$"]
+    },
+    {
+      "id": "security-review",
+      "eval_state": "not_frozen",
+      "eval_task_count": 0,
+      "generation_gate": "freeze_eval_first",
+      "target_gold_records": [180, 240],
+      "sources": ["terax-ai", "neura", "testing-ide"],
+      "subject_keywords": ["security", "harden", "auth", "injection", "ssrf", "secret", "sanitize", "guard", "contain", "unsafe", "path traversal", "cve"],
+      "path_patterns": ["(^|/)(security|auth|guards?|sandbox)/", "(shell|path|secret|permission|policy)"]
+    },
+    {
+      "id": "code-review",
+      "eval_state": "not_frozen",
+      "eval_task_count": 0,
+      "generation_gate": "freeze_eval_first",
+      "target_gold_records": [180, 240],
+      "sources": ["terax-ai", "testing-ide", "neura"],
+      "subject_keywords": ["fix", "bug", "regression", "race", "leak", "crash", "incorrect", "prevent", "refactor", "perf"],
+      "path_patterns": ["\\.(ts|tsx|js|jsx|rs|py)$"]
+    },
+    {
+      "id": "testing-qa",
+      "eval_state": "not_frozen",
+      "eval_task_count": 0,
+      "generation_gate": "freeze_eval_first",
+      "target_gold_records": [200, 280],
+      "sources": ["testing-ide", "terax-ai", "neura"],
+      "subject_keywords": ["test", "testing", "mutation", "flaky", "coverage", "ci", "vitest", "playwright", "integration", "assert"],
+      "path_patterns": ["(^|/)(tests?|__tests__|e2e|integration|fixtures|\\.github)/", "\\.(test|spec)\\.(ts|tsx|js|jsx|py|rs)$"]
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://master-models.local/schema/eval-candidate-v1.schema.json",
+  "title": "Master Models eval candidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "status", "specialist", "repository", "reference_commit", "start_commit", "subject", "changed_files", "inventory_score", "review"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "status": {"const": "candidate"},
+    "specialist": {"type": "string"},
+    "repository": {"type": "string"},
+    "reference_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "start_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "subject": {"type": "string", "minLength": 1},
+    "changed_files": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "inventory_score": {"type": "integer", "minimum": 1},
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reproducible", "focused", "objective_checks", "difficulty", "decision"],
+      "properties": {
+        "reproducible": {"type": ["boolean", "null"]},
+        "focused": {"type": ["boolean", "null"]},
+        "objective_checks": {"type": ["boolean", "null"]},
+        "difficulty": {"type": ["string", "null"], "enum": ["easy", "medium", "hard", null]},
+        "decision": {"type": ["string", "null"], "enum": ["keep", "drop", null]}
+      }
+    }
+  }
+}
