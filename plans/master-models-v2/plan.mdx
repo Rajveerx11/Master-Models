@@ -10,10 +10,10 @@ that beat stock Qwen3-4B on frozen real-repository tasks.
 | Specialist | Dataset target | Eval state |
 |---|---:|---|
 | Frontend stack | 180-220 | 20 tasks frozen |
-| Backend stack | 200-280 | freeze 20 first |
-| Security review | 180-240 | freeze 20 first |
-| Code review | 180-240 | freeze 20 first |
-| Testing/QA | 200-280 | freeze 20 first |
+| Backend stack | 200-280 | 20 tasks frozen |
+| Security review | 180-240 | 20 tasks frozen |
+| Code review | 180-240 | 20 tasks frozen |
+| Testing/QA | 200-280 | 20 tasks frozen |
 
 The orchestrator is deferred until at least three specialists win their domain gates.
 
@@ -32,21 +32,22 @@ overlap.
 
 ## Ordered delivery
 
-1. Generate and review all source inventories.
-2. Freeze backend, security, code-review, and QA evals.
-3. Rebuild inventories with the new reservations.
-4. Re-audit frontend score-7 records.
-5. Generate source-grounded training trajectories for each open domain.
-6. Judge, spot-check, deduplicate, split, and bound whole records at 3,072 tokens.
-7. Pin the exact Qwen3-4B template and build a self-contained Colab notebook.
-8. Train frontend first and complete its A/B gate.
-9. Reuse the verified recipe for the remaining specialists.
+1. [x] Generate source inventories.
+2. [x] Freeze backend, security, code-review, and QA evals.
+3. [x] Rebuild inventories with the new reservations.
+4. [ ] Re-audit frontend score-7 records and review non-eval source candidates.
+5. [ ] Generate source-grounded training trajectories for each open domain.
+6. [ ] Judge, spot-check, deduplicate, split, and bound whole records at 3,072 tokens.
+7. [ ] Pin the exact Qwen3-4B template and build a self-contained Colab notebook.
+8. [ ] Train frontend first and complete its A/B gate.
+9. [ ] Reuse the verified recipe for the remaining specialists.
 
 ## Verification
 
 ```powershell
 py -3 scripts/build_v2_source_inventory.py --check
 py -3 scripts/build_v2_queues.py --check
+py -3 scripts/validate_eval_tasks.py --require-v2
 py -3 scripts/validate_v2_dataset.py
 py -3 -m unittest scripts.test_gate_proxy
 ```

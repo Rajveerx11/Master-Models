@@ -24,10 +24,10 @@ frozen tasks are not silently edited.
 | Specialist | Frozen tasks | State |
 |---|---:|---|
 | frontend-stack | 20 | Frozen V1 set, reusable for V2 |
-| backend-stack | 0 | Build from source inventory |
-| security-review | 0 | Build from source inventory |
-| code-review | 0 | Build from source inventory |
-| testing-qa | 0 | Build from source inventory |
+| backend-stack | 20 | Frozen V2 set |
+| security-review | 20 | Frozen V2 set |
+| code-review | 20 | Frozen V2 set |
+| testing-qa | 20 | Frozen V2 set |
 
 ## Required comparison
 
@@ -63,3 +63,12 @@ Ship a specialist only when it:
 
 If A ties or loses B, improve data or stop that specialist. Do not hide the result by
 changing the frozen set.
+
+## Validation
+
+```powershell
+py -3 scripts/validate_eval_tasks.py --require-v2
+```
+
+The validator checks task shape, immutable Git ancestry, exact 5/9/6 difficulty
+balance, and cross-domain reference/start isolation.

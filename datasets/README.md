@@ -32,6 +32,8 @@ real Git history
 ```
 
 For any domain whose eval state is not `frozen`, training generation is blocked.
+All five domains are now frozen. New-domain generation may use only commits retained
+in the rebuilt source inventories; frontend still requires its V1 truthfulness re-audit.
 
 ## V2 trajectory contract
 
@@ -85,6 +87,7 @@ any record with unsupported red/green or test claims require semantic review.
 ```powershell
 py -3 scripts/build_v2_source_inventory.py
 py -3 scripts/build_v2_queues.py
+py -3 scripts/validate_eval_tasks.py --require-v2
 py -3 scripts/validate_v2_dataset.py --registry datasets/v2-registry.json
 ```
 

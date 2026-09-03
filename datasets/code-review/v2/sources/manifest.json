@@ -6,13 +6,13 @@
     "testing-ide": 144
   },
   "candidates_sha256": "cf34181d05693177e6e3667c0343bc6044b9db3ce1442f6837c1a71b53ea405f",
-  "eval_state": "not_frozen",
-  "generation_gate": "freeze_eval_first",
+  "eval_state": "frozen",
+  "generation_gate": "open",
   "purpose": "source candidates only; not approved training data",
   "reserved_commit_count": 36,
   "schema_version": 1,
   "source_heads": {
-    "neura": "d0bb9ac679f4058f94d26dd93455bb84ffc53336",
+    "neura": "bc0055d4e312b529e27d2370ec0486028fcd0c15",
     "terax-ai": "868a5254f030f099fe4de6edebd626e65720a1dc",
     "testing-ide": "f3dcda3977fcac6f24a0fe47bb077d2e1ee91699"
   },

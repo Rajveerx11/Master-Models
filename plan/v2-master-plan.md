@@ -57,20 +57,21 @@ local Git repositories
 - [x] Select Qwen3-4B and define resource limits.
 - [x] Define five specialist boundaries.
 - [x] Add registry, schemas, inventory builder, and validator.
-- [ ] Generate source inventories from available local repositories.
-- [ ] Review candidate balance and remove weak/documentation-only commits.
-- [ ] Record immutable repository identity and license/provenance.
+- [x] Generate source inventories from available local repositories.
+- [x] Review eval candidate balance and remove weak/documentation-only commits.
+- [x] Record immutable repository identity and license/provenance.
+- [ ] Review non-eval source candidates before trajectory generation.
 
 Exit: every specialist has a reviewed candidate pool with no known eval overlap.
 
 ## Phase 2 — freeze evaluation
 
 - [x] Reuse the existing 20-task frontend set.
-- [ ] Freeze 20 backend tasks.
-- [ ] Freeze 20 security tasks.
-- [ ] Freeze 20 code-review tasks.
-- [ ] Freeze 20 testing/QA tasks.
-- [ ] Add all reference hashes to reservations before training generation.
+- [x] Freeze 20 backend tasks.
+- [x] Freeze 20 security tasks.
+- [x] Freeze 20 code-review tasks.
+- [x] Freeze 20 testing/QA tasks.
+- [x] Add all reference hashes to reservations before training generation.
 
 Target balance per set: 5 easy, 9 medium, 6 hard. A task must have a reproducible parent
 revision, focused prompt, objective checks, and graders-only reference evidence.
@@ -149,10 +150,12 @@ this prevents multiplying a broken recipe.
 ## Verification
 
 ```powershell
-python scripts/build_v2_source_inventory.py --check
-python scripts/validate_v2_dataset.py --registry datasets/v2-registry.json
-python scripts/build_train_mix.py --demo
-python -m unittest scripts.test_gate_proxy
+py -3 scripts/build_v2_source_inventory.py --check
+py -3 scripts/build_v2_queues.py --check
+py -3 scripts/validate_eval_tasks.py --require-v2
+py -3 scripts/validate_v2_dataset.py --registry datasets/v2-registry.json
+py -3 scripts/build_train_mix.py --demo
+py -3 -m unittest scripts.test_gate_proxy
 ```
 
 Final proof is not these local checks. It is a committed per-domain A/B gate report.

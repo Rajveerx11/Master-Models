@@ -23,8 +23,8 @@ too fragile for the free tier.
 | Shared V2 dataset schema and registry | Ready |
 | Frontend frozen eval | Ready: 20 tasks |
 | Frontend reusable corpus | Ready for V2 re-audit: 242 domain trajectories |
-| Other specialist source inventories | Buildable from local Git history |
-| Other specialist frozen evals | Required before training generation |
+| All specialist source inventories | Ready and eval-isolated |
+| All specialist frozen evals | Ready: 20 tasks each, 100 total |
 | Qwen3-4B template, bounded splits, notebook | Pending |
 | V2 training and gates | Pending |
 
@@ -58,6 +58,7 @@ training/    Colab-safe recipes, tool schemas, and pinned chat templates
 ```powershell
 py -3 scripts/build_v2_source_inventory.py
 py -3 scripts/build_v2_queues.py
+py -3 scripts/validate_eval_tasks.py --require-v2
 py -3 scripts/validate_v2_dataset.py --registry datasets/v2-registry.json
 py -3 scripts/build_train_mix.py --demo
 py -3 -m unittest scripts.test_gate_proxy

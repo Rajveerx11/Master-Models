@@ -17,7 +17,8 @@ runtime storage for packages, checkpoints, merge, and GGUF export.
 
 ## Completed evidence
 
-- V1 frontend eval: 20 frozen real tasks.
+- Frozen evaluation: 20 real tasks per specialist, 100 total.
+- Every V2 set has exact 5 easy / 9 medium / 6 hard balance.
 - V1 frontend raw generation: 350 judged trajectories.
 - V1 retained frontend set: 242 trajectories after automatic filtering and spot-check.
 - V1 final mix: 384 train / 20 holdout.
@@ -33,11 +34,11 @@ useful data and tooling, not a proven specialist.
 
 | Specialist | Eval | Source data | Train generation | State |
 |---|---|---|---|---|
-| frontend-stack | 20 frozen tasks | 242 retained V1 trajectories | Allowed after truthfulness re-audit | Active |
-| backend-stack | Not frozen | Local Git history | Blocked by eval-first rule | Inventory |
-| security-review | Not frozen | Local Git history | Blocked by eval-first rule | Inventory |
-| code-review | Not frozen | Local Git history | Blocked by eval-first rule | Inventory |
-| testing-qa | Not frozen | Local Git history | Blocked by eval-first rule | Inventory |
+| frontend-stack | 20 frozen tasks | 242 retained V1 trajectories | Allowed after truthfulness re-audit | Re-audit |
+| backend-stack | 20 frozen tasks | 276 source candidates | Open | Ready for generation |
+| security-review | 20 frozen tasks | 62 source candidates | Open | Ready for generation |
+| code-review | 20 frozen tasks | 332 source candidates | Open | Ready for generation |
+| testing-qa | 20 frozen tasks | 84 source candidates | Open | Ready for generation |
 
 ## Current work queue
 
@@ -49,8 +50,10 @@ useful data and tooling, not a proven specialist.
 - [x] Build isolated eval review queues: 40 backend, 40 security, 40 code-review,
   and 32 testing/QA candidates.
 - [x] Build the 121-record frontend score-7 semantic re-audit queue.
-- [ ] Human-review source inventories and eval candidates.
-- [ ] Freeze 20 real tasks each for backend, security, review, and QA.
+- [x] Human-review eval candidates through independent author/audit passes.
+- [x] Freeze 20 real tasks each for backend, security, review, and QA.
+- [x] Validate 100 tasks, immutable ancestry, difficulty balance, and hash isolation.
+- [ ] Review non-eval source inventories for training-generation quality.
 - [ ] Re-audit frontend score-7 records for unsupported claims.
 - [ ] Build generation queues from non-eval commits.
 - [ ] Generate, judge, deduplicate, and spot-check domain trajectories.
@@ -61,6 +64,6 @@ useful data and tooling, not a proven specialist.
 
 ## Immediate next checkpoint
 
-Commit reviewed source inventories and frozen eval tasks for the four new domains.
-Only then open their training-generation queues. Frontend can proceed in parallel with
-its V1 truthfulness re-audit because its eval set is already frozen.
+Re-audit the 121 frontend score-7 records and review non-eval source candidates.
+Then generate a small 30-50 trajectory pilot per new domain, validate it, and inspect
+quality before scaling toward each domain target.
