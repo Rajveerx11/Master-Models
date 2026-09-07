@@ -1,0 +1,33 @@
+{
+  "task": 10,
+  "started_at": "2026-09-07T06:30:51.957Z",
+  "checks": [
+    {
+      "name": "key-required cloud disabled",
+      "pass": true
+    },
+    {
+      "name": "keyless local selectable",
+      "pass": true
+    },
+    {
+      "name": "selection without settings redirect",
+      "pass": true,
+      "observed": {
+        "selected": "lmstudio-local",
+        "calls": []
+      }
+    },
+    {
+      "name": "local title has no missing-key warning",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "screenshots": [
+    "C:\\Master-Models\\outputs\\frontend-pilot\\frontend-pilot-10\\browser\\1788762651957\\picker.png",
+    "C:\\Master-Models\\outputs\\frontend-pilot\\frontend-pilot-10\\browser\\1788762651957\\selected.png"
+  ],
+  "browser": "151.0.7922.34",
+  "passed": true
+}

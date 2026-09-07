@@ -1,0 +1,20 @@
+{
+  "task": 10,
+  "started_at": "2026-09-07T06:29:22.166Z",
+  "checks": [
+    {
+      "name": "key-required cloud disabled",
+      "pass": true
+    },
+    {
+      "name": "keyless local selectable",
+      "pass": false
+    }
+  ],
+  "errors": [],
+  "screenshots": [
+    "C:\\Master-Models\\outputs\\frontend-pilot\\frontend-pilot-10\\browser\\1788762562166\\picker.png"
+  ],
+  "browser": "151.0.7922.34",
+  "passed": false
+}

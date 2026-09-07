@@ -1,0 +1,66 @@
+{
+  "reviewer": "Codex; same author as implementation",
+  "independent_semantic_review": "pending",
+  "gold_approved": 0,
+  "training_eligible": false,
+  "event_indexing": "One-based lines in each task's tool-events.jsonl",
+  "tasks": [
+    {
+      "id": "frontend-pilot-01",
+      "baseline_events": [7],
+      "final_check_events": [9, 10],
+      "baseline_observation": "Input height was 36px versus the requested 32px. Existing primary focus, controlled values, blur and disabled behavior passed.",
+      "result": "Six browser checks pass after the compact sizing/focus patch; TypeScript 5.7.3 passes.",
+      "limitations": ["Documented install-only husky manifest overlay.", "Earlier browser runs include missing browser, CommonJS conversion and missing Tailwind sources; these are harness failures.", "Early focus assertion also required a primary border, beyond the original requested ring; corrected before accepting the baseline."],
+      "inspected_screenshots": ["frontend-pilot-01/browser/1788762612758/focused.png"],
+      "training_eligible": false
+    },
+    {
+      "id": "frontend-pilot-10",
+      "baseline_events": [2, 10],
+      "final_check_events": [12, 13, 14],
+      "baseline_observation": "Keyless availability/send tests failed while cloud/missing-session control passed. Actual picker disabled the keyless local item.",
+      "result": "Three unit tests, four browser checks and TypeScript 5.8.3 pass.",
+      "limitations": ["Chat SDK send is a recording mock; this is a send-guard contract check, not successful network transport or local model inference.", "Composer, platform and settings-window boundaries are explicit browser fixture stubs.", "First unit run had a mock-resolution defect; first browser run timed out waiting for network idle."],
+      "inspected_screenshots": ["frontend-pilot-10/browser/1788762651957/selected.png"],
+      "training_eligible": false
+    },
+    {
+      "id": "frontend-pilot-15",
+      "baseline_events": [1],
+      "final_check_events": [4, 6],
+      "baseline_observation": "Unknown-leaf and unchanged-cwd cases cloned the root; actual-change control passed.",
+      "result": "Three identity/immutability tests and TypeScript 5.8.3 pass.",
+      "limitations": ["No terminal GPU, performance or remount measurements are claimed."],
+      "inspected_screenshots": [],
+      "training_eligible": false
+    },
+    {
+      "id": "frontend-pilot-20",
+      "baseline_events": [5],
+      "final_check_events": [7, 8],
+      "baseline_observation": "Custom red tooltip bodies kept default dark arrow backgrounds and fills in all four placements; default colors and keyboard relationships passed.",
+      "result": "Sixteen browser checks and TypeScript 5.8.3 pass. All eight final placement/variant screenshots inspected; no visible contrasting arrow seams observed.",
+      "limitations": ["Patch uses a native triangle instead of the original rotated square arrow.", "Selector depends on the installed Radix wrapper structure; dependency lock is pinned.", "Checks cover solid default/red surfaces and four placements, not gradients, every theme, viewport collision or every browser.", "An earlier fixture placed the left trigger too close to the viewport edge and Radix correctly flipped its placement."],
+      "inspected_screenshots": ["frontend-pilot-20/browser/1788762658219/top-default.png", "frontend-pilot-20/browser/1788762658219/top-custom.png", "frontend-pilot-20/browser/1788762658219/bottom-default.png", "frontend-pilot-20/browser/1788762658219/bottom-custom.png", "frontend-pilot-20/browser/1788762658219/left-default.png", "frontend-pilot-20/browser/1788762658219/left-custom.png", "frontend-pilot-20/browser/1788762658219/right-default.png", "frontend-pilot-20/browser/1788762658219/right-custom.png"],
+      "training_eligible": false
+    },
+    {
+      "id": "frontend-pilot-29",
+      "baseline_events": [2],
+      "final_check_events": [5, 7],
+      "baseline_observation": "A split at eight leaves created a ninth leaf.",
+      "result": "Boundary/no-op, per-tab and reopened-capacity assertions pass in one hook test; TypeScript 5.8.3 passes.",
+      "limitations": ["First hook test failed because the harness loaded two React copies; not accepted as the product baseline.", "No claim that eight is a universal WebGL limit; it is the task's specified cap."],
+      "inspected_screenshots": [],
+      "training_eligible": false
+    }
+  ],
+  "shared_limitations": [
+    "Reference patches were previously inspected by this author. These are source-grounded replay evidence, not reference-unexposed authoring or independent review.",
+    "All complete records exceed 3072 tokens; reject them whole from the bounded training split.",
+    "Early pnpm-through-Git-Bash typecheck commands are not accepted as verification; final checks invoked source-pinned TypeScript directly through node.",
+    "The Python capture CLI initially returned zero even when its captured command exit code was nonzero. Raw command metadata was accurate. CLI exit propagation is now fixed.",
+    "No V2 gold rows, train/holdout assignment, model weights or training were produced."
+  ]
+}

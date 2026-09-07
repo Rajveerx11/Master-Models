@@ -1,0 +1,14 @@
+--- a/src/modules/terminal/lib/panes.ts
++++ b/src/modules/terminal/lib/panes.ts
+@@ -36,8 +36,9 @@
+   id: PaneId,
+   cwd: string,
+ ): PaneNode {
+-  if (isLeaf(n)) return n.id === id ? { ...n, cwd } : n;
+-  return { ...n, children: n.children.map((c) => setLeafCwd(c, id, cwd)) };
++  if (isLeaf(n)) return n.id === id && n.cwd !== cwd ? { ...n, cwd } : n;
++  const children = n.children.map((c) => setLeafCwd(c, id, cwd));
++  return children.every((c, i) => c === n.children[i]) ? n : { ...n, children };
+ }
+ 
+ /**

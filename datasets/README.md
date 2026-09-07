@@ -7,7 +7,7 @@ Qwen3-4B specialists. Quality and eval isolation matter more than row count.
 
 | ID | Target work | Current reusable data |
 |---|---|---|
-| `frontend-stack` | React, TypeScript, CSS, UI state and accessibility | 242 V1 trajectories pending re-audit |
+| `frontend-stack` | React, TypeScript, CSS, UI state and accessibility | 237 replay candidates; 5 quarantined; no V2 gold |
 | `backend-stack` | APIs, services, persistence, concurrency, providers | None yet |
 | `security-review` | trust boundaries, injection, path/auth/secret safety | None yet |
 | `code-review` | defect discovery, evidence, severity, precise fixes | None yet |
@@ -32,8 +32,14 @@ real Git history
 ```
 
 For any domain whose eval state is not `frozen`, training generation is blocked.
-All five domains are now frozen. New-domain generation may use only commits retained
-in the rebuilt source inventories; frontend still requires its V1 truthfulness re-audit.
+All five domains are now frozen. A V2 eval-reference parser defect was repaired on
+2026-09-06: frontend inventory now contains 143 candidates after excluding 60 reserved
+reference/parent collisions. Other domains' historical inventories require rebuilding
+with the corrected parser before generation. The [30 selected frontend pilot tasks](frontend-stack/v2/review/pilot/README.md)
+have scoped acceptance checks. The [first five execution bundles](frontend-stack/v2/review/execution-pilot/README.md)
+pass focused/browser/type checks, but all complete traces exceed 3,072 tokens and
+independent review remains pending. No task specification, oversized evidence record
+or old replay candidate is training data.
 
 ## V2 trajectory contract
 
@@ -78,9 +84,12 @@ assistant answer.
 `datasets/frontend-stack/filtered/` and `datasets/frontend-stack/final/` are preserved
 as V1 evidence. Do not overwrite them. V2 outputs use explicit `v2/` subdirectories.
 
-The old 242-record frontend keep set remains valuable because its tool traces validate
-and its tasks match the domain. It is not accepted unchanged: all score-7 examples and
-any record with unsupported red/green or test claims require semantic review.
+The 2026-09-06 whole-corpus audit screened all 242 retained frontend records, including
+scores 8 and 9. Five are quarantined and four explanations are corrected in a separate
+237-record candidate set. Every candidate is explicitly training-ineligible: V1 tool
+results were authored synthetically and lack captured execution and source identity.
+See [the report](frontend-stack/v2/review/hardening/REPORT.md) for evidence and replay
+requirements. High judge scores do not substitute for semantic or execution review.
 
 ## Commands
 

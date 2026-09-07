@@ -1,0 +1,237 @@
+{
+  "all_decisions": {
+    "quarantine": 12,
+    "replay_required": 340
+  },
+  "coverage_method": "Overlapping lexical tags; not evidence of skill mastery or test adequacy",
+  "eval_prompts_scanned": 100,
+  "eval_similarity_method": "Token Jaccard >= .45 with >=12 shared tokens; heuristic only, not semantic/patch clearance",
+  "execution_policy": "Never execute dataset commands; no synthetic output is accepted as captured execution",
+  "final_mixes": {
+    "holdout": {
+      "by_source": {
+        "databricks-dolly-15k": 4,
+        "frontend-stack": 12,
+        "hermes-function-calling-v1": 4
+      },
+      "contract_errors": [],
+      "records": 20
+    },
+    "holdout-short4096": {
+      "by_source": {
+        "databricks-dolly-15k": 4,
+        "frontend-stack": 10,
+        "hermes-function-calling-v1": 4
+      },
+      "contract_errors": [],
+      "records": 18
+    },
+    "train": {
+      "by_source": {
+        "databricks-dolly-15k": 77,
+        "frontend-stack": 230,
+        "hermes-function-calling-v1": 77
+      },
+      "contract_errors": [
+        {
+          "error": "message 1 find_gamification_apps: 'Team Building' is not one of [None]",
+          "line": 236
+        },
+        {
+          "error": "message 1 find_gamification_apps: None is not of type 'string'",
+          "line": 236
+        },
+        {
+          "error": "message 1 copy_folder: '/Users/username/Desktop/ProjectX' is not one of [None]",
+          "line": 278
+        },
+        {
+          "error": "message 1 copy_folder: '/Volumes/BackupDrive/Archives/ProjectX' is not one of [None]",
+          "line": 278
+        },
+        {
+          "error": "message 1 get_trending_games: None is not of type 'string'",
+          "line": 357
+        },
+        {
+          "error": "message 1 get_trending_games: 5 is not one of [None]",
+          "line": 357
+        },
+        {
+          "error": "message 1 install_games_on_windows: ['Lords Mobile', 'Color by Numbers', 'Minecraft', 'Eversoul', 'Soul Knight Prequel'] is not one of [None]",
+          "line": 357
+        }
+      ],
+      "records": 384
+    },
+    "train-short4096": {
+      "by_source": {
+        "databricks-dolly-15k": 77,
+        "frontend-stack": 174,
+        "hermes-function-calling-v1": 77
+      },
+      "contract_errors": [
+        {
+          "error": "message 1 find_gamification_apps: 'Team Building' is not one of [None]",
+          "line": 203
+        },
+        {
+          "error": "message 1 find_gamification_apps: None is not of type 'string'",
+          "line": 203
+        },
+        {
+          "error": "message 1 copy_folder: '/Users/username/Desktop/ProjectX' is not one of [None]",
+          "line": 241
+        },
+        {
+          "error": "message 1 copy_folder: '/Volumes/BackupDrive/Archives/ProjectX' is not one of [None]",
+          "line": 241
+        },
+        {
+          "error": "message 1 get_trending_games: None is not of type 'string'",
+          "line": 308
+        },
+        {
+          "error": "message 1 get_trending_games: 5 is not one of [None]",
+          "line": 308
+        },
+        {
+          "error": "message 1 install_games_on_windows: ['Lords Mobile', 'Color by Numbers', 'Minecraft', 'Eversoul', 'Soul Knight Prequel'] is not one of [None]",
+          "line": 308
+        }
+      ],
+      "records": 328
+    }
+  },
+  "general_quarantined_records": 3,
+  "general_schema_checked_candidates": 159,
+  "inputs": {
+    "datasets/frontend-stack/filtered/keep_ge7.index.json": "032f271c7fdd2ef370d436b8695abc2b44157e4b8cc7af2acda5dab99ad11dca",
+    "datasets/frontend-stack/filtered/keep_ge7.jsonl": "65238312fd4eed42d8aa861288b1b1f366a57779032a209a189158ca3fa38e51",
+    "datasets/frontend-stack/filtered/keep_ge7.pi.jsonl": "66dccb93ea0ff58d39b0d9bdd6181ea9a1daa4db201fa06d1bf5da4c8823e832",
+    "datasets/frontend-stack/final/holdout-short4096.jsonl": "a159f1e54ed57df08829689722db5ed348c4a8df8d36d433a6114d70b48b8a78",
+    "datasets/frontend-stack/final/holdout.jsonl": "8d59b5c22ee6df65d8b1843d0bdf08dc352aa6640efee07d8fc6d17158485372",
+    "datasets/frontend-stack/final/train-short4096.jsonl": "3bafb8cbc6c793c302fbc0d81b8fa5793959cc0a3d748842ab40daf0b8643504",
+    "datasets/frontend-stack/final/train.jsonl": "f4c36ca2b83d98137841777eb2d64024d929c82fdacfad75292607be5777d19d",
+    "datasets/frontend-stack/generated/raw/batch1_forms_bugfix_medium.jsonl": "d1962c69b7035b103ffa3ce66dc8bb7ee9e1b14b2b0e1f8234fba21c77ede4cd",
+    "datasets/frontend-stack/generated/raw/batch1_part_a.jsonl": "d2e4bc1700ef723af20f7a0604b1469a57e26615a2f30ea47068bafa4cc97973",
+    "datasets/frontend-stack/generated/raw/batch1_part_b.jsonl": "87962ed5359d89e6113b6b429418c0d31b51b9cf2d24927d1d1d8938832dd469",
+    "datasets/frontend-stack/generated/raw/batch1_part_c.jsonl": "4b6e75fc7e22143c13724b129185208c77a380d38ca995079d681f3f1d1b90fb",
+    "datasets/frontend-stack/generated/raw/batch1_part_d.jsonl": "23199d356aa9ef11ee30340e30588112952aee8fd4d0987e7e181de8adb035a4",
+    "datasets/frontend-stack/generated/raw/batch1_part_e.jsonl": "5e2f0eb0bf8c73aa364fdd02fd5d91da7407a2e68ea2f53a0e1d85109c4d7337",
+    "datasets/frontend-stack/generated/raw/batch1_scores.jsonl": "32414f5dbcc42349dad97bcf5f8df3d1a1415031dc29c000b9b0057f058b3da2",
+    "datasets/frontend-stack/generated/raw/batch1_scores_calibrated.jsonl": "4c50a4b4c8d523a1af6dc9da2684ccdcd683b06b40b853c6d6a9d7ff442f430d",
+    "datasets/frontend-stack/generated/raw/batch2_mixed_25.jsonl": "322cc25926f48d008628bd03fa717439997b27d92f300384600eebe55e73ad4c",
+    "datasets/frontend-stack/generated/raw/batch2_part_a.jsonl": "433f4b2c368fa6a6e3d3d4691eaae43c5016db1c123e26a8e53b8f9a5b608ad2",
+    "datasets/frontend-stack/generated/raw/batch2_part_b.jsonl": "1a816fd26fd09fa50c24ac23e8d03f559dc108f4f49e13a684d8e3c7249a6048",
+    "datasets/frontend-stack/generated/raw/batch2_part_c.jsonl": "167b4421cac779b51c2a07a32ca0943b5f780e3caa922013a6bdf6601a9de259",
+    "datasets/frontend-stack/generated/raw/batch2_part_d.jsonl": "e3c12ed4312c4afd3028509699695442a8b64f08732a2b56a6738337d88c33d6",
+    "datasets/frontend-stack/generated/raw/batch2_part_e.jsonl": "07a33b80f11050d027584ba28f324b24cc52f642fab2f46ad1988363d4fd4c64",
+    "datasets/frontend-stack/generated/raw/batch2_scores.jsonl": "46a945412003fcbc34873e8b4d161627fb91feff7d96b25cec4aa335df2a52ef",
+    "datasets/frontend-stack/generated/raw/batch3_mixed_100.jsonl": "035b924bc9042ba2852c4ca65ad254d8685e6bd8ee4d8f6b63d8845f69e600d4",
+    "datasets/frontend-stack/generated/raw/batch3_part_a.jsonl": "8c412a8ddf9d878a46e7958747135112b8d5c2140f72f07ed8b13a88539e3a00",
+    "datasets/frontend-stack/generated/raw/batch3_part_b.jsonl": "19831d984a0c26f674adc1fc7b986c61ea47218c9b2693582c396ded347e6b29",
+    "datasets/frontend-stack/generated/raw/batch3_part_c.jsonl": "655b91103501b4836f879986e662cf3fc7ee4d6b6a22394430cb20b9caf99a74",
+    "datasets/frontend-stack/generated/raw/batch3_part_d.jsonl": "61ad5063dbb4ef90fb0835261e51743f7b7035ddc7b510dec76751b3bb5ddacc",
+    "datasets/frontend-stack/generated/raw/batch3_part_e.jsonl": "ff350adccf4f3ee68b192ea202ab60e734e7e053c80b8bde6aac5fd24e57dd90",
+    "datasets/frontend-stack/generated/raw/batch3_part_f.jsonl": "a822f65adf0b190ff8a499af1bc9f0e4deaf58f3966c3ed685bc325cb4867ac1",
+    "datasets/frontend-stack/generated/raw/batch3_part_g.jsonl": "e35050d71c34052b9d3e7074e05ed424634f9a2822560c2ec89886bb5173b67c",
+    "datasets/frontend-stack/generated/raw/batch3_part_h.jsonl": "f35bbc8e6e72dd45570e0bd3ba41704583a8ed6350e106b30739bfc69587b31c",
+    "datasets/frontend-stack/generated/raw/batch3_part_i.jsonl": "864f73c1a2c5477addda31ff2c51f37e4bed57cb1c9d8f5cf3a846e9e781142b",
+    "datasets/frontend-stack/generated/raw/batch3_part_j.jsonl": "d3ab3ac23bf5a26a5825d412b43e2c7968618b3d07ebd68c2c7e1296d51e9fe9",
+    "datasets/frontend-stack/generated/raw/batch3_scores.jsonl": "cd7b9a4f2f373eeceb89f24836f4be47a9c4e0fb09d28ae4a06c345fb2f10dd3",
+    "datasets/frontend-stack/generated/raw/batch3_scores_1_50.jsonl": "d32484109dd03b8ec73353ad47a696bfbb51bc07a3e75e843d7a80eb62ebcbde",
+    "datasets/frontend-stack/generated/raw/batch3_scores_51_100.jsonl": "8c640e485e48b866e5105f35ec657d652202cfc3dd799df0edbb60d53b616c17",
+    "datasets/frontend-stack/generated/raw/batch4_mixed_100.jsonl": "36c362fbbff4b3b73db67e4eff05da4191fc8617fb66032c171d1f17f9bc9ecd",
+    "datasets/frontend-stack/generated/raw/batch4_part_a.jsonl": "c18abf61450928b7f083ce45136d1f30b69632f5d5207d4633c2ff7f7ee84728",
+    "datasets/frontend-stack/generated/raw/batch4_part_b.jsonl": "04e5bdb0d3dbc28acf222e069d4b7e3381b23e642288f27bfbacce76327ac834",
+    "datasets/frontend-stack/generated/raw/batch4_part_c.jsonl": "02daf9b86d133befc9fdbfe36396da4b7162913146fe613aefbf041a6e3ca6b9",
+    "datasets/frontend-stack/generated/raw/batch4_part_d.jsonl": "47bbc55fd445b6484900ed5b342a7c81f4108b2e4d0333e0ffb47177c9c0e614",
+    "datasets/frontend-stack/generated/raw/batch4_part_e.jsonl": "f56a4034b0d995ebdfd622ca1291cd4f714437e5ab7c941a08a2b54b745e9d5d",
+    "datasets/frontend-stack/generated/raw/batch4_part_f.jsonl": "3f524c2182d99816efbbfd611917b7d355e3942cd7a14f8f9898dce3f28d23ad",
+    "datasets/frontend-stack/generated/raw/batch4_part_g.jsonl": "1814825280943b688fdf5b143f6673222eca28be61c6912dd52943a9519c78ca",
+    "datasets/frontend-stack/generated/raw/batch4_part_h.jsonl": "722fa21a32f5afdc2acdae6daf0701369bdd8b220080559602a8138971c5713c",
+    "datasets/frontend-stack/generated/raw/batch4_part_i.jsonl": "ca58586ad32df3bdc032bf4c13963750a35bb006beb02bb54b3d0f13f6b315ef",
+    "datasets/frontend-stack/generated/raw/batch4_part_j.jsonl": "1767fe325745a5416aa1951aef0ce984861aadcccf735aa6750a1d1bcd25fd33",
+    "datasets/frontend-stack/generated/raw/batch4_scores.jsonl": "7ad6a606770c880c040464c08cea72acff7d2dbe8fb93d593ad0b4055b484286",
+    "datasets/frontend-stack/generated/raw/batch4_scores_1_25.jsonl": "0cf421fbc2c119d5341ba03e693b8a493e92ead061bf820e89e72c1df2e88a3d",
+    "datasets/frontend-stack/generated/raw/batch4_scores_26_50.jsonl": "dfa484ff95e3ce9a97104e7506b9e9fdc06729f4410ac146af0976666a876532",
+    "datasets/frontend-stack/generated/raw/batch4_scores_51_75.jsonl": "a1e468ef3ce4c3f8d311bc5a4445f99bf1c54468234683516f043b0a4ee65343",
+    "datasets/frontend-stack/generated/raw/batch4_scores_76_100.jsonl": "6d01cb341268f7b835ac372174bb5d6ae56253918c87043d6a36f966a2846546",
+    "datasets/frontend-stack/generated/raw/batch5_mixed_100.jsonl": "79867231678f2ce346e276b0f0ea71995bb9a6f9f34b977b10c1dbff6e2f5254",
+    "datasets/frontend-stack/generated/raw/batch5_part_a.jsonl": "87e52288fafec292bf49c40ef918e7ea514b0e71c32d4bf4c7f1d4ba25acc527",
+    "datasets/frontend-stack/generated/raw/batch5_part_b.jsonl": "95892c2d22a791e92e9d406d55d295e9a1587d0fd0099fbaddbaa1595beb5271",
+    "datasets/frontend-stack/generated/raw/batch5_part_c.jsonl": "028e49bf298490053ef030b6c72cf8b2c2963f4b8b9d904862e9e9d17b30198e",
+    "datasets/frontend-stack/generated/raw/batch5_part_d.jsonl": "3d0a3b069e95499175f5b54b92206b0d9d9a8f473dd316c9221691ff5a7ec93a",
+    "datasets/frontend-stack/generated/raw/batch5_part_e.jsonl": "07a70695d6f05cab78f7b3f4698a71cbc86b507225cd8918af98867c1474e184",
+    "datasets/frontend-stack/generated/raw/batch5_part_f.jsonl": "39b8e703946422957554b385374101f517443eb807729b8cffa076c78462525e",
+    "datasets/frontend-stack/generated/raw/batch5_part_g.jsonl": "a4bebe55c04187bd9a861894ff9fcbef748f3d7fab67587a650d08795df0a41c",
+    "datasets/frontend-stack/generated/raw/batch5_part_h.jsonl": "b547fcbadaf47e77ad821a4c2e3acc2fbabf231f52365243dcc1f56f2ea10014",
+    "datasets/frontend-stack/generated/raw/batch5_part_i.jsonl": "5ab1de608a0e3655b88df077635886ab2cdd47e158d7fc8aea59f2b54ecd5061",
+    "datasets/frontend-stack/generated/raw/batch5_part_j.jsonl": "f391ceb9892ccc2da739e711a464a5ad8b6eb277e22945521e55165eb1c86bdf",
+    "datasets/frontend-stack/generated/raw/batch5_scores.jsonl": "615722311ded489dab4708d0c7459cf53ea4169a9253a5d5ce93c0d408acfdfd",
+    "datasets/frontend-stack/generated/raw/batch5_scores_1_25.jsonl": "157b967a8c1e969ded204bfc4fd7c41d6cf85d9c90e5780822919d4aa2a70270",
+    "datasets/frontend-stack/generated/raw/batch5_scores_26_50.jsonl": "08da72917712c4594a8294a86421769c7ed839bb9ad712b4d6aa98e519bce02e",
+    "datasets/frontend-stack/generated/raw/batch5_scores_51_75.jsonl": "135cf088e497be3ae2cbc1e233b7e0e9c5572a9e02c5c86b9663a482a02a8729",
+    "datasets/frontend-stack/generated/raw/batch5_scores_76_100.jsonl": "506464cbea29969761d741a72b504b3ee7c3668de527db1e85a8c2942ba36945",
+    "datasets/frontend-stack/seeds/seeds.jsonl": "6ea553a2341bf6e5dadfca9c24bde3c60513995add90d1b14db220034581d80b",
+    "datasets/frontend-stack/v2/review/hardening/semantic-decisions.json": "31d162bdecc5f34a76897ffd2f6c362a9851c440af5e05c9be55a04ee015d1b9",
+    "datasets/frontend-stack/v2/review/hardening/typescript-diagnostics.json": "1c6abf93df3603c15bff1d9e3a4036bac6b1a009f18cca92694a17649382df08",
+    "training/pi_tools.json": "72190fac6d837652b56944b4f5891aae6c882ce045a5945e3a1b0b1813241b43"
+  },
+  "output_sha256": {
+    "audit.jsonl": "2d2dfa8ea5591c9a0ff9ba07776b57e5e3d3f0b36c6324dff3563933dd91c06a",
+    "general-candidates.jsonl": "1fc5fa55783b572be67371c7d1730dec57b60f318633883b3118ea31668392bc",
+    "general-quarantine.jsonl": "b5f63c0f39fed57ac193a50da76885fee6f354cde682e88748c18308e5e6f536",
+    "quarantine.jsonl": "2892e32e1041861e5cd3db368256ef6eed0be0a24c46adbcf0d112a27f3eaa5e",
+    "replay-candidates.jsonl": "542d19fc019068cddf7bd2f88dc7c537fe76691d67206c624661cb4a3e9272cb",
+    "replay-queue.jsonl": "63ba20804d8c5f84faa337315a0feddaba7a185d56fc68101b5aabb743f1dba7",
+    "similarity-review.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "raw_and_seed_records": 352,
+  "retained_coverage_tags": {
+    "accessibility_keyboard": 150,
+    "data_persistence": 90,
+    "forms_validation": 133,
+    "layout_responsive": 178,
+    "routing": 37,
+    "state_async_lifecycle": 101,
+    "test_authoring": 199
+  },
+  "retained_decisions": {
+    "quarantine": 5,
+    "replay_required": 237
+  },
+  "retained_exact_prompt_duplicates": 0,
+  "retained_exact_trace_duplicates": 0,
+  "retained_finding_counts": {
+    "edit_context_mismatch": 1,
+    "edit_from_search_fragment": 8,
+    "overwrite_without_read": 4,
+    "partial_file_context": 6,
+    "react_version_claim_review": 8,
+    "semantic_quarantine": 3,
+    "semantic_repair_summary": 4,
+    "semantic_review": 1,
+    "summary_failure_scope_review": 1,
+    "synthetic_execution_unverified": 242,
+    "typescript_environment_dependency": 3,
+    "typescript_static_error": 1,
+    "unresolved_verification_failure": 1,
+    "visual_claim_review": 17
+  },
+  "retained_prompt_similarity_pairs": 0,
+  "retained_records": 242,
+  "schema_version": 1,
+  "scope": "350 canonical raw trajectories, 2 seeds, all 242 retained, all V1 final splits; raw part copies reconciled",
+  "train_holdout_normalized_prompt_overlap": [],
+  "training_ready": false,
+  "typescript": {
+    "analyzer_sha256": "8c2c6c46f20d246c48040c34dee7a868dc92c2c9483925e572efaa85701c8fe1",
+    "checked_files": 675,
+    "input_sha256": "ce2fe59bb9147f6a527be1687708aea11569fff201e8e9a2001405ba4a3e69bb",
+    "method": "Reconstructed full snapshots; syntax and unresolved local identifiers only. Dependencies are not resolved; no repository typecheck/test execution.",
+    "version": "5.9.3"
+  },
+  "v1_lineage_checks": "Raw/keep/pi conversion agree; all final domain exchanges match pi keep; bounded splits are unchanged subsets of their own source split"
+}

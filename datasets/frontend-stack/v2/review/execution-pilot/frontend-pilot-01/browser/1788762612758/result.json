@@ -1,0 +1,74 @@
+{
+  "task": 1,
+  "started_at": "2026-09-07T06:30:12.758Z",
+  "checks": [
+    {
+      "name": "compact height and alignment",
+      "pass": true,
+      "observed": {
+        "input": {
+          "x": 100,
+          "y": 100,
+          "width": 904,
+          "height": 32
+        },
+        "button": {
+          "x": 1020,
+          "y": 100,
+          "width": 80,
+          "height": 32
+        }
+      }
+    },
+    {
+      "name": "visible primary focus",
+      "pass": true,
+      "observed": {
+        "focused": {
+          "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, oklab(0.814207 -0.102146 -0.00917524 / 0.4) 0px 0px 0px 2px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+          "border": "rgb(53, 53, 52)",
+          "ring": "color-mix(in oklab, #6bd8cb 40%, transparent)",
+          "ringRgba": [
+            107,
+            215,
+            202,
+            102
+          ],
+          "primaryRgba": [
+            107,
+            216,
+            203,
+            255
+          ]
+        },
+        "primary": "rgb(107, 216, 203)"
+      }
+    },
+    {
+      "name": "controlled typing",
+      "pass": true
+    },
+    {
+      "name": "focus ring removed on blur",
+      "pass": true,
+      "observed": {
+        "blurred": "none"
+      }
+    },
+    {
+      "name": "external value update",
+      "pass": true
+    },
+    {
+      "name": "disabled value preserved",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "screenshots": [
+    "C:\\Master-Models\\outputs\\frontend-pilot\\frontend-pilot-01\\browser\\1788762612758\\focused.png",
+    "C:\\Master-Models\\outputs\\frontend-pilot\\frontend-pilot-01\\browser\\1788762612758\\blurred.png"
+  ],
+  "browser": "151.0.7922.34",
+  "passed": true
+}

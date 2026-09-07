@@ -61,6 +61,7 @@ local Git repositories
 - [x] Review eval candidate balance and remove weak/documentation-only commits.
 - [x] Record immutable repository identity and license/provenance.
 - [ ] Review non-eval source candidates before trajectory generation.
+- [x] Select 30 scoped frontend pilot tasks; correct eval reservation parsing (143 frontend sources remain).
 
 Exit: every specialist has a reviewed candidate pool with no known eval overlap.
 
@@ -83,10 +84,16 @@ commits.
 
 Frontend:
 
-- Re-audit all 121 score-7 records.
-- Retain score-8/9 records unless deterministic checks fail.
-- Repair summaries only when the tool trace and code are correct.
-- Drop or regenerate fabricated outputs, impossible edits, or unsupported test claims.
+- Whole-corpus static screening completed: 5 retained records quarantined, 4
+  explanation repairs, 237 candidates awaiting real execution.
+- Five of the [selected 30-task pilot](../datasets/frontend-stack/v2/review/pilot/README.md)
+  tasks pass captured checks with a pinned harness. All five complete traces exceed
+  3,072 tokens; repair capture length and obtain independent review before expansion.
+  V1 examples remain coverage ideas; never invent provenance for them.
+- Review semantics at every score, including 8/9; judge scores missed incorrect
+  React, CSS, date and accessibility explanations.
+- Capture real tool execution and verify both failure and corrected behavior before
+  promoting any record. See `datasets/frontend-stack/v2/review/hardening/REPORT.md`.
 - Add 30-50 gap-targeted examples only if the audited pool lacks important skills.
 
 New domains:
@@ -101,6 +108,7 @@ All domains:
 
 - Deduplicate normalized prompts and assistant outputs.
 - Scan source hashes and text against eval material.
+- Group by source task before splitting; variations of one commit stay together.
 - Add 60-100 shared general/tool anti-forgetting records.
 - Create deterministic train/holdout splits.
 - Render with the pinned 4B template and filter whole records at 3,072 tokens.

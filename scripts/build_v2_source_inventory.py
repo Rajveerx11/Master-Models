@@ -24,7 +24,10 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_REGISTRY = ROOT / "datasets/v2-registry.json"
 EVAL_ROOT = ROOT / "evals/tasks"
-COMMIT_REF = re.compile(r"\bcommit\s+`([0-9a-fA-F]{7,40})`")
+COMMIT_REF = re.compile(
+    r"(?:^Source:\s+`[^`]+`\s+commit\s+|^Reference commit:\s+)`([0-9a-fA-F]{7,40})`",
+    re.MULTILINE,
+)
 DOC_SUFFIXES = {
     ".md", ".mdx", ".txt", ".png", ".jpg", ".jpeg", ".gif", ".svg", ".ico",
 }

@@ -1,14 +1,14 @@
 {
-  "candidate_count": 203,
+  "candidate_count": 143,
   "candidate_count_by_repository": {
-    "terax-ai": 134,
-    "testing-ide": 69
+    "terax-ai": 100,
+    "testing-ide": 43
   },
-  "candidates_sha256": "d0cb233126002df8b7d5f0286f220558659625817ed9fe5c4c2ed79cb047350d",
+  "candidates_sha256": "eac0368e5406032b958dc43f54df4faa916b00462d798b3bab66d7d18a295a59",
   "eval_state": "frozen",
   "generation_gate": "v1_truthfulness_reaudit",
   "purpose": "source candidates only; not approved training data",
-  "reserved_commit_count": 36,
+  "reserved_commit_count": 195,
   "schema_version": 1,
   "source_heads": {
     "terax-ai": "868a5254f030f099fe4de6edebd626e65720a1dc",

@@ -22,14 +22,24 @@ too fragile for the free tier.
 | V2 architecture and per-specialist plans | Ready |
 | Shared V2 dataset schema and registry | Ready |
 | Frontend frozen eval | Ready: 20 tasks |
-| Frontend reusable corpus | Ready for V2 re-audit: 242 domain trajectories |
-| All specialist source inventories | Ready and eval-isolated |
+| Frontend reusable corpus | Audited: 237 replay candidates, 5 quarantined; no V2 gold approved |
+| Frontend source inventory and pilot | 143 sources; 30 selected, 5 executed, 0 gold |
+| Other specialist source inventories | Refresh required after V2 eval-parser correction |
 | All specialist frozen evals | Ready: 20 tasks each, 100 total |
-| Qwen3-4B template, bounded splits, notebook | Pending |
+| Qwen3-4B template, bounded splits, notebook | Template pinned; 5 traces oversized; splits/notebook pending |
 | V2 training and gates | Pending |
 
 See [STATUS.md](STATUS.md) for the live checkpoint and
 [plan/v2-master-plan.md](plan/v2-master-plan.md) for the execution order.
+
+The [frontend hardening report](datasets/frontend-stack/v2/review/hardening/REPORT.md)
+records code defects, corrected explanations, and missing execution provenance.
+The V1 mix and archived notebook are historical evidence, not approved training inputs.
+
+The [frontend pilot queue](datasets/frontend-stack/v2/review/pilot/README.md) specifies
+30 source-grounded tasks and focused checks. The [first five execution bundles](datasets/frontend-stack/v2/review/execution-pilot/README.md)
+contain passing focused/browser/type checks, but all complete traces exceed 3,072
+tokens. Independent review and a bounded verified corpus remain pending.
 
 ## Repository map
 
@@ -56,6 +66,7 @@ training/    Colab-safe recipes, tool schemas, and pinned chat templates
 ## First commands
 
 ```powershell
+py -3 -m pip install -r scripts/requirements-audit.txt
 py -3 scripts/build_v2_source_inventory.py
 py -3 scripts/build_v2_queues.py
 py -3 scripts/validate_eval_tasks.py --require-v2

@@ -51,6 +51,13 @@ The exact Qwen3-4B template must be pinned from the selected tokenizer revision 
 building bounded splits. V1's `qwen3-8b.jinja` is historical and must not be silently
 reused even though current 4B/8B families are closely related.
 
+The export-identity tokenizer is now pinned at
+`1cfa9a7208912126459214e8b04321603b3df60c`; hashes and rendering options are in
+[`qwen3-4b.pin.json`](templates/qwen3-4b.pin.json). Thinking and generation-prompt
+insertion are disabled for complete-record measurement. All first-five pilot
+records exceed 3,072 tokens. The quantized training-base revision and template parity
+still require verification; this pin alone does not permit training.
+
 ## Colab sequence
 
 1. Install pinned package versions.

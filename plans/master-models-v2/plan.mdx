@@ -34,11 +34,11 @@ overlap.
 
 1. [x] Generate source inventories.
 2. [x] Freeze backend, security, code-review, and QA evals.
-3. [x] Rebuild inventories with the new reservations.
-4. [ ] Re-audit frontend score-7 records and review non-eval source candidates.
-5. [ ] Generate source-grounded training trajectories for each open domain.
+3. [ ] Refresh other specialists' inventories with corrected V2 reference parsing. Frontend refreshed to 143; historical other-domain inventories remain unchanged.
+4. [x] Screen all frontend V1 records; quarantine 5 and correct 4 explanations in candidate copies.
+5. [ ] Complete the 30-task frontend pilot. First five pass captured checks; all complete traces exceed 3,072 tokens. Fix capture length and obtain independent review before the remaining 25. All old candidates and pilot evidence remain training-ineligible.
 6. [ ] Judge, spot-check, deduplicate, split, and bound whole records at 3,072 tokens.
-7. [ ] Pin the exact Qwen3-4B template and build a self-contained Colab notebook.
+7. [ ] Build a self-contained Colab notebook. Qwen3-4B export tokenizer/template is pinned; quantized training-base revision/parity remain pending.
 8. [ ] Train frontend first and complete its A/B gate.
 9. [ ] Reuse the verified recipe for the remaining specialists.
 
@@ -53,3 +53,5 @@ py -3 -m unittest scripts.test_gate_proxy
 ```
 
 Final success requires committed per-domain gate reports, not only datasets or weights.
+
+Current evidence and limitations: `datasets/frontend-stack/v2/review/hardening/REPORT.md`.

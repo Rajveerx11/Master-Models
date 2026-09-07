@@ -1,0 +1,62 @@
+{
+  "task": 1,
+  "started_at": "2026-09-07T06:25:51.846Z",
+  "checks": [
+    {
+      "name": "compact height and alignment",
+      "pass": false,
+      "observed": {
+        "input": {
+          "x": 100,
+          "y": 103,
+          "width": 183,
+          "height": 26
+        },
+        "button": {
+          "x": 299,
+          "y": 100,
+          "width": 80,
+          "height": 32
+        }
+      }
+    },
+    {
+      "name": "visible primary focus",
+      "pass": false,
+      "observed": {
+        "focused": {
+          "shadow": "none",
+          "border": "rgb(229, 226, 225)",
+          "ring": ""
+        },
+        "primary": "rgb(107, 216, 203)"
+      }
+    },
+    {
+      "name": "controlled typing",
+      "pass": true
+    },
+    {
+      "name": "focus ring removed on blur",
+      "pass": false,
+      "observed": {
+        "blurred": "none"
+      }
+    },
+    {
+      "name": "external value update",
+      "pass": true
+    },
+    {
+      "name": "disabled value preserved",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "screenshots": [
+    "C:\\Master-Models\\outputs\\frontend-pilot\\frontend-pilot-01\\browser\\1788762351841\\focused.png",
+    "C:\\Master-Models\\outputs\\frontend-pilot\\frontend-pilot-01\\browser\\1788762351841\\blurred.png"
+  ],
+  "browser": "151.0.7922.34",
+  "passed": false
+}

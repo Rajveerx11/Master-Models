@@ -1,0 +1,302 @@
+{
+  "schema_version": 1,
+  "selected_tasks": 30,
+  "executed_tasks": 5,
+  "remaining_tasks": 25,
+  "gold_approved": 0,
+  "training_eligible": false,
+  "expansion_gate": "blocked: oversized complete records and pending independent semantic review",
+  "tasks": [
+    {
+      "id": "frontend-pilot-01",
+      "parent": "0e94a9e34230fb0d37a777e4e78fa65e447c31df",
+      "changed_files": [
+        {
+          "path": "apps/desktop/src/components/ui/input.tsx",
+          "before_sha256": "64c6448e6e2c1b939d739121bd8e50333f8775bf5ce189d749d52d9d813be3bf",
+          "after_sha256": "622461bcda20585bd17e80a24a877c3e44e72cdd5de99272b0509d7a45fdec97"
+        }
+      ],
+      "tool_events": 10,
+      "browser_runs": [
+        {
+          "path": "frontend-pilot-01/browser/1788761891066/result.json",
+          "passed": false,
+          "checks": 0,
+          "errors": 1
+        },
+        {
+          "path": "frontend-pilot-01/browser/1788762302927/result.json",
+          "passed": false,
+          "checks": 0,
+          "errors": 2
+        },
+        {
+          "path": "frontend-pilot-01/browser/1788762351841/result.json",
+          "passed": false,
+          "checks": 6,
+          "errors": 0
+        },
+        {
+          "path": "frontend-pilot-01/browser/1788762398058/result.json",
+          "passed": false,
+          "checks": 6,
+          "errors": 0
+        },
+        {
+          "path": "frontend-pilot-01/browser/1788762453554/result.json",
+          "passed": false,
+          "checks": 6,
+          "errors": 0
+        },
+        {
+          "path": "frontend-pilot-01/browser/1788762612758/result.json",
+          "passed": true,
+          "checks": 6,
+          "errors": 0
+        }
+      ],
+      "source_archive_verified": true,
+      "captured_edit_chain_verified": true,
+      "source_lock_unchanged": true,
+      "author_reference_exposure": true,
+      "independent_semantic_review": "pending",
+      "training_eligible": false
+    },
+    {
+      "id": "frontend-pilot-10",
+      "parent": "27617dae22e020a6c22a663925ca54e5facb8aaa",
+      "changed_files": [
+        {
+          "path": "src/modules/ai/components/AiStatusBarControls.tsx",
+          "before_sha256": "87a9bb6f21e8e7093253365314abc65271cd1d3637bab4aa4a954f5183f58357",
+          "after_sha256": "87938de48e8f7ec37e185a5cde6c68a75d52b841cbc55666677753d621caa419"
+        },
+        {
+          "path": "src/modules/ai/store/chatStore.ts",
+          "before_sha256": "c4b1600b09053e96185de1630f31b065894c1cf0fa047711a72c6e9edbeeaa91",
+          "after_sha256": "a3dd4a0c61016de13406259b809c5098a029eaef3025ab6e93fe4ebb8816e07b"
+        }
+      ],
+      "tool_events": 14,
+      "browser_runs": [
+        {
+          "path": "frontend-pilot-10/browser/1788762440987/result.json",
+          "passed": false,
+          "checks": 0,
+          "errors": 1
+        },
+        {
+          "path": "frontend-pilot-10/browser/1788762562166/result.json",
+          "passed": false,
+          "checks": 2,
+          "errors": 0
+        },
+        {
+          "path": "frontend-pilot-10/browser/1788762651957/result.json",
+          "passed": true,
+          "checks": 4,
+          "errors": 0
+        }
+      ],
+      "source_archive_verified": true,
+      "captured_edit_chain_verified": true,
+      "source_lock_unchanged": true,
+      "author_reference_exposure": true,
+      "independent_semantic_review": "pending",
+      "training_eligible": false
+    },
+    {
+      "id": "frontend-pilot-15",
+      "parent": "bbe9ed1d922436230231754fa356857b4ecd6123",
+      "changed_files": [
+        {
+          "path": "src/modules/terminal/lib/panes.ts",
+          "before_sha256": "9769a1bf03b33f141dad15930915bf3a68f7919c1b528d33940471a329ab324b",
+          "after_sha256": "124a58a31f7c7be15cfba8bdd2c239fe1d6ff9cc822d4361f5e852984817ed78"
+        }
+      ],
+      "tool_events": 6,
+      "browser_runs": [],
+      "source_archive_verified": true,
+      "captured_edit_chain_verified": true,
+      "source_lock_unchanged": true,
+      "author_reference_exposure": true,
+      "independent_semantic_review": "pending",
+      "training_eligible": false
+    },
+    {
+      "id": "frontend-pilot-20",
+      "parent": "90ad498995fbed7766b566a8ee029b60e4deb948",
+      "changed_files": [
+        {
+          "path": "src/components/ui/tooltip.tsx",
+          "before_sha256": "20a26c8873ce6d84b8ef928f39bbf0aa3f7e51e055e5e7858cf1378b66a7db7e",
+          "after_sha256": "5fb240940213b4d4970f8f228a53487ff72b223b2e814cd7db50f1da04b73c29"
+        }
+      ],
+      "tool_events": 8,
+      "browser_runs": [
+        {
+          "path": "frontend-pilot-20/browser/1788762420404/result.json",
+          "passed": false,
+          "checks": 8,
+          "errors": 1
+        },
+        {
+          "path": "frontend-pilot-20/browser/1788762529202/result.json",
+          "passed": false,
+          "checks": 16,
+          "errors": 0
+        },
+        {
+          "path": "frontend-pilot-20/browser/1788762658219/result.json",
+          "passed": true,
+          "checks": 16,
+          "errors": 0
+        }
+      ],
+      "source_archive_verified": true,
+      "captured_edit_chain_verified": true,
+      "source_lock_unchanged": true,
+      "author_reference_exposure": true,
+      "independent_semantic_review": "pending",
+      "training_eligible": false
+    },
+    {
+      "id": "frontend-pilot-29",
+      "parent": "14d487947f39f353106dd0662279cfe111f538cf",
+      "changed_files": [
+        {
+          "path": "src/modules/tabs/lib/useTabs.ts",
+          "before_sha256": "59548cdfa6a5ca5664ae46834f14c4b3d19b6a279b115e16cff8f5d45e57d252",
+          "after_sha256": "0bb0bf3d995884cb8b4d7ebbf0904b0da19664cf9fbfaab146bb8c93a84df103"
+        }
+      ],
+      "tool_events": 7,
+      "browser_runs": [],
+      "source_archive_verified": true,
+      "captured_edit_chain_verified": true,
+      "source_lock_unchanged": true,
+      "author_reference_exposure": true,
+      "independent_semantic_review": "pending",
+      "training_eligible": false
+    }
+  ],
+  "files": {
+    "frontend-pilot-01/browser/1788761891066/result.json": "8f314927c2e469ce1126d51b259b4bef974197e853d33e121ec8a7ba2098961e",
+    "frontend-pilot-01/browser/1788762302927/result.json": "b485888eef943de01840c5eb9fe680dc718f93b1b56e09baa3823c9b2dcc56ed",
+    "frontend-pilot-01/browser/1788762351841/blurred.png": "54b8af6d5a2c66fa235efcce4248208dc9e69d3b27e1b4af0aa22d4959c32522",
+    "frontend-pilot-01/browser/1788762351841/focused.png": "27d7a48a0ca07800489dc9b43e12712eec2e5a07e97500c10334c2d61ca3a38d",
+    "frontend-pilot-01/browser/1788762351841/result.json": "80fb4a0a6ec365ea252742296bcf667bbfd7d4159abf8b83b48d11734f710050",
+    "frontend-pilot-01/browser/1788762398058/blurred.png": "080cee4ae752e160442f0f4f61103cc878bd34b9ddee609766d995b581717329",
+    "frontend-pilot-01/browser/1788762398058/focused.png": "f8bfb50dc73f73b6461a0058398176b05ed36fd6753392f23bc4c4d7705bf62f",
+    "frontend-pilot-01/browser/1788762398058/result.json": "44d62b724409c949b527c48e6ac49b15bf8006d0203a913f0890c3634e3e6a9f",
+    "frontend-pilot-01/browser/1788762453554/blurred.png": "19099a2b8b0cfbb1088cbe55410756b1f383808b57a91f0bd6c2fabad8260862",
+    "frontend-pilot-01/browser/1788762453554/focused.png": "f8bfb50dc73f73b6461a0058398176b05ed36fd6753392f23bc4c4d7705bf62f",
+    "frontend-pilot-01/browser/1788762453554/result.json": "45e0249c2f1bdb9508d35c09cd0e5d5da92e178f4f17e48b4ed5f6c6bdf3da3d",
+    "frontend-pilot-01/browser/1788762612758/blurred.png": "bb7ceb0faf83ea3c080809d7d13365508087aa838ad490dfa1bcc14e051a9af3",
+    "frontend-pilot-01/browser/1788762612758/focused.png": "9772773bd0c75a7d8fede3adf41ba594a5647b89cc411b05793677916c382cc2",
+    "frontend-pilot-01/browser/1788762612758/result.json": "fd0b605bd736758df9587149ab8da447363e384c4051757f8dd586775ec4b67e",
+    "frontend-pilot-01/command-events.jsonl": "56ce3108b6c39da3e438d69ac1ffa741c8ee0b8b0a91da78d3839d43330ab1cf",
+    "frontend-pilot-01/provenance.json": "ab1a0f6b04e4b423c8a1aeb5513d2ae5076d11a0304c6c09beb1b71df213dcc4",
+    "frontend-pilot-01/setup-events.jsonl": "8af90605aa4903279103d19a0a11fa3d4c9fb8b8cdcbfaa5ee605c9379e0f1d9",
+    "frontend-pilot-01/setup-overlay.json": "0e617df2e58250a0518945c581389a2195aae412d8af4bb901b98716886141e4",
+    "frontend-pilot-01/source.patch": "060a7d90a8f10599b47030d9f5748ca3c157284e8d67a582f40138577477170a",
+    "frontend-pilot-01/tool-events.jsonl": "fad87bf078356318407909130c83df7a08ecbb5841da8db56ed349bfd3869ef3",
+    "frontend-pilot-10/browser/1788762440987/result.json": "277265f03d096aa282068f86a61c4feca0b4f949843d432fd8b1c19ed83e8388",
+    "frontend-pilot-10/browser/1788762562166/picker.png": "567ca532b0e020c532418af247d3d5d501a6496aeafcb92bb96228c758693c53",
+    "frontend-pilot-10/browser/1788762562166/result.json": "088fc129c348c0bec1f4980366e16cf79774356336953a9b978a9db9a10f4565",
+    "frontend-pilot-10/browser/1788762651957/picker.png": "c1e8f3474772fdc32ecfb3a9c8bb46bdfff3a27d6400ddbf7abf0a2a6e4ad147",
+    "frontend-pilot-10/browser/1788762651957/result.json": "faa3acd35a07e1f78b4935f5af8666247be35a954bd2d17e23b75c5ba90b30a6",
+    "frontend-pilot-10/browser/1788762651957/selected.png": "1d82600f2bc1de9aeefb11c4588bf33f33b33c53dd894c743ad71c1275269a70",
+    "frontend-pilot-10/command-events.jsonl": "5f9f714adfc10c8d7f05a9d9ec7437d13b8ed000150d74c4ad7f4e544ff21850",
+    "frontend-pilot-10/provenance.json": "7268dc2c6a9354b601b8186839e3e17ca86646d67b7eef3ec08ea374fcb871a9",
+    "frontend-pilot-10/setup-events.jsonl": "7116fb15f967fcafe69c7a2fe5923a69dae3d47f795c323a3d4c9167638800cb",
+    "frontend-pilot-10/source.patch": "55233c11a42648d1bd846e0a0dd65ef0eade635c93a3ce3c8cdd825ec83887a8",
+    "frontend-pilot-10/tool-events.jsonl": "d265a2953deb5df76ac0159e7068a954f26ad7cfcc963f2fdf006880e560b922",
+    "frontend-pilot-15/command-events.jsonl": "65d51757a0770b506afa8c439c1ad4510457a3dd5dce50e10ae6e3811c6cd91d",
+    "frontend-pilot-15/provenance.json": "578b602bf839b728654a96c587a109823cd0a4fcf7b12b3cd3e98b7a31416f4f",
+    "frontend-pilot-15/setup-events.jsonl": "7861e0d5c6925fd9be4334e75e1c49ade5e98151299480cf5391f789fe2d435a",
+    "frontend-pilot-15/source.patch": "26acdbc0b186223269ea812f447d516fbaf7c86c3fc2c3f37c85f678ed9c78fb",
+    "frontend-pilot-15/tool-events.jsonl": "a61bef6772f21d498fc5898d6199bb188f563c1bcc84fecca118d65fc882e93e",
+    "frontend-pilot-20/browser/1788762420404/bottom-custom.png": "117a22e396231d0fed06c2b36cbd749c2784cb7dba7b274f052cbe58e4ce36c7",
+    "frontend-pilot-20/browser/1788762420404/bottom-default.png": "cc81ad46d37612df8adf3e299526187b8552447c5779e7367ed375beb18927ff",
+    "frontend-pilot-20/browser/1788762420404/result.json": "1cbafb1675927d18db6a94a0fa1bf4bcdbb6c2b992e326df3cfc34fce98eb474",
+    "frontend-pilot-20/browser/1788762420404/top-custom.png": "b691d2df403c22a154574562f82a02a0c834acc9c7f8abb308a740bb151eeb4a",
+    "frontend-pilot-20/browser/1788762420404/top-default.png": "c2ab7ce3b771b657fcec0dc895fab8652b43c79f9e58c2404d7494c64dc7fa11",
+    "frontend-pilot-20/browser/1788762529202/bottom-custom.png": "c8b74bbb115e33a03421238085554faeb9bf788bf14f30864e3ae4cf4b620adf",
+    "frontend-pilot-20/browser/1788762529202/bottom-default.png": "f6c3000ed6acfd8f7c98a0ef8b789347c031cb97b4da62369b3a968dab6c70a1",
+    "frontend-pilot-20/browser/1788762529202/left-custom.png": "7c33244144b20f2fe441764250a138c2547ad02118f5694d865fd60f9a380983",
+    "frontend-pilot-20/browser/1788762529202/left-default.png": "c3e73fec98118708f60ab5437c8a64567a2161c29c86c3b5609d7109d89a3975",
+    "frontend-pilot-20/browser/1788762529202/result.json": "c669e49f85d6f29749773579b08e125cd2189bee5d3420e52d354c709194984b",
+    "frontend-pilot-20/browser/1788762529202/right-custom.png": "f5b71c9a9b49cee5a1237d427f75f341abf018b1e28de4446c46d74b38615e06",
+    "frontend-pilot-20/browser/1788762529202/right-default.png": "22c369e5b89679100d031dbdaa0a7f4c810e5ef7576cc2248313d02e1ea8a16b",
+    "frontend-pilot-20/browser/1788762529202/top-custom.png": "ce2ed17d711fd4d05f9a87341542eaa6550b91c32f0389f930e816ecf17703b7",
+    "frontend-pilot-20/browser/1788762529202/top-default.png": "52181f2c8e5f18e5aa7449032f21117fbfba862f108081d5a2d4ca4370fd5e81",
+    "frontend-pilot-20/browser/1788762658219/bottom-custom.png": "87bf3682c813da0c82d10b4f741020323364b5cd406e95f142c94337743191a1",
+    "frontend-pilot-20/browser/1788762658219/bottom-default.png": "f90b2346b318ce5d3573fd0ba1457c40981d6046973828e57f42badd6e5914b7",
+    "frontend-pilot-20/browser/1788762658219/left-custom.png": "2142260f510c85247caf0b612875c0f39b6a620961779c4edebf0c3acde7c878",
+    "frontend-pilot-20/browser/1788762658219/left-default.png": "05d09217591e787acc86735295d77f13f6fe806900783a9971c6e75051a33c68",
+    "frontend-pilot-20/browser/1788762658219/result.json": "056085c5be32e68f6299c5d0ad9f48e06bbde40ceca26baf119565b8b67cba29",
+    "frontend-pilot-20/browser/1788762658219/right-custom.png": "03882d9fa2efd0089ce9016a4294b52b271d3ec7c739b84490990360fa588824",
+    "frontend-pilot-20/browser/1788762658219/right-default.png": "603c836c035f2f847783ad3a50634cef3263cef4d5ec1776eaa0e0ea32883fcc",
+    "frontend-pilot-20/browser/1788762658219/top-custom.png": "f7fc0fe64667acae94194ab4e17b69c0940245df6ad8621c9149d1bfba6697bf",
+    "frontend-pilot-20/browser/1788762658219/top-default.png": "598ddcc226e496d663bc76dd40e9891a6c01e317fae8e851864fe6dc07ee34da",
+    "frontend-pilot-20/command-events.jsonl": "f7e774ae66c5b78afb19d313cb87c241dc4f68d9737a8448b152c063aa988673",
+    "frontend-pilot-20/provenance.json": "93c0d62f8f83967d83a5ea6967f52f316b81b4538907b7258edb7bf90b66bddc",
+    "frontend-pilot-20/setup-events.jsonl": "fb91b42f2d2af4c5acbc9e2fa510eb30d3dc18226e9a7632fae748b4aa662d71",
+    "frontend-pilot-20/source.patch": "2d5e525f7a63f66966cc65355e97dff495fb84693cf705eeacbd10966ecee47a",
+    "frontend-pilot-20/tool-events.jsonl": "ad9f742e055a1dbe6fb18cf6fe1248963429ed8df9707defa8ff3029c6a483b2",
+    "frontend-pilot-29/command-events.jsonl": "b5ee1828c5dbe6e7c55644b04f9b1fc1c13b64ab8a20d22eac38349118a1f48c",
+    "frontend-pilot-29/provenance.json": "2d3196f84d90aaab9e587bbffea1dab01a7288eda9f5f6473463d30e479d4ed9",
+    "frontend-pilot-29/setup-events.jsonl": "18c03add9815f19a7796a19fc7a028b66c57896b176e55a8953416cbb2ed425e",
+    "frontend-pilot-29/source.patch": "a68eb74a77f8368f1976489f7d7fde0caffcc78614088fafbe46acf58ed4f28c",
+    "frontend-pilot-29/tool-events.jsonl": "60c72a4d456dd565a7dacc912d96ba31e195fdb5cb69ac7f6bd32c12e3970884",
+    "harness-history/initial/package.json": "2ab8803eefbb8822e122b2621f09e8a89d869fc8d056e08e675d246e8b45eda2",
+    "harness-history/initial/pnpm-lock.yaml": "e1568f2a31cd36df68f55a85a876212e06d0df6475f156f8fe9875531292d3a9",
+    "records/frontend-pilot-01.json": "f285fb25752fe75adbb29dec5c4a9ec0261c312628f4b6be573264f5066ed6a3",
+    "records/frontend-pilot-10.json": "cd3c7a6d5f23ad3f912c04d47385007f72c7a2e12e01329a361c3ff0227b01ca",
+    "records/frontend-pilot-15.json": "7fb7eacebb1cfe633b72e27fe00bc6480955dd2b8bdc37bf390eaca49b51cf54",
+    "records/frontend-pilot-20.json": "db3ab63da2652b819218f1c1384ae55e36b79654c987f6c205d7274a145c6649",
+    "records/frontend-pilot-29.json": "b4ced2cea60dab489c6b1b1348247bee632ffaaf3cb4d6e936a96b240eac88f1",
+    "review-decisions.json": "d9e98e00568ae87b24d9da616b02a3f3bf6c861f2db4ed0691732498df66096a",
+    "runtime.json": "610456b7b304bbecd404f48f14632230cf02dc6fe1198e4da6e836257fdd3b6d",
+    "setup-events.jsonl": "45f383a766dcbe99c491857deaab5542ddac479956e8a7c5621e69b11b73d6fe",
+    "token-fit.json": "f3a9427ac370625beaa5ff38d04cd0d25e6095040075113c56a95158952bbf3e",
+    "tokenizer-source.json": "756b53e535d870202f28457fba21ecd86267d7db17d49fa031e9ed116a1b4698"
+  },
+  "harness_files": {
+    "scripts/frontend_pilot/apply_browser_fixes.py": "f3b93736c473c9d53f83c675ff8089fd92645b79df96145e62966bb59a69ced6",
+    "scripts/frontend_pilot/apply_initial_fixes.py": "5fcd1260b63be3818031f16952e050b207712e69f90475fa5720be4d98801f14",
+    "scripts/frontend_pilot/browser-check.cjs": "d92f63e6dd45694add4a7ce46242577ac68358ffeae5c5b3d9974f1398252566",
+    "scripts/frontend_pilot/browser-server.mjs": "7a27dc0bb153696dab143d0581a73a75ef29f2b00e9a7b724236a580a8f4f206",
+    "scripts/frontend_pilot/browser-status.cjs": "6995a3dd7dd9a707c766e5179ac502911a71bd3e49f3c0709eba61ef91156b65",
+    "scripts/frontend_pilot/fixtures/1.tsx": "d5ee84bad418018005071cb16b4f58ede09f9768db69c9333512307a2935e2ce",
+    "scripts/frontend_pilot/fixtures/10.tsx": "4b441b3faa350ec6ee79ab8eb30db83fdc7a249ef6523a3c609f9d6d0b64e58b",
+    "scripts/frontend_pilot/fixtures/20.tsx": "db3ff5842c46acacad199fbab8094ec8e6491724852dbf3bec6e01186f5fd5db",
+    "scripts/frontend_pilot/fixtures/composer.ts": "f3057469a4ae0a0dc938c3eb8d213214eaa376a503ccc8f513047c05e07cf469",
+    "scripts/frontend_pilot/fixtures/main.tsx": "be706b8dea199fc02a2016dd262b74baae8e90ccd4b9bdc29ca3509e45fc61b9",
+    "scripts/frontend_pilot/fixtures/platform.ts": "12e9fe4e453bf37a062ed5e44834fb8f29314bce34c58cbe60a79cfded8b315c",
+    "scripts/frontend_pilot/fixtures/settings.ts": "5d864f0d9c5285985fad45c62207061c4425d457be85f19627d85ebeb5a40243",
+    "scripts/frontend_pilot/fixtures/transport.ts": "e5a86e7c81e9d74dcdf94771e37493b687580793357614d9366ce83c46403473",
+    "scripts/frontend_pilot/index.html": "71c0a8e043e04c6bd1a0897fbac3dfeb2b608385186893c780eb85ce4d08b52c",
+    "scripts/frontend_pilot/package.json": "fb7c735a106097e8590adf3219126a433146620b46d33256e2385c5316457237",
+    "scripts/frontend_pilot/pnpm-lock.yaml": "d970e79e4be8ecfd9274e00cf3ac6eac8415e0f4d9da6549be5dae94b2459c39",
+    "scripts/frontend_pilot/README.md": "06edad410763832de42cb33bfb23d8fb1cec45a0dde612dccb82d84e11c1002f",
+    "scripts/frontend_pilot/requirements-tokenizer.lock.txt": "a8ad0602ea38c13158b44dcc2f34b03a4d34b81e18a2303f4161d1a94efd4a3a",
+    "scripts/frontend_pilot/requirements-tokenizer.txt": "32b9cd294869312292517ab08d41ba788c73ad2eab1d5fa5dfa629e807b45a94",
+    "scripts/frontend_pilot/tests/10.test.tsx": "781680ae7392f542a66d9af301dca8123a8f5bb66856741003bfa98443b57278",
+    "scripts/frontend_pilot/tests/15.test.tsx": "ba76194d1ebdff5d0134319fb87ad0b9eb817c380c309903bef406b8dd4e394b",
+    "scripts/frontend_pilot/tests/29.test.tsx": "cbe4f291577f1c0eae4e6a34991476996b6290ea90279e291dccbcce08287151",
+    "scripts/frontend_pilot/vitest.config.mjs": "bb5bd8d789228ccd989c49813d661d580e8185c1b49f44f7c163a56fedbe5dd5"
+  },
+  "limitations": [
+    "Same-author replay, reference patches were previously inspected.",
+    "Early harness failures are preserved and are not product defect baselines.",
+    "Early events predate per-event harness hashes; historical setup lock and final harness are retained.",
+    "Source Git archive uses CRLF conversion; original Git blobs and archive bytes have distinct hashes.",
+    "Fixtures do not execute native Tauri services or a live model server.",
+    "Machine-specific paths and browser timestamps remain intact in raw evidence."
+  ]
+}

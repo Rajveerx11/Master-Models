@@ -19,14 +19,58 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
+from jsonschema import Draft202012Validator
+
+try:
+    from .audit_frontend_dataset import tool_contract_errors, words, prompt, FAILURE, VERIFY
+    from .build_v2_source_inventory import COMMIT_REF, reserved_hashes, run_git
+except ImportError:
+    from audit_frontend_dataset import tool_contract_errors, words, prompt, FAILURE, VERIFY
+    from build_v2_source_inventory import COMMIT_REF, reserved_hashes, run_git
+
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_REGISTRY = ROOT / "datasets/v2-registry.json"
 PI_TOOLS = ROOT / "training/pi_tools.json"
 EVAL_ROOT = ROOT / "evals/tasks"
-COMMIT_REF = re.compile(r"\bcommit\s+`([0-9a-fA-F]{7,40})`")
 ID_PATTERN = re.compile(r"^[a-z0-9-]+:[a-z0-9._-]+$")
 HASH_PATTERN = re.compile(r"^[0-9a-f]{40}$")
 TRAJECTORY_DIRS = ("generated", "filtered", "final")
+
+
+def validate_split_isolation(train: list[dict], holdout: list[dict]) -> None:
+    """Hold out entire source tasks, not alternate traces of the same commit."""
+    for label, key in (
+        ("id", lambda r: r["id"]),
+        ("messages", canonical_messages),
+        ("prompt", lambda r: " ".join(words(prompt(r)))),
+        ("source task", lambda r: (r["source"]["repository"], r["source"]["commit"])),
+    ):
+        overlap = {key(r) for r in train} & {key(r) for r in holdout}
+        if overlap:
+            fail(f"train/holdout {label} overlap ({len(overlap)} identities)")
+
+
+def validate_source_identity(source: dict, registry: dict, specialist: str) -> None:
+    allowed = next(s["sources"] for s in registry["specialists"] if s["id"] == specialist)
+    repository = source["repository"]
+    if repository not in allowed:
+        fail(f"{specialist}: unregistered source repository {repository!r}")
+    repo = Path(registry["source_repositories"][repository]["path"])
+    actual = run_git(repo, "rev-parse", "--verify", f"{source['commit']}^{{commit}}", allow_failure=True)
+    parent = run_git(repo, "rev-parse", "--verify", f"{source['commit']}^", allow_failure=True)
+    if actual != source["commit"] or parent != source["parent"]:
+        fail(f"{specialist}: source commit/parent is not real immutable ancestry")
+    changed = set(run_git(repo, "diff", "--name-only", source["parent"], source["commit"]).splitlines())
+    if not set(source["files"]) <= changed:
+        fail(f"{specialist}: declared source files are not in the source diff")
+
+
+def validate_final_approval(row: dict, where: str) -> None:
+    quality = row["quality"]
+    if quality["review_state"] not in {"judge_passed", "human_approved"}:
+        fail(f"{where}: final record has not passed review")
+    if type(quality.get("judge_score")) is not int or quality["judge_score"] < 8:
+        fail(f"{where}: final record requires judge_score >= 8")
 
 
 def fail(message: str) -> None:
@@ -232,8 +276,15 @@ def validate_tools(messages: list[Any], declared: set[str], where: str) -> dict[
             if call["name"] == "bash":
                 command = call["arguments"].get("command")
                 metadata = result.get("metadata", {})
-                if isinstance(command, str) and metadata.get("exit_code") == 0:
+                if not isinstance(metadata, dict) or type(metadata.get("exit_code")) is not int:
+                    fail(f"{where}: every bash result requires integer exit_code metadata")
+                if metadata["exit_code"] == 0 and VERIFY.search(command or "") and FAILURE.search(result.get("content", "")):
+                    fail(f"{where}: exit_code=0 contradicts recorded failure output")
+                if isinstance(command, str) and metadata["exit_code"] == 0:
                     successful_bash[command] = successful_bash.get(command, 0) + 1
+            if call["name"] in {"edit", "write"}:
+                # A successful check on the old state cannot qualify the final state.
+                successful_bash.clear()
         index += 1 + len(calls)
     return successful_bash
 
@@ -270,6 +321,9 @@ def validate_trajectory(
         fail(f"{where}: trajectory boundaries are invalid")
     if row["tools"] != pi_tools:
         fail(f"{where}: tools differ from training/pi_tools.json")
+    contract_errors = tool_contract_errors(messages, pi_tools)
+    if contract_errors:
+        fail(f"{where}: {contract_errors[0]}")
     declared = {tool["function"]["name"] for tool in row["tools"]}
     successful_bash = validate_tools(messages, declared, where)
     quality = row["quality"]
@@ -313,13 +367,22 @@ def main() -> None:
     unknown = selected - set(indexed)
     if unknown:
         parser.error(f"unknown specialist(s): {', '.join(sorted(unknown))}")
-    refs = eval_refs()
+    refs = reserved_hashes(registry["source_repositories"])
+    refs.update(eval_refs())
     pi_tools = load_json(PI_TOOLS)
+    schema = Draft202012Validator(load_json(ROOT / "datasets/schema/trajectory-v2.schema.json"))
+    frozen_prompts = set()
+    for path in EVAL_ROOT.rglob("*.md"):
+        match = re.search(r"## Prompt[^\n]*\n(.*?)\n## Success criteria", path.read_text(encoding="utf-8"), re.S)
+        if match:
+            frozen_prompts.add(" ".join(words(match[1])))
     validate_eval_queues(indexed, selected, refs)
     total_trajectories = 0
     for specialist in sorted(selected):
         validate_inventory(specialist, refs)
         files = trajectory_files(specialist)
+        split_rows: dict[str, list] = {"train": [], "holdout": []}
+        checked_sources = set()
         if not files:
             if args.strict:
                 fail(f"{specialist}: no V2 trajectory files")
@@ -327,12 +390,28 @@ def main() -> None:
             continue
         for path in files:
             rows = load_jsonl(path)
+            if not rows:
+                fail(f"{path}: empty trajectory file")
             file_ids: set[str] = set()
             file_content: set[str] = set()
             for number, row in enumerate(rows, 1):
+                schema_errors = list(schema.iter_errors(row))
+                if schema_errors:
+                    fail(f"{path}:{number}: {schema_errors[0].message}")
                 record_id, content_hash = validate_trajectory(
                     row, specialist, f"{path.relative_to(ROOT)}:{number}", refs, pi_tools
                 )
+                source_key = json.dumps(row["source"], sort_keys=True)
+                if source_key not in checked_sources:
+                    validate_source_identity(row["source"], registry, specialist)
+                    checked_sources.add(source_key)
+                if " ".join(words(prompt(row))) in frozen_prompts:
+                    fail(f"{path}:{number}: frozen eval prompt overlap")
+                if path.parent.name == "final":
+                    validate_final_approval(row, f"{path}:{number}")
+                    for split in split_rows:
+                        if path.stem == split or path.stem.startswith(split + "-"):
+                            split_rows[split].append(row)
                 if record_id in file_ids:
                     fail(f"{path}:{number}: duplicate trajectory id {record_id}")
                 if content_hash in file_content:
@@ -340,6 +419,7 @@ def main() -> None:
                 file_ids.add(record_id)
                 file_content.add(content_hash)
                 total_trajectories += 1
+        validate_split_isolation(split_rows["train"], split_rows["holdout"])
         if args.strict:
             final = ROOT / "datasets" / specialist / "v2" / "final"
             for name in ("train.jsonl", "holdout.jsonl"):

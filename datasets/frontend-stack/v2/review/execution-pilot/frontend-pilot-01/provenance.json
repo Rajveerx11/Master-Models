@@ -1,0 +1,13 @@
+{
+  "task_id": "frontend-pilot-01",
+  "repository": "testing-ide",
+  "parent": "0e94a9e34230fb0d37a777e4e78fa65e447c31df",
+  "archive_sha256": "f2573eea364e1c6302b0767df551175f9b67445532fb73760771608114881d10",
+  "node": "v24.16.0",
+  "pnpm": "10.9.0",
+  "spec_sha256": "e48fb38e97a0be4ef7d1323b8a978e2d691742e446e62fd3a7c4516a29602880",
+  "created_at": "2026-09-07T06:06:00.863043+00:00",
+  "source_lock_sha256": "df5210691bde4ae397f1cdc1d46198e35e5f354b6bac4f842bace5628137b960",
+  "author_reference_exposure": true,
+  "training_eligible": false
+}

@@ -1,0 +1,62 @@
+{
+  "tokenizer_pin_sha256": "13a1af95f5eb7807cd3de3c55d4d9b4862c15f37e3f98f7d6c2d6f6a82b7c15c",
+  "tools_sha256": "72190fac6d837652b56944b4f5891aae6c882ce045a5945e3a1b0b1813241b43",
+  "records": [
+    {
+      "id": "frontend-pilot-01",
+      "events": 10,
+      "tokens": 4378,
+      "fits_3072": false,
+      "rendered_sha256": "418929e95e2133b2ce26f58aa9909a971350c74da804b2586202496d12e8255e",
+      "record_sha256": "f285fb25752fe75adbb29dec5c4a9ec0261c312628f4b6be573264f5066ed6a3",
+      "complete_record": true,
+      "truncated": false,
+      "training_eligible": false
+    },
+    {
+      "id": "frontend-pilot-10",
+      "events": 14,
+      "tokens": 10822,
+      "fits_3072": false,
+      "rendered_sha256": "a0e54f41894c4c932836d48c1236e445d2300500be4c6e93c6d9ee9621e794b8",
+      "record_sha256": "cd3c7a6d5f23ad3f912c04d47385007f72c7a2e12e01329a361c3ff0227b01ca",
+      "complete_record": true,
+      "truncated": false,
+      "training_eligible": false
+    },
+    {
+      "id": "frontend-pilot-15",
+      "events": 6,
+      "tokens": 4185,
+      "fits_3072": false,
+      "rendered_sha256": "9feff62bf2e56325b41098d11bae3f72904ecbbf2daccd508e4aa8ded6051527",
+      "record_sha256": "7fb7eacebb1cfe633b72e27fe00bc6480955dd2b8bdc37bf390eaca49b51cf54",
+      "complete_record": true,
+      "truncated": false,
+      "training_eligible": false
+    },
+    {
+      "id": "frontend-pilot-20",
+      "events": 8,
+      "tokens": 8064,
+      "fits_3072": false,
+      "rendered_sha256": "4cc0d8e47b69d895e89294cce99277307d617e1b4162b8c48843a0f911471842",
+      "record_sha256": "db3ab63da2652b819218f1c1384ae55e36b79654c987f6c205d7274a145c6649",
+      "complete_record": true,
+      "truncated": false,
+      "training_eligible": false
+    },
+    {
+      "id": "frontend-pilot-29",
+      "events": 7,
+      "tokens": 6989,
+      "fits_3072": false,
+      "rendered_sha256": "e963a033e8490d9e5f34814e938ca0946f81314c99b78318b7b950992766e495",
+      "record_sha256": "b4ced2cea60dab489c6b1b1348247bee632ffaaf3cb4d6e936a96b240eac88f1",
+      "complete_record": true,
+      "truncated": false,
+      "training_eligible": false
+    }
+  ],
+  "limitation": "Counts include all captured tool failures and reads. No truncation. These are replay evidence records, not approved V2 trajectories."
+}

@@ -1,0 +1,62 @@
+{
+  "task": 1,
+  "started_at": "2026-09-07T06:27:33.554Z",
+  "checks": [
+    {
+      "name": "compact height and alignment",
+      "pass": false,
+      "observed": {
+        "input": {
+          "x": 100,
+          "y": 100,
+          "width": 904,
+          "height": 36
+        },
+        "button": {
+          "x": 1020,
+          "y": 102,
+          "width": 80,
+          "height": 32
+        }
+      }
+    },
+    {
+      "name": "visible primary focus",
+      "pass": true,
+      "observed": {
+        "focused": {
+          "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(107, 216, 203) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px",
+          "border": "rgb(53, 53, 52)",
+          "ring": "#6bd8cb"
+        },
+        "primary": "rgb(107, 216, 203)"
+      }
+    },
+    {
+      "name": "controlled typing",
+      "pass": true
+    },
+    {
+      "name": "focus ring removed on blur",
+      "pass": true,
+      "observed": {
+        "blurred": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px"
+      }
+    },
+    {
+      "name": "external value update",
+      "pass": true
+    },
+    {
+      "name": "disabled value preserved",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "screenshots": [
+    "C:\\Master-Models\\outputs\\frontend-pilot\\frontend-pilot-01\\browser\\1788762453554\\focused.png",
+    "C:\\Master-Models\\outputs\\frontend-pilot\\frontend-pilot-01\\browser\\1788762453554\\blurred.png"
+  ],
+  "browser": "151.0.7922.34",
+  "passed": false
+}

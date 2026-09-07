@@ -1,0 +1,61 @@
+--- a/src/modules/ai/components/AiStatusBarControls.tsx
++++ b/src/modules/ai/components/AiStatusBarControls.tsx
+@@ -32,6 +32,7 @@
+   getModel,
+   MODELS,
+   PROVIDERS,
++  providerNeedsKey,
+   type ModelId,
+   type ProviderId,
+ } from "../config";
+@@ -197,10 +198,10 @@
+   const apiKeys = useChatStore((s) => s.apiKeys);
+   const setSelected = useChatStore((s) => s.setSelectedModelId);
+   const current = getModel(selected);
+-  const currentProviderHasKey = !!apiKeys[current.provider];
++  const currentProviderHasKey = !providerNeedsKey(current.provider) || !!apiKeys[current.provider];
+ 
+   const onPick = (id: ModelId, providerId: ProviderId) => {
+-    if (!apiKeys[providerId]) {
++    if (providerNeedsKey(providerId) && !apiKeys[providerId]) {
+       void openSettingsWindow("models");
+       return;
+     }
+@@ -243,7 +244,7 @@
+       <DropdownMenuContent align="end" className="min-w-[240px]">
+         {PROVIDERS.map((p) => {
+           const models = MODELS.filter((m) => m.provider === p.id);
+-          const hasKey = !!apiKeys[p.id];
++          const hasKey = !providerNeedsKey(p.id) || !!apiKeys[p.id];
+           return (
+             <div key={p.id} className="px-1 pt-1.5 first:pt-1">
+               <div className="mb-0.5 flex items-center gap-1.5 px-2 text-[9.5px] font-medium tracking-wide text-muted-foreground uppercase">
+--- a/src/modules/ai/store/chatStore.ts
++++ b/src/modules/ai/store/chatStore.ts
+@@ -7,6 +7,7 @@
+ import {
+   DEFAULT_MODEL_ID,
+   getModel,
++  providerNeedsKey,
+   type ModelId,
+   type ProviderId,
+ } from "../config";
+@@ -455,7 +456,8 @@
+ 
+ export function hasKeyForModel(modelId: ModelId): boolean {
+   const { apiKeys } = useChatStore.getState();
+-  return !!apiKeys[getModel(modelId).provider];
++  const provider = getModel(modelId).provider;
++  return !providerNeedsKey(provider) || !!apiKeys[provider];
+ }
+ 
+ export function getOrCreateChat(sessionId: string): Chat<UIMessage> {
+@@ -476,7 +478,7 @@
+   const state = useChatStore.getState();
+   const sessionId = state.activeSessionId;
+   if (!sessionId) return false;
+-  if (!getActiveProviderKey()) return false;
++  if (!hasKeyForModel(state.selectedModelId)) return false;
+   const c = getOrCreateChat(sessionId);
+   await c.sendMessage({ text });
+   return true;

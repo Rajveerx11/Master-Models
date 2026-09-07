@@ -1,0 +1,13 @@
+{
+  "task": 1,
+  "started_at": "2026-09-07T06:18:11.066Z",
+  "checks": [],
+  "errors": [
+    {
+      "kind": "harness-or-assertion",
+      "message": "browserType.launch: Executable doesn't exist at C:\\Users\\rajve\\AppData\\Local\\ms-playwright\\chromium_headless_shell-1187\\chrome-win\\headless_shell.exe\n╔═════════════════════════════════════════════════════════════════════════╗\n║ Looks like Playwright Test or Playwright was just installed or updated. ║\n║ Please run the following command to download new browsers:              ║\n║                                                                         ║\n║     npx playwright install                                              ║\n║                                                                         ║\n║ <3 Playwright Team                                                      ║\n╚═════════════════════════════════════════════════════════════════════════╝\n    at C:\\Users\\rajve\\.agents\\skills\\playwright-skill\\.temp-execution-1788761876817.js:17:28"
+    }
+  ],
+  "screenshots": [],
+  "passed": false
+}

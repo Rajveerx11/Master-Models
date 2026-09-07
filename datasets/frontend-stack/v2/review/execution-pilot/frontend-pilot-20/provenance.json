@@ -1,0 +1,13 @@
+{
+  "task_id": "frontend-pilot-20",
+  "repository": "terax-ai",
+  "parent": "90ad498995fbed7766b566a8ee029b60e4deb948",
+  "archive_sha256": "5336a0a0e3865437294828ddb1d282fd8c956567225ff413c67fc4512a17a96f",
+  "node": "v24.16.0",
+  "pnpm": "10.9.0",
+  "spec_sha256": "e48fb38e97a0be4ef7d1323b8a978e2d691742e446e62fd3a7c4516a29602880",
+  "created_at": "2026-09-07T06:06:15.843357+00:00",
+  "source_lock_sha256": "e46fc3d73a90ef11c69b50ea8f0b2ba5f12c0a351093bfb0ece61af68b4dbe08",
+  "author_reference_exposure": true,
+  "training_eligible": false
+}

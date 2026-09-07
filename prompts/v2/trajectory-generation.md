@@ -28,6 +28,26 @@ The target is Qwen3-4B, so every step must earn its tokens.
 10. Emit exactly one JSON object matching
     `datasets/schema/trajectory-v2.schema.json`.
 
+## Execution evidence and semantic hardening
+
+- Collect tool results from an actual isolated run. The teacher may propose actions
+  and explain observed results; it must not author the results itself.
+- Save a sidecar run bundle containing source/dependency revisions, actual tool
+  events, stdout/stderr, exit codes, final patch and hashes. Exit-code metadata by
+  itself is not proof of execution. Do not backfill it into V1 transcripts.
+- Read enough context to establish exact, unique, non-overlapping edit targets.
+  A tool reporting success cannot excuse an impossible target or invalid final JSX.
+- Capture a failing baseline before claiming a failure predates the patch. For an
+  unrelated failing suite, preserve the disclosure and run focused checks separately.
+- Verify after the last mutation. Typechecking does not prove layout, animation,
+  keyboard behavior, server acceptance, or the absence of side effects.
+- Check the explanation against language/framework behavior, not just the patch:
+  index keys reuse positions; CSS cascade is not HTML class order; Date relational
+  comparison is numeric; aria-current=false does not mean current. A natural-looking
+  story around a plausible fix is grounds for rejection when causality is false.
+- Review the whole candidate pool, including high judge scores. Use source-task
+  grouping for splits and independent semantic review before marking final records.
+
 ## Rejection triggers
 
 - any eval commit, prompt, or solution overlap;

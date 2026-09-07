@@ -1,0 +1,155 @@
+{
+  "version": "5.9.3",
+  "analyzer_sha256": "8c2c6c46f20d246c48040c34dee7a868dc92c2c9483925e572efaa85701c8fe1",
+  "input_sha256": "ce2fe59bb9147f6a527be1687708aea11569fff201e8e9a2001405ba4a3e69bb",
+  "method": "Reconstructed full snapshots; syntax and unresolved local identifiers only. Dependencies are not resolved; no repository typecheck/test execution.",
+  "checked_files": 675,
+  "records": {
+    "batch2:21": [
+      {
+        "file": "src/components/TankTabs.test.tsx",
+        "line": 11,
+        "code": 2304,
+        "text": "Cannot find name 'expect'."
+      },
+      {
+        "file": "src/components/TankTabs.test.tsx",
+        "line": 20,
+        "code": 2304,
+        "text": "Cannot find name 'expect'."
+      }
+    ],
+    "batch3:4": [
+      {
+        "file": "src/routes/customs/QueuePage.tsx",
+        "line": 10,
+        "code": 2304,
+        "text": "Cannot find name 'useState'."
+      },
+      {
+        "file": "src/routes/customs/QueuePage.tsx",
+        "line": 12,
+        "code": 2304,
+        "text": "Cannot find name 'useCallback'."
+      }
+    ],
+    "batch3:50": [
+      {
+        "file": "src/features/inspections/PhotoPanel.test.tsx",
+        "line": 7,
+        "code": 2304,
+        "text": "Cannot find name 'global'."
+      }
+    ],
+    "batch3:88": [
+      {
+        "file": "vite.config.ts",
+        "line": 9,
+        "code": 2304,
+        "text": "Cannot find name '__dirname'."
+      }
+    ],
+    "batch4:32": [
+      {
+        "file": "src/screens/MarkdownQueue.tsx",
+        "line": 24,
+        "code": 2304,
+        "text": "Cannot find name 'ToastStack'."
+      }
+    ],
+    "batch4:33": [
+      {
+        "file": "src/settings/AlertRules.tsx",
+        "line": 18,
+        "code": 2657,
+        "text": "JSX expressions must have one parent element."
+      },
+      {
+        "file": "src/settings/AlertRules.tsx",
+        "line": 57,
+        "code": 1005,
+        "text": "')' expected."
+      },
+      {
+        "file": "src/settings/AlertRules.tsx",
+        "line": 57,
+        "code": 17002,
+        "text": "Expected corresponding JSX closing tag for 'ul'."
+      },
+      {
+        "file": "src/settings/AlertRules.tsx",
+        "line": 58,
+        "code": 1381,
+        "text": "Unexpected token. Did you mean `{'}'}` or `&rbrace;`?"
+      },
+      {
+        "file": "src/settings/AlertRules.tsx",
+        "line": 59,
+        "code": 17002,
+        "text": "Expected corresponding JSX closing tag for 'div'."
+      },
+      {
+        "file": "src/settings/AlertRules.tsx",
+        "line": 60,
+        "code": 1005,
+        "text": "')' expected."
+      },
+      {
+        "file": "src/settings/AlertRules.tsx",
+        "line": 61,
+        "code": 1109,
+        "text": "Expression expected."
+      }
+    ],
+    "batch4:37": [
+      {
+        "file": "src/buying/hooks/useVendorAlertsFeed.ts",
+        "line": 14,
+        "code": 2304,
+        "text": "Cannot find name 'notifyToast'."
+      }
+    ],
+    "batch4:38": [
+      {
+        "file": "src/waitlist/WaitlistPanel.tsx",
+        "line": 14,
+        "code": 2451,
+        "text": "Cannot redeclare block-scoped variable 'restockCount'."
+      },
+      {
+        "file": "src/waitlist/WaitlistPanel.tsx",
+        "line": 16,
+        "code": 2451,
+        "text": "Cannot redeclare block-scoped variable 'restockCount'."
+      },
+      {
+        "file": "src/waitlist/WaitlistPanel.tsx",
+        "line": 16,
+        "code": 2304,
+        "text": "Cannot find name 'useRestockToasts'."
+      }
+    ],
+    "batch4:44": [
+      {
+        "file": "src/permits/PermitHolderTable.tsx",
+        "line": 47,
+        "code": 1005,
+        "text": "')' expected."
+      },
+      {
+        "file": "src/permits/PermitHolderTable.tsx",
+        "line": 48,
+        "code": 1109,
+        "text": "Expression expected."
+      }
+    ],
+    "seed:2": [
+      {
+        "file": "src/components/UserCard.tsx",
+        "line": 3,
+        "code": 2304,
+        "text": "Cannot find name 'User'."
+      }
+    ]
+  }
+}

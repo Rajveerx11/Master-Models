@@ -7,11 +7,17 @@ styling, component contracts, and focused verification.
 
 ## Data
 
-- Reuse the 242 retained V1 trajectories only after V2 truthfulness audit.
+- Whole-corpus static audit leaves 237 replay candidates and 5 quarantined records.
+  Reuse task ideas only until real source identity and execution are captured.
+  Four explanations are corrected in candidate copies, not approved for training.
 - Prioritize state races, lifecycle cleanup, multi-file prop/API changes, overflow,
   keyboard behavior, accessibility, and failed-check recovery.
 - Add 30-50 new records only for measured coverage gaps.
 - Target 180-220 clean domain rows after removing weak examples.
+- Five of the [30 selected pilot tasks](../../datasets/frontend-stack/v2/review/pilot/README.md)
+  now pass captured checks. All five complete traces exceed 3,072 tokens; fix capture
+  length and obtain independent review before the remaining 25. The corrected source
+  inventory has 143 candidates; 60 eval collisions were excluded. Gold remains zero.
 
 ## Reject
 

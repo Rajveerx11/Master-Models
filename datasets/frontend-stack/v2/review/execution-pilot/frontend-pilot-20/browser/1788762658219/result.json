@@ -1,0 +1,131 @@
+{
+  "task": 20,
+  "started_at": "2026-09-07T06:30:58.219Z",
+  "checks": [
+    {
+      "name": "top default surface matches",
+      "pass": true,
+      "observed": {
+        "body": "oklch(0.148 0.004 228.8)",
+        "arrowBackground": "oklch(0.148 0.004 228.8)",
+        "arrowFill": "rgba(0, 0, 0, 0)",
+        "html": "<div data-side=\"top\" data-align=\"center\" data-state=\"instant-open\" data-slot=\"tooltip-content\" class=\"z-50 inline-flex w-fit max-w-xs origin-(--radix-tooltip-content-transform-origin) items-center gap-1.5 rounded-xl bg-foreground px-3 py-1.5 text-xs text-background has-data-[slot=kbd]:pr-1.5 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 **:data-[slot=kbd]:relative **:data-[slot=kbd]:isolate **:data-[slot=kbd]:z-50 **:data-[slot=kbd]:rounded-lg data-[state=delayed-open]:animate-in data-[state=delayed-open]:fade-in-0 data-[state=delayed-open]:zoom-in-95 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 [&amp;&gt;span:has(&gt;[data-slot=tooltip-arrow])]:bg-inherit [&amp;&gt;span:has(&gt;[data-slot=tooltip-arrow])]:[clip-path:polygon(0_0,100%_0,50%_100%)]\" style=\"--radix-tooltip-content-transform-origin: var(--radix-popper-transform-origin); --radix-tooltip-content-available-width: var(--radix-popper-available-width); --radix-tooltip-content-available-height: var(--radix-popper-available-height); --radix-tooltip-trigger-width: var(--radix-popper-anchor-width); --radix-tooltip-trigger-height: var(--radix-popper-anchor-height);\">Surface top default<span style=\"position: absolute; bottom: 0px; transform: translateY(100%); left: 57.5px;\"><svg data-slot=\"tooltip-arrow\" class=\"bg-inherit fill-transparent\" width=\"10\" height=\"5\" viewBox=\"0 0 30 10\" preserveAspectRatio=\"none\" style=\"display: block;\"><polygon points=\"0,0 30,0 15,10\"></polygon></svg></span><span id=\"radix-_r_0_\" role=\"tooltip\" style=\"position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;\">Surface top default</span></div>"
+      }
+    },
+    {
+      "name": "top default keyboard relationship",
+      "pass": true
+    },
+    {
+      "name": "top custom surface matches",
+      "pass": true,
+      "observed": {
+        "body": "oklch(0.577 0.245 27.325)",
+        "arrowBackground": "oklch(0.577 0.245 27.325)",
+        "arrowFill": "rgba(0, 0, 0, 0)",
+        "html": "<div data-side=\"top\" data-align=\"center\" data-state=\"instant-open\" data-slot=\"tooltip-content\" class=\"z-50 inline-flex w-fit max-w-xs origin-(--radix-tooltip-content-transform-origin) items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs has-data-[slot=kbd]:pr-1.5 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 **:data-[slot=kbd]:relative **:data-[slot=kbd]:isolate **:data-[slot=kbd]:z-50 **:data-[slot=kbd]:rounded-lg data-[state=delayed-open]:animate-in data-[state=delayed-open]:fade-in-0 data-[state=delayed-open]:zoom-in-95 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 [&amp;&gt;span:has(&gt;[data-slot=tooltip-arrow])]:bg-inherit [&amp;&gt;span:has(&gt;[data-slot=tooltip-arrow])]:[clip-path:polygon(0_0,100%_0,50%_100%)] bg-red-600 text-white\" style=\"--radix-tooltip-content-transform-origin: var(--radix-popper-transform-origin); --radix-tooltip-content-available-width: var(--radix-popper-available-width); --radix-tooltip-content-available-height: var(--radix-popper-available-height); --radix-tooltip-trigger-width: var(--radix-popper-anchor-width); --radix-tooltip-trigger-height: var(--radix-popper-anchor-height);\">Surface top custom<span style=\"position: absolute; bottom: 0px; transform: translateY(100%); left: 58.5px;\"><svg data-slot=\"tooltip-arrow\" class=\"bg-inherit fill-transparent\" width=\"10\" height=\"5\" viewBox=\"0 0 30 10\" preserveAspectRatio=\"none\" style=\"display: block;\"><polygon points=\"0,0 30,0 15,10\"></polygon></svg></span><span id=\"radix-_r_1_\" role=\"tooltip\" style=\"position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;\">Surface top custom</span></div>"
+      }
+    },
+    {
+      "name": "top custom keyboard relationship",
+      "pass": true
+    },
+    {
+      "name": "bottom default surface matches",
+      "pass": true,
+      "observed": {
+        "body": "oklch(0.148 0.004 228.8)",
+        "arrowBackground": "oklch(0.148 0.004 228.8)",
+        "arrowFill": "rgba(0, 0, 0, 0)",
+        "html": "<div data-side=\"bottom\" data-align=\"center\" data-state=\"instant-open\" data-slot=\"tooltip-content\" class=\"z-50 inline-flex w-fit max-w-xs origin-(--radix-tooltip-content-transform-origin) items-center gap-1.5 rounded-xl bg-foreground px-3 py-1.5 text-xs text-background has-data-[slot=kbd]:pr-1.5 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 **:data-[slot=kbd]:relative **:data-[slot=kbd]:isolate **:data-[slot=kbd]:z-50 **:data-[slot=kbd]:rounded-lg data-[state=delayed-open]:animate-in data-[state=delayed-open]:fade-in-0 data-[state=delayed-open]:zoom-in-95 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 [&amp;&gt;span:has(&gt;[data-slot=tooltip-arrow])]:bg-inherit [&amp;&gt;span:has(&gt;[data-slot=tooltip-arrow])]:[clip-path:polygon(0_0,100%_0,50%_100%)]\" style=\"--radix-tooltip-content-transform-origin: var(--radix-popper-transform-origin); --radix-tooltip-content-available-width: var(--radix-popper-available-width); --radix-tooltip-content-available-height: var(--radix-popper-available-height); --radix-tooltip-trigger-width: var(--radix-popper-anchor-width); --radix-tooltip-trigger-height: var(--radix-popper-anchor-height);\">Surface bottom default<span style=\"position: absolute; top: 0px; transform-origin: center 0px; transform: rotate(180deg); left: 67.5px;\"><svg data-slot=\"tooltip-arrow\" class=\"bg-inherit fill-transparent\" width=\"10\" height=\"5\" viewBox=\"0 0 30 10\" preserveAspectRatio=\"none\" style=\"display: block;\"><polygon points=\"0,0 30,0 15,10\"></polygon></svg></span><span id=\"radix-_r_2_\" role=\"tooltip\" style=\"position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;\">Surface bottom default</span></div>"
+      }
+    },
+    {
+      "name": "bottom default keyboard relationship",
+      "pass": true
+    },
+    {
+      "name": "bottom custom surface matches",
+      "pass": true,
+      "observed": {
+        "body": "oklch(0.577 0.245 27.325)",
+        "arrowBackground": "oklch(0.577 0.245 27.325)",
+        "arrowFill": "rgba(0, 0, 0, 0)",
+        "html": "<div data-side=\"bottom\" data-align=\"center\" data-state=\"instant-open\" data-slot=\"tooltip-content\" class=\"z-50 inline-flex w-fit max-w-xs origin-(--radix-tooltip-content-transform-origin) items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs has-data-[slot=kbd]:pr-1.5 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 **:data-[slot=kbd]:relative **:data-[slot=kbd]:isolate **:data-[slot=kbd]:z-50 **:data-[slot=kbd]:rounded-lg data-[state=delayed-open]:animate-in data-[state=delayed-open]:fade-in-0 data-[state=delayed-open]:zoom-in-95 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 [&amp;&gt;span:has(&gt;[data-slot=tooltip-arrow])]:bg-inherit [&amp;&gt;span:has(&gt;[data-slot=tooltip-arrow])]:[clip-path:polygon(0_0,100%_0,50%_100%)] bg-red-600 text-white\" style=\"--radix-tooltip-content-transform-origin: var(--radix-popper-transform-origin); --radix-tooltip-content-available-width: var(--radix-popper-available-width); --radix-tooltip-content-available-height: var(--radix-popper-available-height); --radix-tooltip-trigger-width: var(--radix-popper-anchor-width); --radix-tooltip-trigger-height: var(--radix-popper-anchor-height);\">Surface bottom custom<span style=\"position: absolute; top: 0px; transform-origin: center 0px; transform: rotate(180deg); left: 68.5px;\"><svg data-slot=\"tooltip-arrow\" class=\"bg-inherit fill-transparent\" width=\"10\" height=\"5\" viewBox=\"0 0 30 10\" preserveAspectRatio=\"none\" style=\"display: block;\"><polygon points=\"0,0 30,0 15,10\"></polygon></svg></span><span id=\"radix-_r_3_\" role=\"tooltip\" style=\"position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;\">Surface bottom custom</span></div>"
+      }
+    },
+    {
+      "name": "bottom custom keyboard relationship",
+      "pass": true
+    },
+    {
+      "name": "left default surface matches",
+      "pass": true,
+      "observed": {
+        "body": "oklch(0.148 0.004 228.8)",
+        "arrowBackground": "oklch(0.148 0.004 228.8)",
+        "arrowFill": "rgba(0, 0, 0, 0)",
+        "html": "<div data-side=\"left\" data-align=\"center\" data-state=\"instant-open\" data-slot=\"tooltip-content\" class=\"z-50 inline-flex w-fit max-w-xs origin-(--radix-tooltip-content-transform-origin) items-center gap-1.5 rounded-xl bg-foreground px-3 py-1.5 text-xs text-background has-data-[slot=kbd]:pr-1.5 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 **:data-[slot=kbd]:relative **:data-[slot=kbd]:isolate **:data-[slot=kbd]:z-50 **:data-[slot=kbd]:rounded-lg data-[state=delayed-open]:animate-in data-[state=delayed-open]:fade-in-0 data-[state=delayed-open]:zoom-in-95 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 [&amp;&gt;span:has(&gt;[data-slot=tooltip-arrow])]:bg-inherit [&amp;&gt;span:has(&gt;[data-slot=tooltip-arrow])]:[clip-path:polygon(0_0,100%_0,50%_100%)]\" style=\"--radix-tooltip-content-transform-origin: var(--radix-popper-transform-origin); --radix-tooltip-content-available-width: var(--radix-popper-available-width); --radix-tooltip-content-available-height: var(--radix-popper-available-height); --radix-tooltip-trigger-width: var(--radix-popper-anchor-width); --radix-tooltip-trigger-height: var(--radix-popper-anchor-height);\">Surface left default<span style=\"position: absolute; right: 0px; transform-origin: 100% 0px; transform: translateY(50%) rotate(-90deg) translateX(50%); top: 11.5px;\"><svg data-slot=\"tooltip-arrow\" class=\"bg-inherit fill-transparent\" width=\"10\" height=\"5\" viewBox=\"0 0 30 10\" preserveAspectRatio=\"none\" style=\"display: block;\"><polygon points=\"0,0 30,0 15,10\"></polygon></svg></span><span id=\"radix-_r_4_\" role=\"tooltip\" style=\"position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;\">Surface left default</span></div>"
+      }
+    },
+    {
+      "name": "left default keyboard relationship",
+      "pass": true
+    },
+    {
+      "name": "left custom surface matches",
+      "pass": true,
+      "observed": {
+        "body": "oklch(0.577 0.245 27.325)",
+        "arrowBackground": "oklch(0.577 0.245 27.325)",
+        "arrowFill": "rgba(0, 0, 0, 0)",
+        "html": "<div data-side=\"left\" data-align=\"center\" data-state=\"instant-open\" data-slot=\"tooltip-content\" class=\"z-50 inline-flex w-fit max-w-xs origin-(--radix-tooltip-content-transform-origin) items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs has-data-[slot=kbd]:pr-1.5 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 **:data-[slot=kbd]:relative **:data-[slot=kbd]:isolate **:data-[slot=kbd]:z-50 **:data-[slot=kbd]:rounded-lg data-[state=delayed-open]:animate-in data-[state=delayed-open]:fade-in-0 data-[state=delayed-open]:zoom-in-95 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 [&amp;&gt;span:has(&gt;[data-slot=tooltip-arrow])]:bg-inherit [&amp;&gt;span:has(&gt;[data-slot=tooltip-arrow])]:[clip-path:polygon(0_0,100%_0,50%_100%)] bg-red-600 text-white\" style=\"--radix-tooltip-content-transform-origin: var(--radix-popper-transform-origin); --radix-tooltip-content-available-width: var(--radix-popper-available-width); --radix-tooltip-content-available-height: var(--radix-popper-available-height); --radix-tooltip-trigger-width: var(--radix-popper-anchor-width); --radix-tooltip-trigger-height: var(--radix-popper-anchor-height);\">Surface left custom<span style=\"position: absolute; right: 0px; transform-origin: 100% 0px; transform: translateY(50%) rotate(-90deg) translateX(50%); top: 11.5px;\"><svg data-slot=\"tooltip-arrow\" class=\"bg-inherit fill-transparent\" width=\"10\" height=\"5\" viewBox=\"0 0 30 10\" preserveAspectRatio=\"none\" style=\"display: block;\"><polygon points=\"0,0 30,0 15,10\"></polygon></svg></span><span id=\"radix-_r_5_\" role=\"tooltip\" style=\"position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;\">Surface left custom</span></div>"
+      }
+    },
+    {
+      "name": "left custom keyboard relationship",
+      "pass": true
+    },
+    {
+      "name": "right default surface matches",
+      "pass": true,
+      "observed": {
+        "body": "oklch(0.148 0.004 228.8)",
+        "arrowBackground": "oklch(0.148 0.004 228.8)",
+        "arrowFill": "rgba(0, 0, 0, 0)",
+        "html": "<div data-side=\"right\" data-align=\"center\" data-state=\"instant-open\" data-slot=\"tooltip-content\" class=\"z-50 inline-flex w-fit max-w-xs origin-(--radix-tooltip-content-transform-origin) items-center gap-1.5 rounded-xl bg-foreground px-3 py-1.5 text-xs text-background has-data-[slot=kbd]:pr-1.5 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 **:data-[slot=kbd]:relative **:data-[slot=kbd]:isolate **:data-[slot=kbd]:z-50 **:data-[slot=kbd]:rounded-lg data-[state=delayed-open]:animate-in data-[state=delayed-open]:fade-in-0 data-[state=delayed-open]:zoom-in-95 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 [&amp;&gt;span:has(&gt;[data-slot=tooltip-arrow])]:bg-inherit [&amp;&gt;span:has(&gt;[data-slot=tooltip-arrow])]:[clip-path:polygon(0_0,100%_0,50%_100%)]\" style=\"--radix-tooltip-content-transform-origin: var(--radix-popper-transform-origin); --radix-tooltip-content-available-width: var(--radix-popper-available-width); --radix-tooltip-content-available-height: var(--radix-popper-available-height); --radix-tooltip-trigger-width: var(--radix-popper-anchor-width); --radix-tooltip-trigger-height: var(--radix-popper-anchor-height);\">Surface right default<span style=\"position: absolute; left: 0px; transform-origin: 0px 0px; transform: translateY(50%) rotate(90deg) translateX(-50%); top: 11.5px;\"><svg data-slot=\"tooltip-arrow\" class=\"bg-inherit fill-transparent\" width=\"10\" height=\"5\" viewBox=\"0 0 30 10\" preserveAspectRatio=\"none\" style=\"display: block;\"><polygon points=\"0,0 30,0 15,10\"></polygon></svg></span><span id=\"radix-_r_6_\" role=\"tooltip\" style=\"position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;\">Surface right default</span></div>"
+      }
+    },
+    {
+      "name": "right default keyboard relationship",
+      "pass": true
+    },
+    {
+      "name": "right custom surface matches",
+      "pass": true,
+      "observed": {
+        "body": "oklch(0.577 0.245 27.325)",
+        "arrowBackground": "oklch(0.577 0.245 27.325)",
+        "arrowFill": "rgba(0, 0, 0, 0)",
+        "html": "<div data-side=\"right\" data-align=\"center\" data-state=\"instant-open\" data-slot=\"tooltip-content\" class=\"z-50 inline-flex w-fit max-w-xs origin-(--radix-tooltip-content-transform-origin) items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs has-data-[slot=kbd]:pr-1.5 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 **:data-[slot=kbd]:relative **:data-[slot=kbd]:isolate **:data-[slot=kbd]:z-50 **:data-[slot=kbd]:rounded-lg data-[state=delayed-open]:animate-in data-[state=delayed-open]:fade-in-0 data-[state=delayed-open]:zoom-in-95 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 [&amp;&gt;span:has(&gt;[data-slot=tooltip-arrow])]:bg-inherit [&amp;&gt;span:has(&gt;[data-slot=tooltip-arrow])]:[clip-path:polygon(0_0,100%_0,50%_100%)] bg-red-600 text-white\" style=\"--radix-tooltip-content-transform-origin: var(--radix-popper-transform-origin); --radix-tooltip-content-available-width: var(--radix-popper-available-width); --radix-tooltip-content-available-height: var(--radix-popper-available-height); --radix-tooltip-trigger-width: var(--radix-popper-anchor-width); --radix-tooltip-trigger-height: var(--radix-popper-anchor-height);\">Surface right custom<span style=\"position: absolute; left: 0px; transform-origin: 0px 0px; transform: translateY(50%) rotate(90deg) translateX(-50%); top: 11.5px;\"><svg data-slot=\"tooltip-arrow\" class=\"bg-inherit fill-transparent\" width=\"10\" height=\"5\" viewBox=\"0 0 30 10\" preserveAspectRatio=\"none\" style=\"display: block;\"><polygon points=\"0,0 30,0 15,10\"></polygon></svg></span><span id=\"radix-_r_7_\" role=\"tooltip\" style=\"position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;\">Surface right custom</span></div>"
+      }
+    },
+    {
+      "name": "right custom keyboard relationship",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "screenshots": [
+    "C:\\Master-Models\\outputs\\frontend-pilot\\frontend-pilot-20\\browser\\1788762658219\\top-default.png",
+    "C:\\Master-Models\\outputs\\frontend-pilot\\frontend-pilot-20\\browser\\1788762658219\\top-custom.png",
+    "C:\\Master-Models\\outputs\\frontend-pilot\\frontend-pilot-20\\browser\\1788762658219\\bottom-default.png",
+    "C:\\Master-Models\\outputs\\frontend-pilot\\frontend-pilot-20\\browser\\1788762658219\\bottom-custom.png",
+    "C:\\Master-Models\\outputs\\frontend-pilot\\frontend-pilot-20\\browser\\1788762658219\\left-default.png",
+    "C:\\Master-Models\\outputs\\frontend-pilot\\frontend-pilot-20\\browser\\1788762658219\\left-custom.png",
+    "C:\\Master-Models\\outputs\\frontend-pilot\\frontend-pilot-20\\browser\\1788762658219\\right-default.png",
+    "C:\\Master-Models\\outputs\\frontend-pilot\\frontend-pilot-20\\browser\\1788762658219\\right-custom.png"
+  ],
+  "browser": "151.0.7922.34",
+  "passed": true
+}

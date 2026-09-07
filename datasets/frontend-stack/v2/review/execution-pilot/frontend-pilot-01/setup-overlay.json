@@ -1,0 +1,10 @@
+{
+  "reason": "Parent root package declares husky absent from its lockfile. Remove only this unused Git-hook dev dependency for isolated no-Git execution; source lock remains unchanged.",
+  "path": "package.json",
+  "before_sha256": "017ea87958013fe8344f9d7d71162c0822b5d9ed12c5c733bb52403fc9db8829",
+  "after_sha256": "7ecfad6ffa4735e3052d0beedad268c77436ed54e8ac1a8c0a2bb29c55cb25a8",
+  "removed": {
+    "devDependencies.husky": "^9.1.7"
+  },
+  "training_eligible": false
+}

@@ -1,0 +1,7 @@
+# These artifacts are SHA-256-bound to captured bytes. Never normalize line endings.
+/datasets/frontend-stack/v2/review/** -text whitespace=cr-at-eol
+/datasets/frontend-stack/v2/review/**/*.patch -whitespace
+/datasets/frontend-stack/v2/sources/** -text whitespace=cr-at-eol
+/scripts/frontend_pilot/** -text whitespace=cr-at-eol
+/training/templates/qwen3-4b.jinja -text -whitespace
+/training/templates/qwen3-4b.pin.json -text whitespace=cr-at-eol

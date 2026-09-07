@@ -1,0 +1,19 @@
+--- a/src/modules/tabs/lib/useTabs.ts
++++ b/src/modules/tabs/lib/useTabs.ts
+@@ -10,6 +10,8 @@
+   type PaneNode,
+   type SplitDir,
+ } from "@/modules/terminal/lib/panes";
++
++export const MAX_PANES_PER_TAB = 8;
+ 
+ export type TerminalTab = {
+   id: number;
+@@ -376,6 +378,7 @@
+       setTabs((curr) =>
+         curr.map((t) => {
+           if (t.id !== tabId || t.kind !== "terminal") return t;
++          if (leafIds(t.paneTree).length >= MAX_PANES_PER_TAB) return t;
+           const splitId = nextIdRef.current++;
+           const leafId = nextIdRef.current++;
+           newLeafId = leafId;

@@ -1,0 +1,6 @@
+{
+  "node": "v24.16.0",
+  "pnpm": "10.9.0",
+  "harness_lock_sha256": "e1568f2a31cd36df68f55a85a876212e06d0df6475f156f8fe9875531292d3a9",
+  "platform": "win32"
+}

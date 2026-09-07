@@ -1,0 +1,1760 @@
+[
+  {
+    "authored_at": "2026-06-10T17:25:48+05:30",
+    "changed_files": [
+      "apps/desktop/package.json",
+      "apps/desktop/src/components/command-palette.test.tsx",
+      "apps/desktop/src/components/provider-config-panel.test.tsx",
+      "apps/desktop/src/components/ui/dialog.test.tsx",
+      "pnpm-lock.yaml"
+    ],
+    "commit": "7010eb762a0cf77304bf04731ca63141fe03bd1d",
+    "parent": "7aac2d54864af2527fdea79df570e39473a17123",
+    "reasons": [
+      "subject:ui",
+      "subject:react",
+      "path:\\.(tsx|jsx|css|scss)$",
+      "path:(^|/)(components|frontend|ui)/",
+      "multi-file"
+    ],
+    "repository": "testing-ide",
+    "schema_version": 1,
+    "score": 11,
+    "specialist": "frontend-stack",
+    "subject": "test(ui): add component-level Vitest tests for interactive React UI (#76)",
+    "reserved_matches": [
+      "7010eb762a0cf77304bf04731ca63141fe03bd1d"
+    ]
+  },
+  {
+    "authored_at": "2026-05-09T23:22:48+02:00",
+    "changed_files": [
+      "src-tauri/capabilities/default.json",
+      "src/components/WindowControls.tsx",
+      "src/lib/platform.ts",
+      "src/modules/ai/components/AiStatusBarControls.tsx",
+      "src/modules/ai/components/SelectionAskAi.tsx",
+      "src/modules/header/Header.tsx",
+      "src/modules/header/SearchInline.tsx",
+      "src/modules/shortcuts/ShortcutsDialog.tsx",
+      "src/modules/shortcuts/shortcuts.ts",
+      "src/modules/statusbar/AiTools.tsx",
+      "src/modules/tabs/TabBar.tsx",
+      "src/settings/SettingsApp.tsx",
+      "src/styles/globals.css"
+    ],
+    "commit": "cebad5fa7d39bf5b58367eac69ab263bbae1f6aa",
+    "parent": "4dc87cf9f16e57d35452aa857973bb68d49fb810",
+    "reasons": [
+      "subject:ui",
+      "path:\\.(tsx|jsx|css|scss)$",
+      "path:(^|/)(components|frontend|ui)/",
+      "multi-file"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 8,
+    "specialist": "frontend-stack",
+    "subject": "feat(ui): cross-platform adaptation for Windows/Linux",
+    "reserved_matches": [
+      "4dc87cf9f16e57d35452aa857973bb68d49fb810"
+    ]
+  },
+  {
+    "authored_at": "2026-05-12T10:40:46+01:00",
+    "changed_files": [
+      "src/modules/settings/store.ts",
+      "src/modules/terminal/lib/useTerminalSession.ts",
+      "src/settings/components/SettingRow.tsx",
+      "src/settings/sections/GeneralSection.tsx"
+    ],
+    "commit": "f5b54a9a877bbb768c486a5c221223d949e8c4d1",
+    "parent": "8dcb22e5f9c9c0a6a6b3b5a31b0b8f78a14ea9ef",
+    "reasons": [
+      "subject:terminal",
+      "path:\\.(tsx|jsx|css|scss)$",
+      "path:(^|/)(components|frontend|ui)/",
+      "multi-file"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 8,
+    "specialist": "frontend-stack",
+    "subject": "feat(terminal): add WebGL toggle and font-size preferences (#163)",
+    "reserved_matches": [
+      "f5b54a9a877bbb768c486a5c221223d949e8c4d1"
+    ]
+  },
+  {
+    "authored_at": "2026-05-31T17:46:24+05:30",
+    "changed_files": [
+      "apps/desktop/src/components/ai-panel/ai-panel.tsx",
+      "apps/desktop/src/components/ai-panel/artifact-detail-drawer.tsx",
+      "apps/desktop/src/components/settings/settings-sheet.tsx",
+      "apps/desktop/src/lib/artifact.ts",
+      "apps/desktop/src/lib/provider.ts"
+    ],
+    "commit": "2b30e765180e963b78af85a80cc2343124bf6ea3",
+    "parent": "bb2562a4c142918093ad6952b80f95a6794bb9ec",
+    "reasons": [
+      "subject:frontend",
+      "path:\\.(tsx|jsx|css|scss)$",
+      "path:(^|/)(components|frontend|ui)/",
+      "multi-file"
+    ],
+    "repository": "testing-ide",
+    "schema_version": 1,
+    "score": 8,
+    "specialist": "frontend-stack",
+    "subject": "refactor(frontend): extract toArtifactSummary and pickActiveProvider helpers",
+    "reserved_matches": [
+      "2b30e765180e963b78af85a80cc2343124bf6ea3",
+      "bb2562a4c142918093ad6952b80f95a6794bb9ec"
+    ]
+  },
+  {
+    "authored_at": "2026-06-15T13:19:34+05:30",
+    "changed_files": [
+      "CHANGELOG.md",
+      "CLAUDE.md",
+      "apps/desktop/src-tauri/migrations/0008_flaky_checks.sql",
+      "apps/desktop/src-tauri/src/commands/sandbox.rs",
+      "apps/desktop/src-tauri/src/lib.rs",
+      "apps/desktop/src-tauri/src/providers/runners/mod.rs",
+      "apps/desktop/src-tauri/src/repositories/flaky_check_repo.rs",
+      "apps/desktop/src-tauri/src/repositories/mod.rs",
+      "apps/desktop/src-tauri/src/services/sandbox_service.rs",
+      "apps/desktop/src/components/ai-panel/sandbox-run-panel.test.tsx",
+      "apps/desktop/src/components/ai-panel/sandbox-run-panel.tsx",
+      "apps/desktop/src/lib/ipc/sandbox.ts",
+      "packages/shared/src/schemas/test-run.schema.test.ts",
+      "packages/shared/src/schemas/test-run.schema.ts",
+      "plan/versions/v2/v2-feature-docs/FLAKY_TEST_DETECTION.md"
+    ],
+    "commit": "88de8e225fb4a541a1d04b47a9c73160880da14f",
+    "parent": "a901ad0727398012d2946e2b1382f544f51ee382",
+    "reasons": [
+      "subject:ui",
+      "path:\\.(tsx|jsx|css|scss)$",
+      "path:(^|/)(components|frontend|ui)/",
+      "multi-file"
+    ],
+    "repository": "testing-ide",
+    "schema_version": 1,
+    "score": 8,
+    "specialist": "frontend-stack",
+    "subject": "feat(sandbox): persist flaky-check history + trend UI (#82)",
+    "reserved_matches": [
+      "88de8e225fb4a541a1d04b47a9c73160880da14f",
+      "a901ad0727398012d2946e2b1382f544f51ee382"
+    ]
+  },
+  {
+    "authored_at": "2026-06-24T12:38:01+05:30",
+    "changed_files": [
+      "apps/desktop/src-tauri/migrations/0010_heal_checks.sql",
+      "apps/desktop/src-tauri/src/commands/healing.rs",
+      "apps/desktop/src-tauri/src/lib.rs",
+      "apps/desktop/src-tauri/src/repositories/heal_check_repo.rs",
+      "apps/desktop/src-tauri/src/repositories/mod.rs",
+      "apps/desktop/src-tauri/src/services/healing_service.rs",
+      "apps/desktop/src/components/ai-panel/sandbox-run-panel.test.tsx",
+      "apps/desktop/src/components/ai-panel/sandbox-run-panel.tsx",
+      "apps/desktop/src/lib/ipc/healing.ts",
+      "packages/shared/src/schemas/heal.schema.test.ts",
+      "packages/shared/src/schemas/heal.schema.ts"
+    ],
+    "commit": "9ec127a71b818296b5ac201a2bfd7e926e69a206",
+    "parent": "baf623f52f4e79f1a329bc852638214fb7727c65",
+    "reasons": [
+      "subject:ui",
+      "path:\\.(tsx|jsx|css|scss)$",
+      "path:(^|/)(components|frontend|ui)/",
+      "multi-file"
+    ],
+    "repository": "testing-ide",
+    "schema_version": 1,
+    "score": 8,
+    "specialist": "frontend-stack",
+    "subject": "feat(heal): persist self-heal history + trend UI (v2 hardening §5.1) (#102)",
+    "reserved_matches": [
+      "9ec127a71b818296b5ac201a2bfd7e926e69a206"
+    ]
+  },
+  {
+    "authored_at": "2026-05-31T17:44:04+05:30",
+    "changed_files": [
+      "apps/desktop/src/App.tsx",
+      "apps/desktop/src/components/ai-panel/ai-panel.tsx",
+      "apps/desktop/src/components/ai-panel/artifact-detail-drawer.tsx",
+      "apps/desktop/src/components/file-explorer/file-explorer.tsx",
+      "apps/desktop/src/components/first-run-wizard.tsx",
+      "apps/desktop/src/components/layout/status-bar.tsx",
+      "apps/desktop/src/components/layout/toolbar.tsx",
+      "apps/desktop/src/components/provider-config-panel.tsx",
+      "apps/desktop/src/components/settings/settings-sheet.tsx",
+      "apps/desktop/src/lib/ipc/error.ts",
+      "apps/desktop/src/lib/ipc/index.ts",
+      "apps/desktop/src/lib/open-file.ts"
+    ],
+    "commit": "bb2562a4c142918093ad6952b80f95a6794bb9ec",
+    "parent": "63bd269390ddd7aa1f65c2ad305f15243fbead23",
+    "reasons": [
+      "subject:frontend",
+      "path:\\.(tsx|jsx|css|scss)$",
+      "path:(^|/)(components|frontend|ui)/",
+      "multi-file"
+    ],
+    "repository": "testing-ide",
+    "schema_version": 1,
+    "score": 8,
+    "specialist": "frontend-stack",
+    "subject": "refactor(frontend): extract getErrorMessage helper for IPC error handling",
+    "reserved_matches": [
+      "63bd269390ddd7aa1f65c2ad305f15243fbead23",
+      "bb2562a4c142918093ad6952b80f95a6794bb9ec"
+    ]
+  },
+  {
+    "authored_at": "2026-05-20T01:00:07+03:00",
+    "changed_files": [
+      "src/modules/terminal/lib/rendererPool.ts",
+      "src/modules/terminal/lib/useTerminalSession.ts"
+    ],
+    "commit": "65209b3e87fca0138b0447bfd04266bc97e254b4",
+    "parent": "ee1c9bb5188b4c8cda40bb3301e9b9385debce28",
+    "reasons": [
+      "subject:ui",
+      "subject:terminal",
+      "multi-file"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 7,
+    "specialist": "frontend-stack",
+    "subject": "fix(terminal): repaint TUIs on resume instead of replaying dormant bytes (#360)",
+    "reserved_matches": [
+      "65209b3e87fca0138b0447bfd04266bc97e254b4",
+      "ee1c9bb5188b4c8cda40bb3301e9b9385debce28"
+    ]
+  },
+  {
+    "authored_at": "2026-05-13T01:51:03+02:00",
+    "changed_files": [
+      "src-tauri/src/modules/fs/search.rs",
+      "src-tauri/src/modules/fs/tree.rs",
+      "src/modules/ai/lib/native.ts",
+      "src/modules/explorer/ExplorerSearch.tsx",
+      "src/modules/explorer/lib/useFileTree.ts",
+      "src/modules/settings/store.ts",
+      "src/modules/statusbar/CwdBreadcrumb.tsx",
+      "src/settings/sections/GeneralSection.tsx"
+    ],
+    "commit": "4d3df392a809f99df03634c1df0f2da6fef57687",
+    "parent": "83407fe10667171b2728d65f08abea24c297df60",
+    "reasons": [
+      "subject:explorer",
+      "path:\\.(tsx|jsx|css|scss)$",
+      "multi-file"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 6,
+    "specialist": "frontend-stack",
+    "subject": "feat(explorer): extend hidden toggle to files, optimize fs_search",
+    "reserved_matches": [
+      "4d3df392a809f99df03634c1df0f2da6fef57687"
+    ]
+  },
+  {
+    "authored_at": "2026-05-15T15:54:28+02:00",
+    "changed_files": [
+      "src/modules/terminal/lib/rendererPool.ts"
+    ],
+    "commit": "5af83990305d4d18286962c9a3a2086f056b46d7",
+    "parent": "f324da58c287c97b44a47966254e558a805208c1",
+    "reasons": [
+      "subject:ui",
+      "subject:terminal"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 6,
+    "specialist": "frontend-stack",
+    "subject": "fix(terminal): K=4 -> K=5 and preventing the cleaning of TUI apps",
+    "reserved_matches": [
+      "5af83990305d4d18286962c9a3a2086f056b46d7",
+      "f324da58c287c97b44a47966254e558a805208c1"
+    ]
+  },
+  {
+    "authored_at": "2026-05-13T00:55:36+02:00",
+    "changed_files": [
+      "src/app/App.tsx",
+      "src/modules/ai/lib/redact.ts",
+      "src/modules/ai/lib/transport.ts",
+      "src/modules/ai/store/chatStore.ts",
+      "src/modules/header/Header.tsx",
+      "src/modules/shortcuts/shortcuts.ts",
+      "src/modules/statusbar/StatusBar.tsx",
+      "src/modules/tabs/TabBar.tsx",
+      "src/modules/tabs/lib/useTabs.ts"
+    ],
+    "commit": "7db88b374c598937bd3c54e0d4fcd32bee4df3c7",
+    "parent": "83cc3049087cba16e5bf0394090478044d49fac3",
+    "reasons": [
+      "subject:terminal",
+      "path:\\.(tsx|jsx|css|scss)$",
+      "multi-file"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 6,
+    "specialist": "frontend-stack",
+    "subject": "feat(security): private terminal tabs and AI-context auto-redaction",
+    "reserved_matches": [
+      "7db88b374c598937bd3c54e0d4fcd32bee4df3c7",
+      "83cc3049087cba16e5bf0394090478044d49fac3"
+    ]
+  },
+  {
+    "authored_at": "2026-05-13T07:42:00+08:00",
+    "changed_files": [
+      "src-tauri/src/modules/fs/tree.rs",
+      "src/modules/ai/lib/native.ts",
+      "src/modules/explorer/lib/useFileTree.ts",
+      "src/modules/settings/store.ts",
+      "src/modules/statusbar/CwdBreadcrumb.tsx",
+      "src/settings/sections/GeneralSection.tsx"
+    ],
+    "commit": "9b5f4d045a3e989b008fa89adafd433be127ce2c",
+    "parent": "7db88b374c598937bd3c54e0d4fcd32bee4df3c7",
+    "reasons": [
+      "subject:explorer",
+      "path:\\.(tsx|jsx|css|scss)$",
+      "multi-file"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 6,
+    "specialist": "frontend-stack",
+    "subject": "feat(explorer): add show hidden folders setting (#188)",
+    "reserved_matches": [
+      "7db88b374c598937bd3c54e0d4fcd32bee4df3c7"
+    ]
+  },
+  {
+    "authored_at": "2026-05-02T20:27:31+02:00",
+    "changed_files": [
+      "CLAUDE.md",
+      "package.json",
+      "pnpm-lock.yaml",
+      "src-tauri/Cargo.lock",
+      "src-tauri/Cargo.toml",
+      "src-tauri/capabilities/desktop.json",
+      "src-tauri/src/lib.rs",
+      "src-tauri/src/modules/fs/grep.rs",
+      "src-tauri/src/modules/shell/session.rs",
+      "src-tauri/tauri.conf.json",
+      "src/app/App.tsx",
+      "src/modules/updater/UpdaterDialog.tsx",
+      "src/modules/updater/index.ts",
+      "src/modules/updater/useUpdater.ts",
+      "src/settings/sections/AboutSection.tsx"
+    ],
+    "commit": "a5599e04ab6e609ad51833c9dbcf81d55ea4ba3c",
+    "parent": "b942e82e25ce1ef6849160a784d6f3428bad2fa6",
+    "reasons": [
+      "subject:ui",
+      "path:\\.(tsx|jsx|css|scss)$",
+      "multi-file"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 6,
+    "specialist": "frontend-stack",
+    "subject": "v0.5.8 added updater | prepare for build",
+    "reserved_matches": [
+      "a5599e04ab6e609ad51833c9dbcf81d55ea4ba3c",
+      "b942e82e25ce1ef6849160a784d6f3428bad2fa6"
+    ]
+  },
+  {
+    "authored_at": "2026-05-17T21:01:26+04:00",
+    "changed_files": [
+      "AGENTS.md",
+      "package.json",
+      "pnpm-lock.yaml",
+      "pnpm-workspace.yaml",
+      "src-tauri/src/lib.rs",
+      "src-tauri/src/modules/git/commands.rs",
+      "src-tauri/src/modules/git/errors.rs",
+      "src-tauri/src/modules/git/mod.rs",
+      "src-tauri/src/modules/git/operations.rs",
+      "src-tauri/src/modules/git/parser.rs",
+      "src-tauri/src/modules/git/process.rs",
+      "src-tauri/src/modules/git/types.rs",
+      "src-tauri/src/modules/git/utils.rs",
+      "src-tauri/src/modules/mod.rs",
+      "src-tauri/src/modules/net.rs",
+      "src-tauri/src/modules/pty/shell_init.rs",
+      "src-tauri/src/modules/workspace.rs",
+      "src/app/App.tsx",
+      "src/components/ui/tooltip.tsx",
+      "src/modules/ai/lib/agent.ts",
+      "src/modules/ai/lib/native.ts",
+      "src/modules/editor/AiDiffPane.tsx",
+      "src/modules/editor/AiDiffStack.tsx",
+      "src/modules/editor/GitDiffPane.tsx",
+      "src/modules/editor/GitDiffStack.tsx",
+      "src/modules/editor/GitDiffStackLazy.tsx",
+      "src/modules/editor/index.ts",
+      "src/modules/editor/lib/diffCache.ts",
+      "src/modules/editor/lib/languageResolver.ts",
+      "src/modules/explorer/FileExplorer.tsx",
+      "src/modules/explorer/FileTreeNode.tsx",
+      "src/modules/explorer/TreeRow.tsx",
+      "src/modules/git-history/GitHistoryPane.tsx",
+      "src/modules/git-history/GitHistoryStack.tsx",
+      "src/modules/git-history/GitHistoryStackLazy.tsx",
+      "src/modules/git-history/GraphRail.tsx",
+      "src/modules/git-history/index.ts",
+      "src/modules/git-history/lib/graph.ts",
+      "src/modules/git-history/lib/remoteWebUrl.ts",
+      "src/modules/shortcuts/shortcuts.ts",
+      "src/modules/sidebar/ExtensionsView.tsx",
+      "src/modules/sidebar/SidebarRail.tsx",
+      "src/modules/sidebar/index.ts",
+      "src/modules/sidebar/types.ts",
+      "src/modules/source-control/SourceControlPanel.tsx",
+      "src/modules/source-control/SourceControlPanelLazy.tsx",
+      "src/modules/source-control/index.ts",
+      "src/modules/source-control/useSourceControl.ts",
+      "src/modules/source-control/useSourceControlPanel.ts",
+      "src/modules/tabs/TabBar.tsx",
+      "src/modules/tabs/index.ts",
+      "src/modules/tabs/lib/useTabs.ts",
+      "src/modules/terminal/index.ts"
+    ],
+    "commit": "a71767ade103a8d5ebe4b11600c30f7fa360c659",
+    "parent": "06d0a8b8e47b209d9a8426b6bad9393b1fa25825",
+    "reasons": [
+      "subject:ui",
+      "path:\\.(tsx|jsx|css|scss)$",
+      "path:(^|/)(components|frontend|ui)/",
+      "multi-file",
+      "large-diff-penalty"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 6,
+    "specialist": "frontend-stack",
+    "subject": "feat(source-control): git panel, history, lazy UI, perf and security pass (#322)",
+    "reserved_matches": [
+      "06d0a8b8e47b209d9a8426b6bad9393b1fa25825"
+    ]
+  },
+  {
+    "authored_at": "2026-05-11T17:46:26+02:00",
+    "changed_files": [
+      "src/modules/explorer/FileExplorer.tsx",
+      "src/modules/explorer/FileTreeNode.tsx"
+    ],
+    "commit": "fe7147d0a7e2d2ad37688e725ddc52d85e4189cb",
+    "parent": "6fc8b045f58afa80fd424b21896d5033c3fe8aa2",
+    "reasons": [
+      "subject:explorer",
+      "path:\\.(tsx|jsx|css|scss)$",
+      "multi-file"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 6,
+    "specialist": "frontend-stack",
+    "subject": "fix(explorer): prevent inline input from blurring on context menu rename/create (#122)",
+    "reserved_matches": [
+      "6fc8b045f58afa80fd424b21896d5033c3fe8aa2",
+      "fe7147d0a7e2d2ad37688e725ddc52d85e4189cb"
+    ]
+  },
+  {
+    "authored_at": "2026-05-13T02:16:33+02:00",
+    "changed_files": [
+      "src/modules/ai/components/AiMiniWindow.tsx",
+      "src/modules/ai/config.ts",
+      "src/modules/ai/store/chatStore.ts"
+    ],
+    "commit": "17c07a00192ff924b3a43433e856e54d6faac87a",
+    "parent": "8852301646d2008ea70d0b99ef8fe4f65f05d9d5",
+    "reasons": [
+      "path:\\.(tsx|jsx|css|scss)$",
+      "path:(^|/)(components|frontend|ui)/",
+      "multi-file"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 5,
+    "specialist": "frontend-stack",
+    "subject": "feat(ai): token usage, cache-hit rate, and session cost in context popover",
+    "reserved_matches": [
+      "8852301646d2008ea70d0b99ef8fe4f65f05d9d5"
+    ]
+  },
+  {
+    "authored_at": "2026-05-11T00:29:44+02:00",
+    "changed_files": [
+      "src/components/WindowControls.tsx",
+      "src/modules/header/Header.tsx"
+    ],
+    "commit": "182597ffafcd1acaf58b522bc7126d5c835f8b9d",
+    "parent": "5d136a2733bedfb841a3a6592c59d4cd086e862f",
+    "reasons": [
+      "path:\\.(tsx|jsx|css|scss)$",
+      "path:(^|/)(components|frontend|ui)/",
+      "multi-file"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 5,
+    "specialist": "frontend-stack",
+    "subject": "refactor(window-controls): switch to hugeicons, smaller buttons, drop header divider",
+    "reserved_matches": [
+      "182597ffafcd1acaf58b522bc7126d5c835f8b9d",
+      "5d136a2733bedfb841a3a6592c59d4cd086e862f"
+    ]
+  },
+  {
+    "authored_at": "2026-05-04T00:53:09+02:00",
+    "changed_files": [
+      "latest.json",
+      "src-tauri/capabilities/default.json",
+      "src-tauri/src/lib.rs",
+      "src-tauri/tauri.linux.conf.json",
+      "src/components/WindowControls.tsx",
+      "src/main.tsx",
+      "src/settings/main.tsx",
+      "src/styles/globals.css"
+    ],
+    "commit": "5c3784d9d06ba8391fb5a4f7ffebd4b78221d3b7",
+    "parent": "6407e927ad95895a46223b00cf9e4da5c29819f2",
+    "reasons": [
+      "path:\\.(tsx|jsx|css|scss)$",
+      "path:(^|/)(components|frontend|ui)/",
+      "multi-file"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 5,
+    "specialist": "frontend-stack",
+    "subject": "v0.5.9-beta.1 window management for linux (decorations)",
+    "reserved_matches": [
+      "5c3784d9d06ba8391fb5a4f7ffebd4b78221d3b7"
+    ]
+  },
+  {
+    "authored_at": "2026-05-15T16:56:41+02:00",
+    "changed_files": [
+      "src-tauri/src/modules/pty/session.rs",
+      "src/app/App.tsx",
+      "src/modules/ai/components/AiInputBar.tsx",
+      "src/settings/sections/ModelsSection.tsx"
+    ],
+    "commit": "81dd7910e86c692fbbd52cd5aa1ae44cbbdb2d15",
+    "parent": "5af83990305d4d18286962c9a3a2086f056b46d7",
+    "reasons": [
+      "path:\\.(tsx|jsx|css|scss)$",
+      "path:(^|/)(components|frontend|ui)/",
+      "multi-file"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 5,
+    "specialist": "frontend-stack",
+    "subject": "fix: Windows (pwsh) master read pipe exit issue. UX improvments for local models",
+    "reserved_matches": [
+      "5af83990305d4d18286962c9a3a2086f056b46d7"
+    ]
+  },
+  {
+    "authored_at": "2026-05-13T00:23:25+02:00",
+    "changed_files": [
+      "src-tauri/src/lib.rs",
+      "src-tauri/src/modules/net.rs",
+      "src-tauri/tauri.conf.json",
+      "src/app/App.tsx",
+      "src/components/ai-elements/tool.tsx",
+      "src/modules/ai/config.ts",
+      "src/modules/ai/tools/terminal.ts",
+      "src/modules/terminal/PaneTreeView.tsx",
+      "src/modules/terminal/TerminalPane.tsx",
+      "src/modules/terminal/TerminalStack.tsx",
+      "src/modules/terminal/index.ts",
+      "src/modules/terminal/lib/osc-handlers.ts",
+      "src/modules/terminal/lib/useTerminalSession.ts",
+      "src/settings/sections/ModelsSection.tsx"
+    ],
+    "commit": "83cc3049087cba16e5bf0394090478044d49fac3",
+    "parent": "7d6edbff5fcce66b5f1fcc96b313715730781482",
+    "reasons": [
+      "path:\\.(tsx|jsx|css|scss)$",
+      "path:(^|/)(components|frontend|ui)/",
+      "multi-file"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 5,
+    "specialist": "frontend-stack",
+    "subject": "fix(security): phase A — drop OSC 8888, gate suggest_command, lm_ping, CSP",
+    "reserved_matches": [
+      "83cc3049087cba16e5bf0394090478044d49fac3"
+    ]
+  },
+  {
+    "authored_at": "2026-05-04T01:55:17+02:00",
+    "changed_files": [
+      "package.json",
+      "src-tauri/Cargo.lock",
+      "src-tauri/Cargo.toml",
+      "src-tauri/capabilities/default.json",
+      "src-tauri/src/lib.rs",
+      "src-tauri/src/modules/mod.rs",
+      "src-tauri/src/modules/secrets.rs",
+      "src/components/WindowControls.tsx",
+      "src/modules/ai/components/AiInputBar.tsx",
+      "src/modules/ai/lib/keyring.ts",
+      "src/modules/explorer/FileTreeNode.tsx",
+      "src/settings/sections/AboutSection.tsx",
+      "src/styles/globals.css"
+    ],
+    "commit": "a4d62bfe76b805111aab7e245a848fc637ffbdc9",
+    "parent": "5c3784d9d06ba8391fb5a4f7ffebd4b78221d3b7",
+    "reasons": [
+      "path:\\.(tsx|jsx|css|scss)$",
+      "path:(^|/)(components|frontend|ui)/",
+      "multi-file"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 5,
+    "specialist": "frontend-stack",
+    "subject": "v0.5.9 secrets/keyring redesign | bug fixes | adapting for linux",
+    "reserved_matches": [
+      "5c3784d9d06ba8391fb5a4f7ffebd4b78221d3b7",
+      "a4d62bfe76b805111aab7e245a848fc637ffbdc9"
+    ]
+  },
+  {
+    "authored_at": "2026-05-19T03:49:26+03:00",
+    "changed_files": [
+      "src/modules/ai/components/AiStatusBarControls.tsx",
+      "src/modules/ai/config.ts",
+      "src/modules/ai/lib/agent.ts",
+      "src/modules/ai/lib/keyring.ts",
+      "src/settings/components/ProviderIcon.tsx"
+    ],
+    "commit": "dd92eff7f95cb36c6f3fb3d3d25b7d705d2bf812",
+    "parent": "719de9b31058d2f87168206f288be2931e6a8f9b",
+    "reasons": [
+      "path:\\.(tsx|jsx|css|scss)$",
+      "path:(^|/)(components|frontend|ui)/",
+      "multi-file"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 5,
+    "specialist": "frontend-stack",
+    "subject": "feat(ai): add Mistral provider (#355)",
+    "reserved_matches": [
+      "dd92eff7f95cb36c6f3fb3d3d25b7d705d2bf812"
+    ]
+  },
+  {
+    "authored_at": "2026-06-05T21:21:46+05:30",
+    "changed_files": [
+      "apps/desktop/src/components/boards/board-panel.tsx",
+      "apps/desktop/src/components/layout/toolbar.tsx",
+      "apps/desktop/src/lib/ipc/boards.ts",
+      "apps/desktop/src/lib/supabase.ts"
+    ],
+    "commit": "255a1bf879c9d4ec59925621b527c864e862567d",
+    "parent": "88f22d923d928504d9abe00efa22ca2b53b9a2d1",
+    "reasons": [
+      "path:\\.(tsx|jsx|css|scss)$",
+      "path:(^|/)(components|frontend|ui)/",
+      "multi-file"
+    ],
+    "repository": "testing-ide",
+    "schema_version": 1,
+    "score": 5,
+    "specialist": "frontend-stack",
+    "subject": "fix(e2e): lazy-init Supabase client to prevent startup crash without env",
+    "reserved_matches": [
+      "255a1bf879c9d4ec59925621b527c864e862567d",
+      "88f22d923d928504d9abe00efa22ca2b53b9a2d1"
+    ]
+  },
+  {
+    "authored_at": "2026-06-14T18:45:24+05:30",
+    "changed_files": [
+      "BRANCH_PROTECTION.md",
+      "CHANGELOG.md",
+      "CONTRIBUTING.md",
+      "README.md",
+      "apps/desktop/src-tauri/docs/adr/README.md",
+      "apps/desktop/src-tauri/src/menu.rs",
+      "apps/desktop/src-tauri/src/providers/llm/openrouter.rs",
+      "apps/desktop/src/App.tsx",
+      "apps/desktop/src/components/app-error-boundary.tsx",
+      "apps/desktop/src/components/browser-notice.tsx",
+      "docs/AGENT_WORKFLOW.md",
+      "docs/PROJECT_STATUS.md",
+      "plan/versions/v1/CI_JOB_CONSOLIDATION.md"
+    ],
+    "commit": "2ae0d19804ea4bf9ada45403a4f9ffbbce19f640",
+    "parent": "8d99d8eb99c9dabf9fb8a369fa7a9e18f95b5c30",
+    "reasons": [
+      "path:\\.(tsx|jsx|css|scss)$",
+      "path:(^|/)(components|frontend|ui)/",
+      "multi-file"
+    ],
+    "repository": "testing-ide",
+    "schema_version": 1,
+    "score": 5,
+    "specialist": "frontend-stack",
+    "subject": "chore: update repository references from Rajveerx11 to neuratile",
+    "reserved_matches": [
+      "8d99d8eb99c9dabf9fb8a369fa7a9e18f95b5c30"
+    ]
+  },
+  {
+    "authored_at": "2026-06-18T15:56:41+05:30",
+    "changed_files": [
+      "apps/desktop/src-tauri/migrations/0009_mutation_checks.sql",
+      "apps/desktop/src-tauri/src/commands/sandbox.rs",
+      "apps/desktop/src-tauri/src/lib.rs",
+      "apps/desktop/src-tauri/src/providers/runners/mod.rs",
+      "apps/desktop/src-tauri/src/providers/runners/mutation.rs",
+      "apps/desktop/src-tauri/src/repositories/mod.rs",
+      "apps/desktop/src-tauri/src/repositories/mutation_check_repo.rs",
+      "apps/desktop/src-tauri/src/services/mod.rs",
+      "apps/desktop/src-tauri/src/services/mutation_service.rs",
+      "apps/desktop/src-tauri/src/services/sandbox_service.rs",
+      "apps/desktop/src/components/ai-panel/sandbox-run-panel.test.tsx",
+      "apps/desktop/src/components/ai-panel/sandbox-run-panel.tsx",
+      "apps/desktop/src/lib/ipc/index.ts",
+      "apps/desktop/src/lib/ipc/mutation.ts",
+      "apps/desktop/src/stores/sandbox-store.ts",
+      "packages/shared/src/index.ts",
+      "packages/shared/src/schemas/mutation.schema.test.ts",
+      "packages/shared/src/schemas/mutation.schema.ts"
+    ],
+    "commit": "48266fa55f46fff88a966aecf88c0b437e1c5704",
+    "parent": "7e960ef6f41aceb296adf80f6ba536545d60af78",
+    "reasons": [
+      "path:\\.(tsx|jsx|css|scss)$",
+      "path:(^|/)(components|frontend|ui)/",
+      "multi-file"
+    ],
+    "repository": "testing-ide",
+    "schema_version": 1,
+    "score": 5,
+    "specialist": "frontend-stack",
+    "subject": "feat(mutation): mutation score + survivor list (v2 P0 #2, Stage 1) (#86)",
+    "reserved_matches": [
+      "48266fa55f46fff88a966aecf88c0b437e1c5704",
+      "7e960ef6f41aceb296adf80f6ba536545d60af78"
+    ]
+  },
+  {
+    "authored_at": "2026-06-16T15:58:27+05:30",
+    "changed_files": [
+      "apps/desktop/src-tauri/src/commands/healing.rs",
+      "apps/desktop/src-tauri/src/commands/mod.rs",
+      "apps/desktop/src-tauri/src/lib.rs",
+      "apps/desktop/src-tauri/src/services/healing_service.rs",
+      "apps/desktop/src-tauri/src/services/mod.rs",
+      "apps/desktop/src/components/ai-panel/artifact-detail-drawer.tsx",
+      "apps/desktop/src/components/ai-panel/sandbox-run-panel.test.tsx",
+      "apps/desktop/src/components/ai-panel/sandbox-run-panel.tsx",
+      "apps/desktop/src/lib/ipc/healing.ts",
+      "apps/desktop/src/lib/ipc/index.ts",
+      "apps/desktop/src/stores/sandbox-store.ts",
+      "packages/shared/src/index.ts",
+      "packages/shared/src/schemas/heal.schema.test.ts",
+      "packages/shared/src/schemas/heal.schema.ts"
+    ],
+    "commit": "5a990d3ce43702715d264092c04b4242e708a109",
+    "parent": "dd5b9a58e52d5b79cc1d677f0e6c7a37c239df39",
+    "reasons": [
+      "path:\\.(tsx|jsx|css|scss)$",
+      "path:(^|/)(components|frontend|ui)/",
+      "multi-file"
+    ],
+    "repository": "testing-ide",
+    "schema_version": 1,
+    "score": 5,
+    "specialist": "frontend-stack",
+    "subject": "feat(healing): agentic self-healing loop (v2 P0 #1)",
+    "reserved_matches": [
+      "5a990d3ce43702715d264092c04b4242e708a109"
+    ]
+  },
+  {
+    "authored_at": "2026-06-21T14:21:14+05:30",
+    "changed_files": [
+      "apps/desktop/src-tauri/src/commands/sandbox.rs",
+      "apps/desktop/src-tauri/src/lib.rs",
+      "apps/desktop/src-tauri/src/services/mutation_service.rs",
+      "apps/desktop/src/components/ai-panel/sandbox-run-panel.test.tsx",
+      "apps/desktop/src/components/ai-panel/sandbox-run-panel.tsx",
+      "apps/desktop/src/lib/ipc/mutation.ts",
+      "apps/desktop/src/stores/sandbox-store.ts",
+      "packages/shared/src/schemas/mutation.schema.test.ts",
+      "packages/shared/src/schemas/mutation.schema.ts",
+      "plan/ROADMAP.md",
+      "plan/versions/v2/V2_VISION.md",
+      "plan/versions/v2/v2-feature-docs/MUTATION_TESTING.md"
+    ],
+    "commit": "6cdbc5b3b0e0432f328451f949e5ab12c9d83fac",
+    "parent": "6e73ec9fff4d80502fe8f4600e365d3c2120f6d9",
+    "reasons": [
+      "path:\\.(tsx|jsx|css|scss)$",
+      "path:(^|/)(components|frontend|ui)/",
+      "multi-file"
+    ],
+    "repository": "testing-ide",
+    "schema_version": 1,
+    "score": 5,
+    "specialist": "frontend-stack",
+    "subject": "feat(mutation): auto-generate tests to kill survivors (v2 P0 #2, Stage 2) (#88)",
+    "reserved_matches": [
+      "6cdbc5b3b0e0432f328451f949e5ab12c9d83fac",
+      "6e73ec9fff4d80502fe8f4600e365d3c2120f6d9"
+    ]
+  },
+  {
+    "authored_at": "2026-05-08T19:42:23+05:30",
+    "changed_files": [
+      "apps/desktop/src-tauri/capabilities/default.json",
+      "apps/desktop/src-tauri/src/commands/artifacts.rs",
+      "apps/desktop/src-tauri/src/commands/generation.rs",
+      "apps/desktop/src-tauri/src/providers/embeddings/ollama.rs",
+      "apps/desktop/src-tauri/src/repositories/artifact_repo.rs",
+      "apps/desktop/src-tauri/src/services/generation_service.rs",
+      "apps/desktop/src/components/layout/toolbar.tsx"
+    ],
+    "commit": "7875fc1a706f07c491d8c620623d6484541b2035",
+    "parent": "d46f1bbf7c5e44a76e08b1696032b6d8273931ae",
+    "reasons": [
+      "path:\\.(tsx|jsx|css|scss)$",
+      "path:(^|/)(components|frontend|ui)/",
+      "multi-file"
+    ],
+    "repository": "testing-ide",
+    "schema_version": 1,
+    "score": 5,
+    "specialist": "frontend-stack",
+    "subject": "fix(desktop): unblock analyze + generate + open-file flows",
+    "reserved_matches": [
+      "7875fc1a706f07c491d8c620623d6484541b2035",
+      "d46f1bbf7c5e44a76e08b1696032b6d8273931ae"
+    ]
+  },
+  {
+    "authored_at": "2026-06-14T18:25:58+05:30",
+    "changed_files": [
+      "CLAUDE.md",
+      "apps/desktop/e2e/app-flow.spec.ts",
+      "apps/desktop/src-tauri/src/commands/sandbox.rs",
+      "apps/desktop/src-tauri/src/lib.rs",
+      "apps/desktop/src-tauri/src/providers/runners/mod.rs",
+      "apps/desktop/src-tauri/src/services/sandbox_service.rs",
+      "apps/desktop/src/components/ai-panel/sandbox-run-panel.test.tsx",
+      "apps/desktop/src/components/ai-panel/sandbox-run-panel.tsx",
+      "apps/desktop/src/lib/ipc/sandbox.ts",
+      "apps/desktop/src/stores/sandbox-store.ts",
+      "packages/shared/src/schemas/test-run.schema.test.ts",
+      "packages/shared/src/schemas/test-run.schema.ts",
+      "plan/versions/v2/V2_VISION.md",
+      "plan/versions/v2/v2-feature-docs/FLAKY_TEST_DETECTION.md"
+    ],
+    "commit": "8d99d8eb99c9dabf9fb8a369fa7a9e18f95b5c30",
+    "parent": "e3e96e7807d0db75bbf66b3130be9b34b8dcd2df",
+    "reasons": [
+      "path:\\.(tsx|jsx|css|scss)$",
+      "path:(^|/)(components|frontend|ui)/",
+      "multi-file"
+    ],
+    "repository": "testing-ide",
+    "schema_version": 1,
+    "score": 5,
+    "specialist": "frontend-stack",
+    "subject": "feat(sandbox): flaky-test detection (Check flaky, N-run loop) (#80)",
+    "reserved_matches": [
+      "8d99d8eb99c9dabf9fb8a369fa7a9e18f95b5c30",
+      "e3e96e7807d0db75bbf66b3130be9b34b8dcd2df"
+    ]
+  },
+  {
+    "authored_at": "2026-06-04T23:41:03+05:30",
+    "changed_files": [
+      "apps/desktop/src-tauri/capabilities/default.json",
+      "apps/desktop/src/components/file-explorer/file-explorer.tsx",
+      "apps/desktop/src/lib/ipc/filesystem.ts"
+    ],
+    "commit": "9c6ca4ef32c7ff953e843369e51ac8b231fbed6f",
+    "parent": "ef85a84f2cdcb7a38cdb933fd23d6ed18918becf",
+    "reasons": [
+      "path:\\.(tsx|jsx|css|scss)$",
+      "path:(^|/)(components|frontend|ui)/",
+      "multi-file"
+    ],
+    "repository": "testing-ide",
+    "schema_version": 1,
+    "score": 5,
+    "specialist": "frontend-stack",
+    "subject": "Fixed lint issues",
+    "reserved_matches": [
+      "9c6ca4ef32c7ff953e843369e51ac8b231fbed6f",
+      "ef85a84f2cdcb7a38cdb933fd23d6ed18918becf"
+    ]
+  },
+  {
+    "authored_at": "2026-06-06T20:47:28+05:30",
+    "changed_files": [
+      "apps/desktop/src-tauri/src/prompts/bug_report_v2.rs",
+      "apps/desktop/src-tauri/src/prompts/mod.rs",
+      "apps/desktop/src-tauri/src/prompts/snapshots.rs",
+      "apps/desktop/src-tauri/src/prompts/snapshots/testing_ide_lib__prompts__snapshots__bug_report_v2_messages.snap",
+      "apps/desktop/src-tauri/src/prompts/snapshots/testing_ide_lib__prompts__snapshots__bug_report_v2_tool.snap",
+      "apps/desktop/src-tauri/src/prompts/snapshots/testing_ide_lib__prompts__snapshots__test_cases_v2_messages.snap",
+      "apps/desktop/src-tauri/src/prompts/snapshots/testing_ide_lib__prompts__snapshots__test_cases_v2_tool.snap",
+      "apps/desktop/src-tauri/src/prompts/test_cases_v1.rs",
+      "apps/desktop/src-tauri/src/prompts/test_cases_v2.rs",
+      "apps/desktop/src-tauri/src/services/generation_service.rs",
+      "apps/desktop/src/components/ai-panel/artifact-detail-drawer.tsx",
+      "apps/desktop/src/components/ai-panel/artifact-structured-view.tsx",
+      "apps/desktop/src/lib/e2e-tauri-mocks.ts",
+      "packages/shared/src/index.ts",
+      "packages/shared/src/schemas/artifact.schema.ts",
+      "packages/shared/src/schemas/bug-report.schema.ts",
+      "packages/shared/src/schemas/contract-schemas.test.ts",
+      "packages/shared/src/schemas/schema-validity-catalog.test.ts",
+      "packages/shared/src/schemas/test-case.schema.ts",
+      "plan/ARTIFACT_QUALITY_V2.md"
+    ],
+    "commit": "a04704f159975ec39fe5c170af51519092975e4e",
+    "parent": "c3fadbf77f9615a85c80ea900c0e0eb40c2f8260",
+    "reasons": [
+      "path:\\.(tsx|jsx|css|scss)$",
+      "path:(^|/)(components|frontend|ui)/",
+      "multi-file"
+    ],
+    "repository": "testing-ide",
+    "schema_version": 1,
+    "score": 5,
+    "specialist": "frontend-stack",
+    "subject": "feat(artifacts): industry-grade test cases + bug report v2 (Phase 1) (#48)",
+    "reserved_matches": [
+      "a04704f159975ec39fe5c170af51519092975e4e"
+    ]
+  },
+  {
+    "authored_at": "2026-06-17T22:45:09+05:30",
+    "changed_files": [
+      "apps/desktop/src-tauri/src/services/healing_service.rs",
+      "apps/desktop/src/components/ai-panel/sandbox-run-panel.test.tsx",
+      "apps/desktop/src/components/ai-panel/sandbox-run-panel.tsx"
+    ],
+    "commit": "be3ae819634cdc2a19742041f0468a0086dddb03",
+    "parent": "5a990d3ce43702715d264092c04b4242e708a109",
+    "reasons": [
+      "path:\\.(tsx|jsx|css|scss)$",
+      "path:(^|/)(components|frontend|ui)/",
+      "multi-file"
+    ],
+    "repository": "testing-ide",
+    "schema_version": 1,
+    "score": 5,
+    "specialist": "frontend-stack",
+    "subject": "fix(healing): label heal rows from landed attempt + never record errored run as best",
+    "reserved_matches": [
+      "5a990d3ce43702715d264092c04b4242e708a109",
+      "be3ae819634cdc2a19742041f0468a0086dddb03"
+    ]
+  },
+  {
+    "authored_at": "2026-06-09T22:36:31+05:30",
+    "changed_files": [
+      "apps/desktop/src-tauri/src/repositories/provider_config_repo.rs",
+      "apps/desktop/src/components/ai-panel/ai-panel.tsx",
+      "apps/desktop/src/components/layout/status-bar.tsx",
+      "apps/desktop/src/lib/provider.ts"
+    ],
+    "commit": "eb6bed5e7363b9c542d6ac5bf07c51be3956fd88",
+    "parent": "88610471aa4c90f411bd2578dca5a4bc862ca5eb",
+    "reasons": [
+      "path:\\.(tsx|jsx|css|scss)$",
+      "path:(^|/)(components|frontend|ui)/",
+      "multi-file"
+    ],
+    "repository": "testing-ide",
+    "schema_version": 1,
+    "score": 5,
+    "specialist": "frontend-stack",
+    "subject": "feat(providers): enforce single active connection, drop silent fallback (#66)",
+    "reserved_matches": [
+      "88610471aa4c90f411bd2578dca5a4bc862ca5eb",
+      "eb6bed5e7363b9c542d6ac5bf07c51be3956fd88"
+    ]
+  },
+  {
+    "authored_at": "2026-06-04T23:28:52+05:30",
+    "changed_files": [
+      "apps/desktop/src-tauri/Cargo.lock",
+      "apps/desktop/src-tauri/Cargo.toml",
+      "apps/desktop/src-tauri/capabilities/default.json",
+      "apps/desktop/src/components/file-explorer/file-explorer.tsx",
+      "apps/desktop/src/index.css",
+      "apps/desktop/src/lib/ipc/filesystem.ts",
+      "apps/desktop/src/stores/workspace-store.ts"
+    ],
+    "commit": "ef85a84f2cdcb7a38cdb933fd23d6ed18918becf",
+    "parent": "ebad586b76f633d19ac0d48be064d6202dd28d55",
+    "reasons": [
+      "path:\\.(tsx|jsx|css|scss)$",
+      "path:(^|/)(components|frontend|ui)/",
+      "multi-file"
+    ],
+    "repository": "testing-ide",
+    "schema_version": 1,
+    "score": 5,
+    "specialist": "frontend-stack",
+    "subject": "File Exploere Modified",
+    "reserved_matches": [
+      "ef85a84f2cdcb7a38cdb933fd23d6ed18918becf"
+    ]
+  },
+  {
+    "authored_at": "2026-06-07T22:05:15+05:30",
+    "changed_files": [
+      "apps/desktop/src-tauri/src/services/export/mappers.rs",
+      "apps/desktop/src-tauri/src/services/export/markdown_writer.rs",
+      "apps/desktop/src-tauri/src/services/export/mod.rs",
+      "apps/desktop/src-tauri/src/services/export/payload.rs",
+      "apps/desktop/src-tauri/src/services/generation_service.rs",
+      "apps/desktop/src/components/ai-panel/artifact-detail-drawer.tsx",
+      "apps/desktop/src/lib/e2e-bridge.ts",
+      "apps/desktop/src/lib/e2e-tauri-mocks.ts",
+      "apps/desktop/src/lib/export-artifact.test.ts",
+      "apps/desktop/src/lib/export-artifact.ts",
+      "apps/desktop/src/lib/export-markdown.test.ts",
+      "apps/desktop/src/lib/export-markdown.ts",
+      "apps/desktop/src/lib/ipc/exports.ts",
+      "packages/shared/src/schemas/export.schema.test.ts",
+      "packages/shared/src/schemas/export.schema.ts"
+    ],
+    "commit": "fa2320e3d831035bcedcdb4bca7fa061a8966f72",
+    "parent": "59dc9d449f35b75fb3e968566bfbc1d2c87ad849",
+    "reasons": [
+      "path:\\.(tsx|jsx|css|scss)$",
+      "path:(^|/)(components|frontend|ui)/",
+      "multi-file"
+    ],
+    "repository": "testing-ide",
+    "schema_version": 1,
+    "score": 5,
+    "specialist": "frontend-stack",
+    "subject": "fix(export): real markdown export + JSON export for every artifact (#59)",
+    "reserved_matches": [
+      "59dc9d449f35b75fb3e968566bfbc1d2c87ad849"
+    ]
+  },
+  {
+    "authored_at": "2026-05-15T02:09:46+02:00",
+    "changed_files": [
+      "src/lib/fonts.ts",
+      "src/modules/settings/store.ts",
+      "src/modules/tabs/lib/useTabs.ts",
+      "src/modules/terminal/lib/rendererPool.ts",
+      "src/modules/terminal/lib/useTerminalSession.ts"
+    ],
+    "commit": "1aa9886fc7a4d895cbda6ed3cd872ea97c5cca96",
+    "parent": "731d34bc255284b97a4811b706cafe954105164e",
+    "reasons": [
+      "subject:terminal",
+      "multi-file"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 4,
+    "specialist": "frontend-stack",
+    "subject": "perf(terminal): RendererPool improvments, double-rAf, fonts loading",
+    "reserved_matches": [
+      "1aa9886fc7a4d895cbda6ed3cd872ea97c5cca96",
+      "731d34bc255284b97a4811b706cafe954105164e"
+    ]
+  },
+  {
+    "authored_at": "2026-05-17T11:50:07-04:00",
+    "changed_files": [
+      "src/modules/terminal/lib/osc-handlers.test.ts",
+      "src/modules/terminal/lib/osc-handlers.ts",
+      "src/modules/terminal/lib/useTerminalSession.ts"
+    ],
+    "commit": "32a5ec97da8143c664c03ea67d155ebf988024e6",
+    "parent": "10aacd39b12f16e4d887c35c189a2245c02e77d5",
+    "reasons": [
+      "subject:terminal",
+      "multi-file"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 4,
+    "specialist": "frontend-stack",
+    "subject": "security(terminal): gate OSC 7 cwd updates by OSC 133 in-command state",
+    "reserved_matches": [
+      "10aacd39b12f16e4d887c35c189a2245c02e77d5",
+      "32a5ec97da8143c664c03ea67d155ebf988024e6"
+    ]
+  },
+  {
+    "authored_at": "2026-05-13T02:12:38+02:00",
+    "changed_files": [
+      "src/modules/ai/config.ts",
+      "src/modules/ai/lib/transport.ts",
+      "src/modules/ai/store/chatStore.ts",
+      "src/modules/ai/tools/context.ts",
+      "src/modules/ai/tools/terminal.ts"
+    ],
+    "commit": "364b5b8c2658ca073cacd5ecb56eab3486fc434c",
+    "parent": "3e4b7d25fbb3f08d92a8c32123b534b84d6d7f63",
+    "reasons": [
+      "subject:terminal",
+      "multi-file"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 4,
+    "specialist": "frontend-stack",
+    "subject": "perf(ai): make terminal buffer on-demand via get_terminal_output",
+    "reserved_matches": [
+      "3e4b7d25fbb3f08d92a8c32123b534b84d6d7f63"
+    ]
+  },
+  {
+    "authored_at": "2026-05-18T17:54:30+02:00",
+    "changed_files": [
+      "package.json",
+      "pnpm-lock.yaml"
+    ],
+    "commit": "567b022685ce652a95458633049243004d19a8af",
+    "parent": "d4abe401d30291d5800a26b039f4e1a174782853",
+    "reasons": [
+      "subject:ui",
+      "multi-file"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 4,
+    "specialist": "frontend-stack",
+    "subject": "chore(deps): move build-time packages to devDependencies",
+    "reserved_matches": [
+      "567b022685ce652a95458633049243004d19a8af",
+      "d4abe401d30291d5800a26b039f4e1a174782853"
+    ]
+  },
+  {
+    "authored_at": "2026-05-12T17:38:13+02:00",
+    "changed_files": [
+      "src-tauri/Cargo.lock",
+      "src-tauri/Cargo.toml",
+      "src-tauri/src/modules/pty/mod.rs",
+      "src-tauri/src/modules/pty/session.rs",
+      "src/modules/terminal/lib/pty-bridge.ts"
+    ],
+    "commit": "578f1d5c508c8d4ee4e1b702334d3512c45f4cb2",
+    "parent": "f5b54a9a877bbb768c486a5c221223d949e8c4d1",
+    "reasons": [
+      "subject:terminal",
+      "multi-file"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 4,
+    "specialist": "frontend-stack",
+    "subject": "perf(pty): stream terminal output as raw bytes, drop base64-over-JSON",
+    "reserved_matches": [
+      "578f1d5c508c8d4ee4e1b702334d3512c45f4cb2",
+      "f5b54a9a877bbb768c486a5c221223d949e8c4d1"
+    ]
+  },
+  {
+    "authored_at": "2026-05-20T05:43:41+08:00",
+    "changed_files": [
+      "src/modules/terminal/lib/keymap.test.mjs",
+      "src/modules/terminal/lib/keymap.ts",
+      "src/modules/terminal/lib/rendererPool.ts"
+    ],
+    "commit": "5f6cb1dce8becaa46730dfb09bea79ed703b1a3c",
+    "parent": "ca8baa0fa7d8472c339cf8176c6aa38a5d85b941",
+    "reasons": [
+      "subject:terminal",
+      "multi-file"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 4,
+    "specialist": "frontend-stack",
+    "subject": "fix(terminal): support Option arrow word navigation (#308)",
+    "reserved_matches": [
+      "5f6cb1dce8becaa46730dfb09bea79ed703b1a3c",
+      "ca8baa0fa7d8472c339cf8176c6aa38a5d85b941"
+    ]
+  },
+  {
+    "authored_at": "2026-05-19T16:06:37+02:00",
+    "changed_files": [
+      "src-tauri/src/modules/git/operations.rs",
+      "src-tauri/src/modules/git/utils.rs",
+      "src-tauri/src/modules/pty/mod.rs",
+      "src-tauri/src/modules/shell/mod.rs",
+      "src-tauri/src/modules/shell/ringbuffer.rs",
+      "src-tauri/src/modules/workspace.rs",
+      "src/modules/source-control/useSourceControl.ts"
+    ],
+    "commit": "760e77681a4e5c4c8ff2282da9ea107e813f2d95",
+    "parent": "b5f65346882cd5527e79bf0d18b242d17cfc236d",
+    "reasons": [
+      "subject:terminal",
+      "multi-file"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 4,
+    "specialist": "frontend-stack",
+    "subject": "perf(terminal,git): async pty_open, canonical cache, recv_timeout, ring slices",
+    "reserved_matches": [
+      "b5f65346882cd5527e79bf0d18b242d17cfc236d"
+    ]
+  },
+  {
+    "authored_at": "2026-05-10T13:09:29+02:00",
+    "changed_files": [
+      "src/lib/platform.ts",
+      "src/modules/shortcuts/shortcuts.ts"
+    ],
+    "commit": "8f000c93655687757583211e80c1c1d6d0eebd08",
+    "parent": "d5d3802a8a140316ccb453ec5c291485ae3fdbd5",
+    "reasons": [
+      "subject:shortcut",
+      "multi-file"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 4,
+    "specialist": "frontend-stack",
+    "subject": "fix(shortcuts): use property names not display tokens for default bindings",
+    "reserved_matches": [
+      "8f000c93655687757583211e80c1c1d6d0eebd08",
+      "d5d3802a8a140316ccb453ec5c291485ae3fdbd5"
+    ]
+  },
+  {
+    "authored_at": "2026-05-19T15:05:28+02:00",
+    "changed_files": [
+      "src-tauri/src/modules/git/process.rs",
+      "src-tauri/src/modules/git/utils.rs",
+      "src-tauri/src/modules/pty/mod.rs",
+      "src-tauri/src/modules/pty/session.rs",
+      "src-tauri/src/modules/pty/shell_init.rs",
+      "src-tauri/src/modules/shell/background.rs",
+      "src-tauri/src/modules/shell/mod.rs",
+      "src-tauri/src/modules/shell/session.rs",
+      "src-tauri/src/modules/workspace.rs"
+    ],
+    "commit": "b5f65346882cd5527e79bf0d18b242d17cfc236d",
+    "parent": "dd92eff7f95cb36c6f3fb3d3d25b7d705d2bf812",
+    "reasons": [
+      "subject:terminal",
+      "multi-file"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 4,
+    "specialist": "frontend-stack",
+    "subject": "security(terminal,git): workspace auth on spawn, sentinel nonce, pathspec guard",
+    "reserved_matches": [
+      "b5f65346882cd5527e79bf0d18b242d17cfc236d",
+      "dd92eff7f95cb36c6f3fb3d3d25b7d705d2bf812"
+    ]
+  },
+  {
+    "authored_at": "2026-06-04T15:26:11+05:30",
+    "changed_files": [
+      "CLAUDE.md",
+      "website"
+    ],
+    "commit": "2e6e9c3e9977aa40bcee14f31734599fb8aed711",
+    "parent": "3b4b54b7668ec4df1af612952873536c6730e675",
+    "reasons": [
+      "subject:ui",
+      "multi-file"
+    ],
+    "repository": "testing-ide",
+    "schema_version": 1,
+    "score": 4,
+    "specialist": "frontend-stack",
+    "subject": "docs: update CLAUDE.md with pre-push commands and Tauri IPC guidelines (#29)",
+    "reserved_matches": [
+      "3b4b54b7668ec4df1af612952873536c6730e675"
+    ]
+  },
+  {
+    "authored_at": "2026-06-07T21:58:21+05:30",
+    "changed_files": [
+      ".github/workflows/auto-merge.yml",
+      ".github/workflows/ci.yml",
+      ".github/workflows/release.yml"
+    ],
+    "commit": "59dc9d449f35b75fb3e968566bfbc1d2c87ad849",
+    "parent": "c70a88d298f4cb16a8ea2a38355b3df7a7ea9b0d",
+    "reasons": [
+      "subject:ui",
+      "multi-file"
+    ],
+    "repository": "testing-ide",
+    "schema_version": 1,
+    "score": 4,
+    "specialist": "frontend-stack",
+    "subject": "ci: harden workflows — build-check gate, job timeouts, manual dispatch (#60)",
+    "reserved_matches": [
+      "59dc9d449f35b75fb3e968566bfbc1d2c87ad849",
+      "c70a88d298f4cb16a8ea2a38355b3df7a7ea9b0d"
+    ]
+  },
+  {
+    "authored_at": "2026-05-02T22:17:23+05:30",
+    "changed_files": [
+      "apps/desktop/src-tauri/Cargo.lock",
+      "apps/desktop/src-tauri/Cargo.toml"
+    ],
+    "commit": "667ae66fd04e30fa5fa988b1a27a0b44920e9667",
+    "parent": "ffd176cccc8d74fd93a911e883db36e1a4078b4c",
+    "reasons": [
+      "subject:ui",
+      "multi-file"
+    ],
+    "repository": "testing-ide",
+    "schema_version": 1,
+    "score": 4,
+    "specialist": "frontend-stack",
+    "subject": "fix(desktop): enable tracing-subscriber json feature for release builds",
+    "reserved_matches": [
+      "667ae66fd04e30fa5fa988b1a27a0b44920e9667"
+    ]
+  },
+  {
+    "authored_at": "2026-05-22T11:07:49+05:30",
+    "changed_files": [
+      "apps/desktop/src-tauri/src/commands/mod.rs",
+      "apps/desktop/src-tauri/src/lib.rs",
+      "apps/desktop/src-tauri/src/repositories/artifact_repo.rs",
+      "apps/desktop/src/lib/app-menu.ts",
+      "apps/desktop/src/lib/ipc/system.ts"
+    ],
+    "commit": "a12a02e5c3f6beb078ff2f39100747ffbd696fc4",
+    "parent": "cce4841275819eaa08f5d051f96bcbca564efea1",
+    "reasons": [
+      "subject:frontend",
+      "multi-file"
+    ],
+    "repository": "testing-ide",
+    "schema_version": 1,
+    "score": 4,
+    "specialist": "frontend-stack",
+    "subject": "fix: address Greptile review (cancellation safety + frontend log channel)",
+    "reserved_matches": [
+      "a12a02e5c3f6beb078ff2f39100747ffbd696fc4",
+      "cce4841275819eaa08f5d051f96bcbca564efea1"
+    ]
+  },
+  {
+    "authored_at": "2026-05-15T01:28:17+02:00",
+    "changed_files": [
+      "vite.config.ts"
+    ],
+    "commit": "731d34bc255284b97a4811b706cafe954105164e",
+    "parent": "eb4f5a54fa2775a896fae10af9a4c5d44bb0494e",
+    "reasons": [
+      "subject:ui"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 3,
+    "specialist": "frontend-stack",
+    "subject": "chore(build): chrome105 -> chrome120, es2020 -> es2022",
+    "reserved_matches": [
+      "731d34bc255284b97a4811b706cafe954105164e"
+    ]
+  },
+  {
+    "authored_at": "2026-05-09T19:17:17+02:00",
+    "changed_files": [
+      "src-tauri/src/modules/pty/session.rs",
+      "src/modules/explorer/FileExplorer.tsx"
+    ],
+    "commit": "7516c0de7d86f33af6e84343c2fbdea3d479390c",
+    "parent": "67f6cbbcbaa5e33437c1632af7804b7cb20f909f",
+    "reasons": [
+      "path:\\.(tsx|jsx|css|scss)$",
+      "multi-file"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 3,
+    "specialist": "frontend-stack",
+    "subject": "fix(windows): serialize ConPTY spawn to avoid race; basename handles backslash",
+    "reserved_matches": [
+      "67f6cbbcbaa5e33437c1632af7804b7cb20f909f",
+      "7516c0de7d86f33af6e84343c2fbdea3d479390c"
+    ]
+  },
+  {
+    "authored_at": "2026-05-17T11:50:31-04:00",
+    "changed_files": [
+      "src/modules/ai/tools/terminal.ts",
+      "src/modules/preview/PreviewPane.tsx"
+    ],
+    "commit": "82e4f0800ea3356a2329f1c513025f6874c6c869",
+    "parent": "32a5ec97da8143c664c03ea67d155ebf988024e6",
+    "reasons": [
+      "path:\\.(tsx|jsx|css|scss)$",
+      "multi-file"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 3,
+    "specialist": "frontend-stack",
+    "subject": "security(preview): sandbox iframe, restrict open_preview to localhost",
+    "reserved_matches": [
+      "32a5ec97da8143c664c03ea67d155ebf988024e6",
+      "82e4f0800ea3356a2329f1c513025f6874c6c869"
+    ]
+  },
+  {
+    "authored_at": "2026-05-11T00:29:53+02:00",
+    "changed_files": [
+      "src-tauri/src/lib.rs",
+      "src-tauri/tauri.windows.conf.json",
+      "src/main.tsx"
+    ],
+    "commit": "b4df5f97419d3561bcfbc92f1f536a2b60138dc8",
+    "parent": "182597ffafcd1acaf58b522bc7126d5c835f8b9d",
+    "reasons": [
+      "path:\\.(tsx|jsx|css|scss)$",
+      "multi-file"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 3,
+    "specialist": "frontend-stack",
+    "subject": "fix(windows): hide window until first paint to remove transparent shadow flash",
+    "reserved_matches": [
+      "182597ffafcd1acaf58b522bc7126d5c835f8b9d"
+    ]
+  },
+  {
+    "authored_at": "2026-05-11T21:36:23+02:00",
+    "changed_files": [
+      "src/app/App.tsx",
+      "src/modules/source-control/useSourceControl.ts"
+    ],
+    "commit": "b58eb80f3d46ef2146c359c6e773a10b953e5b89",
+    "parent": "ba0fa69aab53c8d26ad766e192aea224774c5437",
+    "reasons": [
+      "path:\\.(tsx|jsx|css|scss)$",
+      "multi-file"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 3,
+    "specialist": "frontend-stack",
+    "subject": "fix(source-control): ensure diff loads correctly when a new selection is made",
+    "reserved_matches": [
+      "b58eb80f3d46ef2146c359c6e773a10b953e5b89",
+      "ba0fa69aab53c8d26ad766e192aea224774c5437"
+    ]
+  },
+  {
+    "authored_at": "2026-05-19T23:58:45+02:00",
+    "changed_files": [
+      "src/modules/editor/lib/languageResolver.ts"
+    ],
+    "commit": "ee1c9bb5188b4c8cda40bb3301e9b9385debce28",
+    "parent": "5f6cb1dce8becaa46730dfb09bea79ed703b1a3c",
+    "reasons": [
+      "subject:editor"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 3,
+    "specialist": "frontend-stack",
+    "subject": "feat(editor): add sql (all dialects) and jsonc/json5 highlighting via legacy-modes",
+    "reserved_matches": [
+      "5f6cb1dce8becaa46730dfb09bea79ed703b1a3c",
+      "ee1c9bb5188b4c8cda40bb3301e9b9385debce28"
+    ]
+  },
+  {
+    "authored_at": "2026-05-11T21:53:44+02:00",
+    "changed_files": [
+      "src/app/App.tsx",
+      "src/modules/source-control/SourceControlPanel.tsx",
+      "src/modules/source-control/useSourceControl.ts"
+    ],
+    "commit": "f1bc47ac4f2af41927fb8990ec032371aa94ac6b",
+    "parent": "b58eb80f3d46ef2146c359c6e773a10b953e5b89",
+    "reasons": [
+      "path:\\.(tsx|jsx|css|scss)$",
+      "multi-file"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 3,
+    "specialist": "frontend-stack",
+    "subject": "feat(source-control): add toggle functionality and context path management for source control panel",
+    "reserved_matches": [
+      "b58eb80f3d46ef2146c359c6e773a10b953e5b89"
+    ]
+  },
+  {
+    "authored_at": "2026-05-15T03:41:01+02:00",
+    "changed_files": [
+      "package.json",
+      "src-tauri/Cargo.lock",
+      "src-tauri/Cargo.toml",
+      "src-tauri/src/modules/workspace.rs",
+      "src-tauri/tauri.conf.json",
+      "src/modules/statusbar/WorkspaceEnvSelector.tsx"
+    ],
+    "commit": "f324da58c287c97b44a47966254e558a805208c1",
+    "parent": "1aa9886fc7a4d895cbda6ed3cd872ea97c5cca96",
+    "reasons": [
+      "path:\\.(tsx|jsx|css|scss)$",
+      "multi-file"
+    ],
+    "repository": "terax-ai",
+    "schema_version": 1,
+    "score": 3,
+    "specialist": "frontend-stack",
+    "subject": "fix(workspace): probe WSL lazily, run wsl.exe off IPC thread (#241)",
+    "reserved_matches": [
+      "1aa9886fc7a4d895cbda6ed3cd872ea97c5cca96",
+      "f324da58c287c97b44a47966254e558a805208c1"
+    ]
+  },
+  {
+    "authored_at": "2026-06-07T20:39:55+05:30",
+    "changed_files": [
+      "apps/desktop/e2e/app-flow.spec.ts",
+      "apps/desktop/src-tauri/Cargo.lock",
+      "apps/desktop/src-tauri/Cargo.toml",
+      "apps/desktop/src-tauri/src/commands/exports.rs",
+      "apps/desktop/src-tauri/src/commands/mod.rs",
+      "apps/desktop/src-tauri/src/lib.rs",
+      "apps/desktop/src-tauri/src/services/export/csv_writer.rs",
+      "apps/desktop/src-tauri/src/services/export/ir.rs",
+      "apps/desktop/src-tauri/src/services/export/mappers.rs",
+      "apps/desktop/src-tauri/src/services/export/mod.rs",
+      "apps/desktop/src-tauri/src/services/export/snapshots/testing_ide_lib__services__export__mappers__tests__bug_report_v2_snapshot.snap",
+      "apps/desktop/src-tauri/src/services/export/snapshots/testing_ide_lib__services__export__mappers__tests__cases_v2_snapshot.snap",
+      "apps/desktop/src-tauri/src/services/export/snapshots/testing_ide_lib__services__export__mappers__tests__context_md_snapshot.snap",
+      "apps/desktop/src-tauri/src/services/export/snapshots/testing_ide_lib__services__export__mappers__tests__defect_report_snapshot.snap",
+      "apps/desktop/src-tauri/src/services/export/snapshots/testing_ide_lib__services__export__mappers__tests__plan_snapshot.snap",
+      "apps/desktop/src-tauri/src/services/export/xlsx_writer.rs",
+      "apps/desktop/src-tauri/src/services/mod.rs",
+      "apps/desktop/src/components/ai-panel/artifact-detail-drawer.tsx",
+      "apps/desktop/src/lib/export-artifact.test.ts",
+      "apps/desktop/src/lib/export-artifact.ts",
+      "apps/desktop/src/lib/export-markdown.ts",
+      "apps/desktop/src/lib/ipc/exports.ts",
+      "apps/desktop/src/lib/ipc/index.ts",
+      "packages/shared/src/index.ts",
+      "packages/shared/src/schemas/export.schema.test.ts",
+      "packages/shared/src/schemas/export.schema.ts"
+    ],
+    "commit": "98ea647ac358411023f0afc21850e07960af80fb",
+    "parent": "de4564870f88d4a9805cbfafd692a5fd346aeac7",
+    "reasons": [
+      "path:\\.(tsx|jsx|css|scss)$",
+      "path:(^|/)(components|frontend|ui)/",
+      "multi-file",
+      "large-diff-penalty"
+    ],
+    "repository": "testing-ide",
+    "schema_version": 1,
+    "score": 3,
+    "specialist": "frontend-stack",
+    "subject": "feat(export): artifact export to Excel/CSV/TSV + copy-as-TSV for Google Sheets (#56)",
+    "reserved_matches": [
+      "de4564870f88d4a9805cbfafd692a5fd346aeac7"
+    ]
+  },
+  {
+    "authored_at": "2026-06-07T21:19:05+05:30",
+    "changed_files": [
+      "CLAUDE.md",
+      "README.md",
+      "apps/desktop/src-tauri/migrations/0005_embedding_config.sql",
+      "apps/desktop/src-tauri/src/commands/analysis.rs",
+      "apps/desktop/src-tauri/src/commands/embeddings.rs",
+      "apps/desktop/src-tauri/src/commands/generation.rs",
+      "apps/desktop/src-tauri/src/commands/mod.rs",
+      "apps/desktop/src-tauri/src/lib.rs",
+      "apps/desktop/src-tauri/src/providers/embeddings/huggingface.rs",
+      "apps/desktop/src-tauri/src/providers/embeddings/mod.rs",
+      "apps/desktop/src-tauri/src/providers/embeddings/ollama.rs",
+      "apps/desktop/src-tauri/src/providers/embeddings/openai_compat.rs",
+      "apps/desktop/src-tauri/src/providers/embeddings/presets.rs",
+      "apps/desktop/src-tauri/src/providers/factory.rs",
+      "apps/desktop/src-tauri/src/repositories/chunk_repo.rs",
+      "apps/desktop/src-tauri/src/repositories/embedding_config_repo.rs",
+      "apps/desktop/src-tauri/src/repositories/mod.rs",
+      "apps/desktop/src-tauri/src/services/analysis_service.rs",
+      "apps/desktop/src-tauri/src/services/embedding_config_service.rs",
+      "apps/desktop/src-tauri/src/services/generation_service.rs",
+      "apps/desktop/src-tauri/src/services/mod.rs",
+      "apps/desktop/src-tauri/src/services/provider_config_service.rs",
+      "apps/desktop/src-tauri/src/utils/crypto.rs",
+      "apps/desktop/src/components/layout/app-shell.tsx",
+      "apps/desktop/src/components/layout/index-stale-banner.tsx",
+      "apps/desktop/src/components/settings/embedding-config-panel.tsx",
+      "apps/desktop/src/components/settings/settings-sheet.tsx",
+      "apps/desktop/src/lib/e2e-tauri-mocks.ts",
+      "apps/desktop/src/lib/ipc/embeddings.ts",
+      "apps/desktop/src/lib/ipc/index.ts",
+      "apps/desktop/src/stores/embedding-store.ts",
+      "packages/shared/src/index.ts",
+      "packages/shared/src/schemas/embedding-config.schema.test.ts",
+      "packages/shared/src/schemas/embedding-config.schema.ts",
+      "plan/EMBEDDING_PROVIDER_SELECT.md"
+    ],
+    "commit": "c70a88d298f4cb16a8ea2a38355b3df7a7ea9b0d",
+    "parent": "14be3cc53d162a34264318faa1040ff36a593462",
+    "reasons": [
+      "path:\\.(tsx|jsx|css|scss)$",
+      "path:(^|/)(components|frontend|ui)/",
+      "multi-file",
+      "large-diff-penalty"
+    ],
+    "repository": "testing-ide",
+    "schema_version": 1,
+    "score": 3,
+    "specialist": "frontend-stack",
+    "subject": "feat(embeddings): selectable embedding provider — Ollama / OpenAI / Gemini / Hugging Face (#58)",
+    "reserved_matches": [
+      "c70a88d298f4cb16a8ea2a38355b3df7a7ea9b0d"
+    ]
+  },
+  {
+    "authored_at": "2026-06-10T19:43:21+05:30",
+    "changed_files": [
+      "AGENTS.md",
+      "BRANCH_PROTECTION.md",
+      "CHANGELOG.md",
+      "CLAUDE.md",
+      "README.md",
+      "apps/desktop/src-tauri/docker/Dockerfile.runner-js",
+      "apps/desktop/src-tauri/docker/Dockerfile.runner-py",
+      "apps/desktop/src-tauri/docs/adr/0004-sandbox-test-runner.md",
+      "apps/desktop/src-tauri/migrations/0004_test_runs.sql",
+      "apps/desktop/src-tauri/migrations/0005_embedding_config.sql",
+      "apps/desktop/src-tauri/migrations/0007_test_case_results.sql",
+      "apps/desktop/src-tauri/src/commands/embeddings.rs",
+      "apps/desktop/src-tauri/src/commands/exports.rs",
+      "apps/desktop/src-tauri/src/commands/test_case_results.rs",
+      "apps/desktop/src-tauri/src/lib.rs",
+      "apps/desktop/src-tauri/src/prompts/bug_report_v2.rs",
+      "apps/desktop/src-tauri/src/prompts/defect_report_v2.rs",
+      "apps/desktop/src-tauri/src/prompts/snapshots.rs",
+      "apps/desktop/src-tauri/src/prompts/test_cases_v2.rs",
+      "apps/desktop/src-tauri/src/prompts/test_plan_v2.rs",
+      "apps/desktop/src-tauri/src/providers/embeddings/huggingface.rs",
+      "apps/desktop/src-tauri/src/providers/embeddings/mod.rs",
+      "apps/desktop/src-tauri/src/providers/factory.rs",
+      "apps/desktop/src-tauri/src/providers/runners/docker_harness.rs",
+      "apps/desktop/src-tauri/src/providers/runners/docker_py.rs",
+      "apps/desktop/src-tauri/src/providers/runners/factory.rs",
+      "apps/desktop/src-tauri/src/providers/runners/mod.rs",
+      "apps/desktop/src-tauri/src/repositories/embedding_config_repo.rs",
+      "apps/desktop/src-tauri/src/repositories/mod.rs",
+      "apps/desktop/src-tauri/src/repositories/test_case_result_repo.rs",
+      "apps/desktop/src-tauri/src/services/embedding_config_service.rs",
+      "apps/desktop/src-tauri/src/services/export/csv_writer.rs",
+      "apps/desktop/src-tauri/src/services/export/ir.rs",
+      "apps/desktop/src-tauri/src/services/export/mappers.rs",
+      "apps/desktop/src-tauri/src/services/export/mod.rs",
+      "apps/desktop/src-tauri/src/services/export/xlsx_writer.rs",
+      "apps/desktop/src-tauri/src/services/sandbox_service.rs",
+      "apps/desktop/src/components/ai-panel/artifact-structured-view.tsx",
+      "apps/desktop/src/components/ai-panel/test-case-table.helpers.ts",
+      "apps/desktop/src/components/ai-panel/test-case-table.tsx",
+      "apps/desktop/src/components/layout/index-stale-banner.tsx",
+      "apps/desktop/src/components/settings/embedding-config-panel.tsx",
+      "apps/desktop/src/lib/ipc/test-case-results.ts",
+      "apps/desktop/src/stores/embedding-store.ts",
+      "docs/AGENT_WORKFLOW.md",
+      "docs/PROJECT_STATUS.md",
+      "packages/shared/src/schemas/test-case-result.schema.ts",
+      "packages/shared/src/schemas/test-run.schema.ts",
+      "plan/ROADMAP.md",
+      "plan/versions/README.md",
+      "plan/versions/v1/ARTIFACT_EXPORT.md",
+      "plan/versions/v1/ARTIFACT_QUALITY_V2.md",
+      "plan/versions/v1/CI_JOB_CONSOLIDATION.md",
+      "plan/versions/v1/CONNECTION_SELECT.md",
+      "plan/versions/v1/EMBEDDING_PROVIDER_SELECT.md",
+      "plan/versions/v1/JIRA_INTEGRATION.md",
+      "plan/versions/v1/SANDBOX_PYTHON_RUNNER.md",
+      "plan/versions/v1/SANDBOX_TEST_RUNNER.md",
+      "plan/versions/v1/TEST_CASE_TABLE.md",
+      "plan/versions/v2/V2_VISION.md"
+    ],
+    "commit": "e7131ddf5937837be466867ac545483d6cd19766",
+    "parent": "f326b9bcb4b7fd3443ada42317d28822bff6b182",
+    "reasons": [
+      "path:\\.(tsx|jsx|css|scss)$",
+      "path:(^|/)(components|frontend|ui)/",
+      "multi-file",
+      "large-diff-penalty"
+    ],
+    "repository": "testing-ide",
+    "schema_version": 1,
+    "score": 3,
+    "specialist": "frontend-stack",
+    "subject": "docs(plan): group design docs by release under plan/versions (#79)",
+    "reserved_matches": [
+      "f326b9bcb4b7fd3443ada42317d28822bff6b182"
+    ]
+  },
+  {
+    "authored_at": "2026-05-02T21:42:19+05:30",
+    "changed_files": [
+      ".claude/settings.local.json"
+    ],
+    "commit": "e9970d65abb5c337f7b2323dd5bad08bbc463ac8",
+    "parent": "7adaea9c713e6c041abfd142280a18e337d43321",
+    "reasons": [
+      "subject:settings"
+    ],
+    "repository": "testing-ide",
+    "schema_version": 1,
+    "score": 3,
+    "specialist": "frontend-stack",
+    "subject": "feat(settings): enhance local settings with additional PowerShell commands for formatting and testing",
+    "reserved_matches": [
+      "e9970d65abb5c337f7b2323dd5bad08bbc463ac8"
+    ]
+  }
+]

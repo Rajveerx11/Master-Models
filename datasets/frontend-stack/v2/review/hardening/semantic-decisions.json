@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "reviewer": "Codex",
+  "scope": "Targeted semantic inspection following whole-corpus structural screening; not independent execution or blanket human approval",
+  "records": {
+    "batch3:25": {
+      "action": "quarantine",
+      "reason": "The shown NavLink derives isActive from its current destination and location. Reusing an index-keyed instance does not establish the claimed stale active styling. No reproducing test is shown. Stable keys are useful, but this causal story needs regeneration.",
+      "references": [
+        "https://reactrouter.com/api/components/NavLink",
+        "https://react.dev/learn/rendering-lists"
+      ],
+      "source_sha256": "53ae58094f62176af54cd1469a74fc8332d71e05c99720770dfdd003370f098d"
+    },
+    "batch3:28": {
+      "action": "repair_summary",
+      "reason": "transition-transform specifies transition-property; it does not itself apply a transform or create the claimed containing block. The shown overflow-hidden is a clipping cause. No measured 44px link height or browser check exists.",
+      "replacement_summary": "Removed overflow-hidden from the sticky header so the Subjects dropdown can extend beyond the header's clipping box. Removed the unused transform transition and added z-20 to the menu wrapper. Added a Saved tutors NavLink before Sessions using the existing linkClass. The recorded build output reports success; dropdown positioning and target dimensions still need browser verification.",
+      "references": [
+        "https://www.w3.org/TR/css-transitions-1/#transition-property-property"
+      ],
+      "source_sha256": "e55bda942e0627c5417abd7173413fcd32c70e26b84e114d096ddf7459890fd8"
+    },
+    "batch3:33": {
+      "action": "quarantine",
+      "reason": "Index keys reuse existing positions when an item is inserted; they do not remount every following li as the summary claims. The shown code and existing play-order/start-time checks do not establish the reported full-column animation restart. Rebuild around a reproduced identity/animation defect.",
+      "references": [
+        "https://react.dev/learn/rendering-lists"
+      ],
+      "source_sha256": "7b7419bc442e1dad7001d0eb134445d136a672c1486cf3b60a056785841913f4"
+    },
+    "batch3:78": {
+      "action": "quarantine",
+      "reason": "Task and explanation claim Tuesday maps to Monday, but getDay() is 2 on Tuesday and WEEKDAY_KEYS[2 - 1] is tue. Sunday does index -1. The task, code and purported failure disagree, so correcting only the summary would leave false training evidence.",
+      "references": [
+        "https://tc39.es/ecma262/multipage/numbers-and-dates.html#sec-date.prototype.getday"
+      ],
+      "source_sha256": "cff003c76e4564178696fce45399a0ff6390466badd7d8e7828a146fcfd662d4"
+    },
+    "batch4:49": {
+      "action": "repair_summary",
+      "reason": "HTML class-string order does not determine CSS precedence. cn/twMerge can resolve conflicts, but the transcript has not read the helper implementation. Its behavior needs confirmation on replay.",
+      "replacement_summary": "Changed ScopedActionButton from string concatenation to cn(base, className), and passed w-full text-sm from BaySideFitmentSheet. Conflicting utility classes are resolved by the generated CSS cascade, not by their order in the HTML class attribute. The new tests require cn to remove the conflicting base width and text-size classes; confirm that the project's helper uses a compatible class merger. The tests also cover unchanged defaults and the denied-scope branch. The recorded Vitest output reports three passing tests.",
+      "references": [
+        "https://tailwindcss.com/docs/styling-with-utility-classes#conflicting-utility-classes"
+      ],
+      "source_sha256": "3fc51dff71c97b1a41f8c67bf9748cdbb1bd65eb918b4873157a0f356e6d684a"
+    },
+    "batch4:74": {
+      "action": "repair_summary",
+      "reason": "Relational comparison requests numeric primitive conversion. The Date becomes a timestamp; the ISO date string converts to NaN. The original explanation incorrectly describes lexicographic comparison against Date.toString().",
+      "replacement_summary": "The cutoff comparison mixed an ISO date string with a Date object. Relational comparison converts the Date to its numeric timestamp and the ISO string to a number; that string becomes NaN, so the greater-than comparison is false. The change compares epoch milliseconds on both sides. The local PanelMeta assertion documents an expected SDK shape but does not validate it at runtime. The recorded tests cover expired, near-expiry and distant-expiry dates; malformed SDK values remain outside that coverage.",
+      "references": [
+        "https://tc39.es/ecma262/multipage/abstract-operations.html#sec-islessthan"
+      ],
+      "source_sha256": "9e57b262fa1b9d00a5dd44493086b1af4e302ebc946919401f4b902dae145141"
+    },
+    "batch4:79": {
+      "action": "review",
+      "reason": "The summary explicitly discloses the remaining failure. Preserve that honesty. Git history of copy changes alone does not prove a baseline test failed; capture the baseline failure, then run the new focused loading tests separately. Do not relabel this as a fabricated all-green summary.",
+      "source_sha256": "63c0247e7451c9f2a5d1c4ece74c80cafc75c4795459748ef41d6053c02b2919"
+    },
+    "batch4:96": {
+      "action": "repair_summary",
+      "reason": "The CSS presence selector matches aria-current=false, but false does not expose an item as current to assistive technology. The active button also has step, not false. Claimed screen-reader observation is unsupported.",
+      "replacement_summary": "The active button receives aria-current=step; inactive buttons previously received aria-current=false. The presence selector [&[aria-current]] matches both values, which explains the shared visual treatment. Inactive buttons now receive undefined, so React omits the attribute and that selector only matches the active step. aria-current=false does not mean current to assistive technology; this trace contains no screen-reader test. The recorded tests check the active attribute, its absence on inactive steps, and disabled future steps.",
+      "references": [
+        "https://www.w3.org/TR/wai-aria-1.2/#aria-current"
+      ],
+      "source_sha256": "cf670ddc0e20d6827cdf7ea23ef9f03b15d8a2b1ab6bfb9a8576e4f76c8ced2e"
+    }
+  }
+}
