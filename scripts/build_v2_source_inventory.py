@@ -41,6 +41,7 @@ def run_git(repo: Path, *args: str, allow_failure: bool = False) -> str:
         text=True,
         encoding="utf-8",
         errors="replace",
+        env={**os.environ, "GIT_NO_LAZY_FETCH": "1"},
     )
     if result.returncode and not allow_failure:
         detail = result.stderr.strip() or result.stdout.strip()

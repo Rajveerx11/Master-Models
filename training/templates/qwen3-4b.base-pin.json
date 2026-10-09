@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "model": "unsloth/Qwen3-4B-bnb-4bit",
+  "revision": "cad0bedfdd862093a12af478cb974ab2addd0e0a",
+  "canonical_model": "Qwen/Qwen3-4B",
+  "canonical_revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+  "canonical_pin_sha256": "13a1af95f5eb7807cd3de3c55d4d9b4862c15f37e3f98f7d6c2d6f6a82b7c15c",
+  "template_sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+  "native_template_sha256": "5da44855ab7e0641774d5ed0ff0b4f89671d01df7d316e54d06557a962211cb4",
+  "native_tokenizer_files": {
+    "tokenizer_config.json": "5f95699c6cf42ee1e3ea6c468d6a1ad61fef4aadf5802b1b56fddbf68370a192",
+    "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+    "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+    "config.json": "131ad2a5941d6b7b6b44838ff5a66b9e9d78c171b56fcaab36024095b54bc1c9",
+    "special_tokens_map.json": "b5acd1507cb3a3539e63369cb4a2b675a599cf13afe62282d371518288967797"
+  },
+  "backend_files": {
+    "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+    "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+  },
+  "parity_verified": true,
+  "native_template_equals_canonical": false,
+  "normalization": {
+    "chat_template": "Explicit canonical pinned template after verifying native tokenizer identity; never silent drift repair.",
+    "native_pad_token": "<|vision_pad|>",
+    "native_pad_token_id": 151654,
+    "canonical_pad_token": "<|endoftext|>",
+    "canonical_pad_token_id": 151643,
+    "render_options": {
+      "enable_thinking": false,
+      "add_generation_prompt": false
+    },
+    "unpadded_render_checks": [
+      {
+        "case": 1,
+        "rendered_sha256": "89b00590beb26decaf6acb98bb2478c2b961c2b29957ce0fa3c9a99f2d76c371",
+        "tokens": 1408,
+        "token_ids_sha256": "238c7fee7471830491919f0a38194ef0cd08aa0d1088df47e2259e21d6d897b9"
+      },
+      {
+        "case": 2,
+        "rendered_sha256": "e0ba8166e1b55ce87d49431c315725bc7749830393b25c8db40f9540b3304148",
+        "tokens": 1467,
+        "token_ids_sha256": "d14cab34d89be2135e76b2ee632d3c0f4ed62cb32988d36035cf06201569ef2a"
+      },
+      {
+        "case": 3,
+        "rendered_sha256": "1c8ffe5324c65b2f2e8c6797b88202c80b1241e0d64af17d6cb2d6cf06584e1a",
+        "tokens": 1446,
+        "token_ids_sha256": "b5297af11eff268efb0bc11cc494efea462b97f2cfc03310c5727b5dfea36e00"
+      }
+    ]
+  },
+  "source": "https://huggingface.co/unsloth/Qwen3-4B-bnb-4bit/tree/cad0bedfdd862093a12af478cb974ab2addd0e0a",
+  "weights_downloaded": false,
+  "training_eligible": false,
+  "limitations": [
+    "Tokenizer/backend and unpadded render parity only; no model loading, hardware compatibility or training was tested.",
+    "Native template and padding differ intentionally; verify native identity before applying the canonical template and supervise using attention/role masks.",
+    "Dataset admission and actual Colab longest-record probe remain separate required gates."
+  ]
+}

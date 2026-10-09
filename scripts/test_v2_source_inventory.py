@@ -1,5 +1,6 @@
 """Regression coverage for frozen-eval source exclusion."""
 
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -9,6 +10,11 @@ from scripts import build_v2_source_inventory as inventory
 
 
 class EvalReservationTests(unittest.TestCase):
+    def test_commit_lookup_never_fetches_unknown_objects_from_partial_clones(self):
+        with patch.object(inventory.subprocess, 'run', return_value=subprocess.CompletedProcess([], 0, 'head', '')) as run:
+            self.assertEqual(inventory.run_git(Path('repo'), 'rev-parse', 'HEAD'), 'head')
+        self.assertEqual(run.call_args.kwargs['env']['GIT_NO_LAZY_FETCH'], '1')
+
     def test_legacy_and_v2_reference_formats_are_reserved(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

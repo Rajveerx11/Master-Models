@@ -25,6 +25,9 @@ datasets/*/generated/raw/
 # public anti-forgetting corpora, 33 MB, re-fetched by scripts/build_train_mix.py
 datasets/general/raw/
 
+# local agent sessions can contain private context; preserve locally, never publish
+.pi-subagents/
+
 # os / editor
 .DS_Store
 Thumbs.db
