@@ -1,11 +1,12 @@
 # Master Models V2
 
-Master Models builds small coding specialists that can be fine-tuned on free Google
-Colab hardware and measured on real repository tasks.
+Master Models aims to build small coding specialists for free Google Colab
+fine-tuning, measured on real repository tasks. The public V2 tooling is available;
+training remains **BLOCKED**, and 4B Colab runtime compatibility is unverified.
 
 ## V2 decision
 
-- Base model: **Qwen3-4B**, loaded in 4-bit for QLoRA.
+- Base model target: **Qwen3-4B**, 4-bit QLoRA.
 - Specialists: frontend, backend, security review, code review, and testing/QA.
 - Data strategy: fewer, harder, source-grounded trajectories.
 - Evaluation: freeze real tasks before generating domain training data.
@@ -21,36 +22,44 @@ too fragile for the free tier.
 |---|---|
 | V2 architecture and per-specialist plans | Ready |
 | Shared V2 dataset schema and registry | Ready |
-| Frontend frozen eval | Ready: 20 tasks |
-| Frontend reusable corpus | Audited: 237 replay candidates, 5 quarantined; no V2 gold approved |
-| Frontend source inventory and pilot | 143 sources; 30 selected, 5 executed, 0 gold |
-| Other specialist source inventories | Refresh required after V2 eval-parser correction |
-| All specialist frozen evals | Ready: 20 tasks each, 100 total |
-| Qwen3-4B template, bounded splits, notebook | Template pinned; 5 traces oversized; splits/notebook pending |
-| V2 training and gates | Pending |
+| All specialist frozen evals | Registry declares 20 tasks each, 100 total |
+| Frontend final V2 corpus and splits | Missing required inputs; no complete approved final corpus published |
+| V2 source inventory tooling | Candidate metadata only; Git lookups disable lazy fetching |
+| Qwen3-4B base pin | Tokenizer/backend parity metadata only; no weights downloaded or training eligibility |
+| Qwen3-4B Colab notebook | Published BLOCKED scaffold; empty payload, no executed cells or outputs |
+| V2 training and release gates | BLOCKED; Colab runtime/probe and specialist qualification remain unverified |
 
-See [STATUS.md](STATUS.md) for the live checkpoint and
+See [STATUS.md](STATUS.md) for the existing project checkpoint and
 [plan/v2-master-plan.md](plan/v2-master-plan.md) for the execution order.
+The V1 mix and archived 8B notebook are historical evidence, not approved V2
+training inputs.
 
-The [frontend hardening report](datasets/frontend-stack/v2/review/hardening/REPORT.md)
-records code defects, corrected explanations, and missing execution provenance.
-The V1 mix and archived notebook are historical evidence, not approved training inputs.
+### Public training tooling
 
-The [frontend pilot queue](datasets/frontend-stack/v2/review/pilot/README.md) specifies
-30 source-grounded tasks and focused checks. The [first five execution bundles](datasets/frontend-stack/v2/review/execution-pilot/README.md)
-contain passing focused/browser/type checks, but all complete traces exceed 3,072
-tokens. Independent review and a bounded verified corpus remain pending.
+- [Training contract](scripts/v2_training_contract.py): stdlib-only, model-free,
+  fail-closed checks for hash-bound inputs, independent review and grouped splits.
+  Passing this data contract does not authorize training.
+- [Colab builder](scripts/build_v2_colab.py): deterministic generator for the
+  [4B notebook](notebooks/frontend_stack_qwen3_4b_colab.ipynb). The published
+  scaffold stops before package installation, ML imports or weight downloads.
+- [Regression tests](scripts/test_v2_training.py): synthetic fixtures and mocks,
+  not real corpus admission, optimizer proof or model benchmarks.
+- [Colab requirements](training/requirements-v2-colab.txt): provisional direct
+  pins, **not a verified compatibility lock**. The
+  [base pin](training/templates/qwen3-4b.base-pin.json) records tokenizer/backend
+  parity only (`weights_downloaded: false`, `training_eligible: false`).
 
 ## Repository map
 
 ```text
 datasets/    V1 corpus, V2 contracts, source inventories, queues, train/holdout sets
 evals/       Frozen real-repository tasks and results
+notebooks/   BLOCKED V2 4B scaffold and archived V1 notebook
 plan/        V2 master plan, specialist plans, and archived V1 research
 plans/       Agent-native copy of the V2 execution plan
 prompts/     Generation and judging provenance
 scripts/     Inventory, validation, mixing, training, serving, and gate tools
-training/    Colab-safe recipes, tool schemas, and pinned chat templates
+training/    Provisional Colab recipe, tool schemas, and pinned chat templates
 ```
 
 ## Non-negotiable rules
@@ -59,22 +68,37 @@ training/    Colab-safe recipes, tool schemas, and pinned chat templates
    bugcheck. Use Colab; use local GPU only for inference and evaluation.
 2. Freeze a specialist's eval set before generating its train trajectories.
 3. Never put eval prompts, commits, patches, or paraphrases into training data.
-4. Keep whole trajectories. Do not truncate messages or tool exchanges.
-5. Train and serve with the same pinned tokenizer chat template and tool schemas.
-6. A specialist ships only after it beats stock Qwen3-4B on its frozen gate.
+   Gold authors must work blind-first, isolated from reference answers/patches;
+   reference-exposed replays are not gold.
+4. Require at least 180 approved gold records and 60 distinct, separately reviewed
+   general records. Keep whole trajectories within 3,072 tokens under the actual
+   pinned native rendering; never truncate messages or tool exchanges.
+5. Require two current-hash, substantive independent semantic and provenance
+   reviews, the declared spot-check policy, and source-family-grouped holdout isolation.
+   File hashes and synthetic tests cannot establish semantic approval.
+6. Train and serve with the same pinned tokenizer chat template and tool schemas.
+   Data admission, verified Colab compatibility, a genuine isolated optimizer
+   probe and explicit training authorization are separate gates.
+7. A specialist ships only after genuine baselines/controls and stock Qwen3-4B
+   comparison on its frozen gate; export alone is not release approval.
 
-## First commands
+## Safe local quickstart
+
+From the repository root, these checks use the Python standard library; no ML
+packages, model downloads or GPU are needed:
 
 ```powershell
-py -3 -m pip install -r scripts/requirements-audit.txt
-py -3 scripts/build_v2_source_inventory.py
-py -3 scripts/build_v2_queues.py
-py -3 scripts/validate_eval_tasks.py --require-v2
-py -3 scripts/validate_v2_dataset.py --registry datasets/v2-registry.json
-py -3 scripts/build_train_mix.py --demo
-py -3 -m unittest scripts.test_gate_proxy
+py -3 -B -m unittest scripts.test_v2_source_inventory scripts.test_v2_training -v
+py -3 -B scripts/v2_training_contract.py
+py -3 -B scripts/build_v2_colab.py --check
 ```
 
-V2 source inventory output is deterministic. It excludes every commit referenced by
-the committed eval suite and writes only commit metadata; raw repository contents and
-model weights remain local.
+The published contract reports **BLOCKED** and exits with code 2 because final V2
+inputs are missing. The builder's `--check` only verifies scaffold synchronization;
+it is **not readiness or training permission**. Do not select a Colab GPU or run the
+notebook as a training job while blocked. No trained V2 weights are delivered.
+
+V2 source inventory output is deterministic candidate metadata, not training data.
+It reserves frozen-eval reference commits and their parents; Git lookups set
+`GIT_NO_LAZY_FETCH=1` to avoid fetching missing objects from partial clones.
+Raw source checkouts and model weights remain local.
